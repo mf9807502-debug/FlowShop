@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FlowShop V10.0 | Sua Loja Online</title>
+<title>FlowShop V10.1 | Sua Loja Online</title>
 
 <style>
 
@@ -49,13 +49,13 @@ body{
     transition:.3s;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
 
 header{
     background:var(--header);
     color:white;
     min-height:70px;
-    padding:12px 5%;
+    padding:0 5%;
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -78,7 +78,7 @@ header{
 nav{
     display:flex;
     align-items:center;
-    gap:20px;
+    gap:22px;
 }
 
 nav a{
@@ -108,6 +108,7 @@ nav a:hover{
     cursor:pointer;
     font-size:18px;
     position:relative;
+    transition:.2s;
 }
 
 .icon-btn:hover{
@@ -129,19 +130,16 @@ nav a:hover{
     justify-content:center;
 }
 
-/* HERO */
+/* ================= HERO ================= */
 
 .hero{
-    min-height:470px;
-    padding:70px 20px;
+    min-height:450px;
+    padding:80px 20px;
     text-align:center;
     color:white;
-
     background:
         radial-gradient(circle at top right,rgba(255,255,255,.18),transparent 30%),
-        radial-gradient(circle at bottom left,rgba(255,255,255,.12),transparent 30%),
         linear-gradient(120deg,#1597ff,#2838c7);
-
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -149,13 +147,14 @@ nav a:hover{
 }
 
 .hero h1{
-    font-size:clamp(35px,6vw,62px);
+    font-size:clamp(35px,6vw,60px);
     margin-bottom:15px;
 }
 
 .hero p{
-    max-width:720px;
-    font-size:19px;
+    max-width:700px;
+    margin:auto;
+    font-size:18px;
     line-height:1.6;
 }
 
@@ -167,7 +166,7 @@ nav a:hover{
     margin-top:30px;
 }
 
-/* BUTTONS */
+/* ================= BUTTONS ================= */
 
 button{
     border:none;
@@ -222,16 +221,11 @@ button:disabled{
     color:white;
 }
 
-.warning{
-    background:var(--warning);
-    color:white;
-}
-
 .full{
     width:100%;
 }
 
-/* OFFER */
+/* ================= OFFER ================= */
 
 .offer{
     margin:30px 5%;
@@ -250,7 +244,7 @@ button:disabled{
     margin-bottom:8px;
 }
 
-/* SECTION */
+/* ================= SECTION ================= */
 
 .section{
     padding:55px 5%;
@@ -268,10 +262,10 @@ button:disabled{
     margin-bottom:30px;
 }
 
-/* TOOLS */
+/* ================= TOOLS ================= */
 
 .tools{
-    max-width:950px;
+    max-width:900px;
     margin:auto auto 35px;
 }
 
@@ -312,11 +306,11 @@ button:disabled{
     color:white;
 }
 
-/* PRODUCTS */
+/* ================= PRODUCTS ================= */
 
 .products{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
     gap:22px;
 }
 
@@ -342,7 +336,7 @@ button:disabled{
 
 .product img{
     width:100%;
-    height:210px;
+    height:220px;
     object-fit:cover;
     display:block;
     transition:.3s;
@@ -363,30 +357,35 @@ button:disabled{
     font-size:12px;
 }
 
-.stock.low{
-    background:#f79009;
-}
-
-.stock.out{
-    background:#f04438;
-}
-
 .favorite{
     position:absolute;
     top:12px;
     right:12px;
-    width:38px;
-    height:38px;
+    width:40px;
+    height:40px;
     padding:0;
     border-radius:50%;
     background:white;
     color:#777;
-    font-size:18px;
+    font-size:19px;
     z-index:2;
 }
 
 .favorite.active{
     color:#f04438;
+}
+
+.sale-badge{
+    position:absolute;
+    top:12px;
+    left:12px;
+    background:#ef4444;
+    color:white;
+    padding:6px 9px;
+    border-radius:8px;
+    font-size:12px;
+    font-weight:bold;
+    z-index:2;
 }
 
 .product-info{
@@ -408,11 +407,27 @@ button:disabled{
     font-size:14px;
 }
 
+.rating-count{
+    color:var(--muted);
+    font-size:12px;
+    margin-left:4px;
+}
+
+.price-box{
+    margin:12px 0;
+}
+
+.old-price{
+    color:var(--muted);
+    text-decoration:line-through;
+    font-size:13px;
+    display:block;
+}
+
 .price{
     font-size:21px;
     color:var(--primary);
     font-weight:bold;
-    margin:12px 0;
 }
 
 .product-actions{
@@ -425,7 +440,7 @@ button:disabled{
     padding:10px;
 }
 
-/* EMPTY */
+/* ================= EMPTY ================= */
 
 .empty{
     text-align:center;
@@ -439,7 +454,7 @@ button:disabled{
     margin-bottom:8px;
 }
 
-/* FOOTER */
+/* ================= FOOTER ================= */
 
 footer{
     background:var(--header);
@@ -454,7 +469,7 @@ footer p{
     margin-top:8px;
 }
 
-/* MODAL */
+/* ================= MODAL ================= */
 
 .modal-bg{
     position:fixed;
@@ -480,6 +495,18 @@ footer p{
     border-radius:18px;
     padding:25px;
     box-shadow:0 20px 60px rgba(0,0,0,.3);
+    animation:modalIn .2s ease;
+}
+
+@keyframes modalIn{
+    from{
+        opacity:0;
+        transform:translateY(15px) scale(.98);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
 }
 
 .modal-header{
@@ -496,14 +523,34 @@ footer p{
     padding:3px 8px;
 }
 
-/* DETAIL */
+/* ================= PRODUCT DETAIL ================= */
 
 .detail-image{
     width:100%;
     height:300px;
     object-fit:cover;
     border-radius:14px;
+    margin-bottom:12px;
+}
+
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
     margin-bottom:18px;
+}
+
+.gallery img{
+    width:100%;
+    height:75px;
+    object-fit:cover;
+    border-radius:9px;
+    cursor:pointer;
+    border:2px solid transparent;
+}
+
+.gallery img:hover{
+    border-color:var(--primary);
 }
 
 .detail-category{
@@ -516,7 +563,7 @@ footer p{
     color:var(--primary);
     font-size:28px;
     font-weight:bold;
-    margin:15px 0;
+    margin:10px 0;
 }
 
 .detail-stock{
@@ -534,10 +581,40 @@ footer p{
     flex:1;
 }
 
-/* INPUT */
+/* ================= REVIEWS ================= */
 
-.input,
-.select{
+.review-box{
+    margin-top:25px;
+    padding-top:20px;
+    border-top:1px solid var(--border);
+}
+
+.review{
+    border-bottom:1px solid var(--border);
+    padding:12px 0;
+}
+
+.review:last-child{
+    border-bottom:none;
+}
+
+.review-name{
+    font-weight:bold;
+}
+
+.review-stars{
+    color:#f79009;
+    margin:4px 0;
+}
+
+.review-text{
+    color:var(--muted);
+    line-height:1.5;
+}
+
+/* ================= INPUT ================= */
+
+.input{
     width:100%;
     padding:13px;
     border-radius:9px;
@@ -548,8 +625,7 @@ footer p{
     outline:none;
 }
 
-.input:focus,
-.select:focus{
+.input:focus{
     border-color:var(--primary);
 }
 
@@ -560,7 +636,7 @@ footer p{
     margin-bottom:6px;
 }
 
-/* CART */
+/* ================= CART ================= */
 
 .cart-item{
     display:flex;
@@ -571,8 +647,8 @@ footer p{
 }
 
 .cart-item img{
-    width:65px;
-    height:65px;
+    width:70px;
+    height:70px;
     object-fit:cover;
     border-radius:9px;
 }
@@ -601,7 +677,15 @@ footer p{
     padding:5px;
 }
 
-.summary{
+.total{
+    display:flex;
+    justify-content:space-between;
+    font-size:20px;
+    font-weight:bold;
+    margin:20px 0;
+}
+
+.cart-summary{
     background:var(--bg);
     padding:15px;
     border-radius:12px;
@@ -614,15 +698,11 @@ footer p{
     margin:8px 0;
 }
 
-.total{
-    display:flex;
-    justify-content:space-between;
-    font-size:20px;
-    font-weight:bold;
-    margin:20px 0;
+.discount{
+    color:var(--success);
 }
 
-/* ACCOUNT */
+/* ================= ACCOUNT ================= */
 
 .account-box{
     text-align:center;
@@ -641,7 +721,7 @@ footer p{
     font-size:32px;
 }
 
-/* ORDERS */
+/* ================= ORDER ================= */
 
 .order-card{
     border:1px solid var(--border);
@@ -661,77 +741,51 @@ footer p{
     font-weight:bold;
 }
 
-/* ADMIN */
+.order-items{
+    margin-top:12px;
+    padding-top:10px;
+    border-top:1px solid var(--border);
+}
 
-.admin-tabs{
+.order-product{
     display:flex;
-    gap:8px;
-    flex-wrap:wrap;
+    align-items:center;
+    gap:10px;
+    margin:8px 0;
+}
+
+.order-product img{
+    width:45px;
+    height:45px;
+    object-fit:cover;
+    border-radius:7px;
+}
+
+/* ================= CHECKOUT ================= */
+
+.checkout-step{
+    display:flex;
+    gap:10px;
     margin-bottom:20px;
-}
-
-.admin-tab{
+    padding:12px;
+    border-radius:10px;
     background:var(--bg);
-    color:var(--text);
 }
 
-.admin-tab.active{
+.checkout-number{
+    width:28px;
+    height:28px;
     background:var(--primary);
     color:white;
-}
-
-.admin-product{
+    border-radius:50%;
     display:flex;
-    gap:12px;
     align-items:center;
-    padding:12px 0;
-    border-bottom:1px solid var(--border);
+    justify-content:center;
+    font-weight:bold;
+    flex-shrink:0;
 }
 
-.admin-product img{
-    width:65px;
-    height:65px;
-    border-radius:9px;
-    object-fit:cover;
-}
-
-.admin-product-info{
-    flex:1;
-}
-
-.admin-actions{
-    display:flex;
-    gap:5px;
-    flex-wrap:wrap;
-}
-
-.admin-actions button{
-    padding:8px 10px;
-}
-
-/* DASHBOARD */
-
-.dashboard{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-    margin-bottom:20px;
-}
-
-.stat{
-    background:var(--bg);
-    padding:18px;
-    border-radius:12px;
-}
-
-.stat strong{
-    display:block;
-    font-size:25px;
-    color:var(--primary);
-    margin-top:5px;
-}
-
-/* TOAST */
+/* ================= TOAST ================= */
 
 .toast{
     position:fixed;
@@ -753,7 +807,7 @@ footer p{
     opacity:1;
 }
 
-/* RESPONSIVE */
+/* ================= RESPONSIVE ================= */
 
 @media(max-width:750px){
 
@@ -766,9 +820,8 @@ footer p{
         order:3;
         width:100%;
         justify-content:center;
-        gap:12px;
+        gap:14px;
         padding-bottom:5px;
-        flex-wrap:wrap;
     }
 
     .hero{
@@ -782,10 +835,6 @@ footer p{
 
     .products{
         grid-template-columns:repeat(2,1fr);
-    }
-
-    .admin-product{
-        align-items:flex-start;
     }
 
 }
@@ -821,8 +870,12 @@ footer p{
         flex-direction:column;
     }
 
-    .dashboard{
-        grid-template-columns:1fr;
+    .cart-item{
+        align-items:flex-start;
+    }
+
+    .gallery img{
+        height:65px;
     }
 
 }
@@ -832,6 +885,8 @@ footer p{
 
 <body>
 
+<!-- ================= HEADER ================= -->
+
 <header>
 
     <div class="logo">
@@ -839,11 +894,15 @@ footer p{
     </div>
 
     <nav>
+
         <a onclick="goHome()">Início</a>
+
         <a onclick="goProducts()">Produtos</a>
+
         <a onclick="openAccount()">Minha conta</a>
+
         <a onclick="openOrders()">Pedidos</a>
-        <a onclick="openAdmin()">⚙️ Admin</a>
+
     </nav>
 
     <div class="header-buttons">
@@ -870,7 +929,14 @@ footer p{
             title="Carrinho"
         >
             🛒
-            <span class="badge" id="cartCount">0</span>
+
+            <span
+                class="badge"
+                id="cartCount"
+            >
+                0
+            </span>
+
         </button>
 
     </div>
@@ -878,12 +944,16 @@ footer p{
 </header>
 
 
+<!-- ================= HERO ================= -->
+
 <section class="hero" id="home">
 
-    <h1>Bem-vindo à FlowShop 🚀</h1>
+    <h1>
+        Bem-vindo à FlowShop 🚀
+    </h1>
 
     <p>
-        Produtos incríveis, preços especiais e uma
+        Produtos incríveis, ofertas especiais e uma
         experiência simples, rápida e moderna.
     </p>
 
@@ -908,11 +978,15 @@ footer p{
 </section>
 
 
+<!-- ================= OFFER ================= -->
+
 <div class="offer">
 
     <div>
 
-        <h2>🔥 Oferta especial</h2>
+        <h2>
+            🔥 Oferta especial
+        </h2>
 
         <p>
             Use o cupom
@@ -931,6 +1005,8 @@ footer p{
 
 </div>
 
+
+<!-- ================= PRODUCTS ================= -->
 
 <section
     class="section"
@@ -985,13 +1061,6 @@ footer p{
                 👟 Moda
             </button>
 
-            <button
-                class="category"
-                onclick="setCategory('Casa',this)"
-            >
-                🏠 Casa
-            </button>
-
         </div>
 
     </div>
@@ -1004,20 +1073,26 @@ footer p{
 </section>
 
 
+<!-- ================= FOOTER ================= -->
+
 <footer>
 
-    <h2>🛍️ FlowShop</h2>
+    <h2>
+        🛍️ FlowShop
+    </h2>
 
     <p>
         Sua loja online — Projeto desenvolvido para aprendizado.
     </p>
 
     <p>
-        FlowShop V10.0 © 2026
+        FlowShop V10.1 © 2026
     </p>
 
 </footer>
 
+
+<!-- ================= MODAL ================= -->
 
 <div
     class="modal-bg"
@@ -1025,7 +1100,10 @@ footer p{
     onclick="closeModalOutside(event)"
 >
 
-    <div class="modal">
+    <div
+        class="modal"
+        id="modal"
+    >
 
         <div class="modal-header">
 
@@ -1058,22 +1136,39 @@ footer p{
 <script>
 
 /* =====================================================
-   PRODUTOS PADRÃO
+   PRODUTOS
 ===================================================== */
 
-const defaultProducts = [
+const products = [
 
     {
         id:1,
         name:"Fone Bluetooth",
         category:"Acessórios",
         price:89.90,
+        oldPrice:119.90,
         stock:12,
         rating:4.8,
+        reviews:34,
         description:
         "Fone Bluetooth moderno, confortável e ideal para ouvir suas músicas no dia a dia.",
-        image:
-        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=700&q=80"
+        images:[
+            "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=700&q=80",
+            "https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=700&q=80",
+            "https://images.unsplash.com/photo-1578319439584-104c94d37305?auto=format&fit=crop&w=700&q=80"
+        ],
+        reviewsList:[
+            {
+                name:"Lucas",
+                rating:5,
+                text:"Produto muito bom e confortável."
+            },
+            {
+                name:"Ana",
+                rating:4,
+                text:"Gostei bastante da qualidade."
+            }
+        ]
     },
 
     {
@@ -1081,12 +1176,24 @@ const defaultProducts = [
         name:"Relógio Digital",
         category:"Acessórios",
         price:129.90,
+        oldPrice:159.90,
         stock:8,
         rating:4.6,
+        reviews:21,
         description:
         "Relógio digital moderno para combinar com diferentes estilos.",
-        image:
-        "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=700&q=80"
+        images:[
+            "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=700&q=80",
+            "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=700&q=80",
+            "https://images.unsplash.com/photo-1508057198894-247b23fe5ade?auto=format&fit=crop&w=700&q=80"
+        ],
+        reviewsList:[
+            {
+                name:"Pedro",
+                rating:5,
+                text:"Muito bonito e chegou rápido."
+            }
+        ]
     },
 
     {
@@ -1094,12 +1201,24 @@ const defaultProducts = [
         name:"Câmera Digital",
         category:"Eletrônicos",
         price:499.90,
+        oldPrice:599.90,
         stock:5,
         rating:4.9,
+        reviews:48,
         description:
         "Câmera digital para registrar seus melhores momentos com qualidade.",
-        image:
-        "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=700&q=80"
+        images:[
+            "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=700&q=80",
+            "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?auto=format&fit=crop&w=700&q=80",
+            "https://images.unsplash.com/photo-1606986628253-35eecad7f1b1?auto=format&fit=crop&w=700&q=80"
+        ],
+        reviewsList:[
+            {
+                name:"Marcos",
+                rating:5,
+                text:"Excelente câmera para fotografias."
+            }
+        ]
     },
 
     {
@@ -1107,12 +1226,29 @@ const defaultProducts = [
         name:"Tênis Esportivo",
         category:"Moda",
         price:199.90,
+        oldPrice:249.90,
         stock:15,
         rating:4.7,
+        reviews:37,
         description:
         "Tênis esportivo confortável para atividades e uso casual.",
-        image:
-        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80"
+        images:[
+            "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80",
+            "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80",
+            "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=700&q=80"
+        ],
+        reviewsList:[
+            {
+                name:"João",
+                rating:5,
+                text:"Muito confortável."
+            },
+            {
+                name:"Carlos",
+                rating:4,
+                text:"Gostei do modelo."
+            }
+        ]
     },
 
     {
@@ -1120,12 +1256,24 @@ const defaultProducts = [
         name:"Notebook",
         category:"Eletrônicos",
         price:2499.90,
+        oldPrice:2899.90,
         stock:4,
         rating:4.9,
+        reviews:56,
         description:
         "Notebook moderno para estudos, trabalho, programação e tarefas do dia a dia.",
-        image:
-        "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=700&q=80"
+        images:[
+            "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=700&q=80",
+            "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=700&q=80",
+            "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?auto=format&fit=crop&w=700&q=80"
+        ],
+        reviewsList:[
+            {
+                name:"Rafael",
+                rating:5,
+                text:"Ótimo para estudar e programar."
+            }
+        ]
     },
 
     {
@@ -1133,12 +1281,24 @@ const defaultProducts = [
         name:"Smartphone",
         category:"Eletrônicos",
         price:1499.90,
+        oldPrice:1699.90,
         stock:7,
         rating:4.8,
+        reviews:42,
         description:
         "Smartphone moderno com ótimo desempenho para aplicativos e entretenimento.",
-        image:
-        "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=700&q=80"
+        images:[
+            "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=700&q=80",
+            "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=700&q=80",
+            "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=700&q=80"
+        ],
+        reviewsList:[
+            {
+                name:"Bruno",
+                rating:5,
+                text:"Excelente desempenho."
+            }
+        ]
     },
 
     {
@@ -1146,12 +1306,24 @@ const defaultProducts = [
         name:"Mochila",
         category:"Acessórios",
         price:119.90,
+        oldPrice:149.90,
         stock:10,
         rating:4.5,
+        reviews:18,
         description:
         "Mochila prática para escola, trabalho e uso cotidiano.",
-        image:
-        "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=700&q=80"
+        images:[
+            "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=700&q=80",
+            "https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?auto=format&fit=crop&w=700&q=80",
+            "https://images.unsplash.com/photo-1581605405669-fcdf81165afa?auto=format&fit=crop&w=700&q=80"
+        ],
+        reviewsList:[
+            {
+                name:"Beatriz",
+                rating:5,
+                text:"Cabe bastante coisa."
+            }
+        ]
     },
 
     {
@@ -1159,38 +1331,24 @@ const defaultProducts = [
         name:"Óculos de Sol",
         category:"Moda",
         price:159.90,
+        oldPrice:199.90,
         stock:9,
         rating:4.7,
+        reviews:25,
         description:
         "Óculos de sol com visual moderno para completar seu estilo.",
-        image:
-        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=700&q=80"
-    },
-
-    {
-        id:9,
-        name:"Luminária LED",
-        category:"Casa",
-        price:79.90,
-        stock:14,
-        rating:4.6,
-        description:
-        "Luminária LED moderna para deixar seu ambiente mais confortável.",
-        image:
-        "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=700&q=80"
-    },
-
-    {
-        id:10,
-        name:"Caixa de Som",
-        category:"Eletrônicos",
-        price:179.90,
-        stock:11,
-        rating:4.8,
-        description:
-        "Caixa de som portátil para ouvir suas músicas favoritas.",
-        image:
-        "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=700&q=80"
+        images:[
+            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=700&q=80",
+            "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=700&q=80",
+            "https://images.unsplash.com/photo-1577803645773-f96470509666?auto=format&fit=crop&w=700&q=80"
+        ],
+        reviewsList:[
+            {
+                name:"Julia",
+                rating:5,
+                text:"Muito bonito."
+            }
+        ]
     }
 
 ];
@@ -1199,11 +1357,6 @@ const defaultProducts = [
 /* =====================================================
    ESTADO
 ===================================================== */
-
-let products =
-    JSON.parse(
-        localStorage.getItem("flowshop_products")
-    ) || defaultProducts;
 
 let cart =
     JSON.parse(
@@ -1230,8 +1383,6 @@ let coupon =
 
 let currentCategory = "Todos";
 
-let toastTimer;
-
 
 /* =====================================================
    UTILIDADES
@@ -1239,7 +1390,7 @@ let toastTimer;
 
 function money(value){
 
-    return Number(value).toLocaleString(
+    return value.toLocaleString(
         "pt-BR",
         {
             style:"currency",
@@ -1250,12 +1401,41 @@ function money(value){
 }
 
 
-function saveData(){
+function stars(value){
 
-    localStorage.setItem(
-        "flowshop_products",
-        JSON.stringify(products)
+    const rounded =
+        Math.round(value);
+
+    return "★".repeat(rounded) +
+           "☆".repeat(5-rounded);
+
+}
+
+
+function getProduct(id){
+
+    return products.find(
+        product => product.id === id
     );
+
+}
+
+
+function getDiscountPercent(product){
+
+    if(!product.oldPrice || product.oldPrice <= product.price){
+        return 0;
+    }
+
+    return Math.round(
+        ((product.oldPrice-product.price) /
+        product.oldPrice) * 100
+    );
+
+}
+
+
+function saveData(){
 
     localStorage.setItem(
         "flowshop_cart",
@@ -1286,17 +1466,8 @@ function saveData(){
 }
 
 
-function getProduct(id){
-
-    return products.find(
-        product => product.id === Number(id)
-    );
-
-}
-
-
 /* =====================================================
-   RENDER PRODUTOS
+   PRODUTOS
 ===================================================== */
 
 function renderProducts(){
@@ -1320,6 +1491,9 @@ function renderProducts(){
 
             const searchOk =
                 product.name
+                .toLowerCase()
+                .includes(search) ||
+                product.category
                 .toLowerCase()
                 .includes(search);
 
@@ -1357,22 +1531,22 @@ function renderProducts(){
             const isFavorite =
                 favorites.includes(product.id);
 
-            let stockClass = "";
-
-            if(product.stock <= 0){
-
-                stockClass = "out";
-
-            }else if(product.stock <= 3){
-
-                stockClass = "low";
-
-            }
-
+            const discount =
+                getDiscountPercent(product);
 
             return `
 
                 <div class="product">
+
+                    ${
+                        discount > 0
+                        ? `
+                            <span class="sale-badge">
+                                🔥 -${discount}%
+                            </span>
+                          `
+                        : ""
+                    }
 
                     <button
                         class="favorite ${isFavorite ? "active" : ""}"
@@ -1387,19 +1561,15 @@ function renderProducts(){
                     >
 
                         <img
-                            src="${product.image}"
+                            src="${product.images[0]}"
                             alt="${product.name}"
                             onerror="
                                 this.src='https://via.placeholder.com/500?text=FlowShop'
                             "
                         >
 
-                        <span class="stock ${stockClass}">
-                            ${
-                                product.stock > 0
-                                ? `📦 ${product.stock} disponíveis`
-                                : "❌ Sem estoque"
-                            }
+                        <span class="stock">
+                            📦 ${product.stock} disponíveis
                         </span>
 
                     </div>
@@ -1415,11 +1585,28 @@ function renderProducts(){
                         </div>
 
                         <div class="rating">
-                            ⭐ ${product.rating}
+                            ${stars(product.rating)}
+                            <span class="rating-count">
+                                (${product.reviews})
+                            </span>
                         </div>
 
-                        <div class="price">
-                            ${money(product.price)}
+                        <div class="price-box">
+
+                            ${
+                                product.oldPrice
+                                ? `
+                                    <span class="old-price">
+                                        ${money(product.oldPrice)}
+                                    </span>
+                                  `
+                                : ""
+                            }
+
+                            <span class="price">
+                                ${money(product.price)}
+                            </span>
+
                         </div>
 
                         <div class="product-actions">
@@ -1470,17 +1657,21 @@ function setCategory(category,button){
 
 
 /* =====================================================
-   DETALHE DO PRODUTO
+   DETALHES
 ===================================================== */
 
 function openProduct(id){
 
-    const product = getProduct(id);
+    const product =
+        getProduct(id);
 
     if(!product) return;
 
     const isFavorite =
         favorites.includes(product.id);
+
+    const discount =
+        getDiscountPercent(product);
 
     openModal(
 
@@ -1489,39 +1680,83 @@ function openProduct(id){
         `
 
             <img
+                id="mainDetailImage"
                 class="detail-image"
-                src="${product.image}"
+                src="${product.images[0]}"
                 alt="${product.name}"
             >
 
-            <h2>${product.name}</h2>
+            <div class="gallery">
+
+                ${product.images.map((image,index)=>`
+
+                    <img
+                        src="${image}"
+                        onclick="changeDetailImage('${image}')"
+                        alt="Imagem ${index+1}"
+                    >
+
+                `).join("")}
+
+            </div>
+
+            <h2>
+                ${product.name}
+            </h2>
 
             <div class="detail-category">
                 🏷️ Categoria: ${product.category}
             </div>
 
             <div class="rating">
-                ⭐ ${product.rating} / 5.0
+                ${stars(product.rating)}
+                ${product.rating} / 5.0
+                <span class="rating-count">
+                    (${product.reviews} avaliações)
+                </span>
             </div>
 
-            <div class="detail-price">
-                ${money(product.price)}
+            <div class="price-box">
+
+                ${
+                    product.oldPrice
+                    ? `
+                        <span class="old-price">
+                            ${money(product.oldPrice)}
+                        </span>
+                      `
+                    : ""
+                }
+
+                <div class="detail-price">
+                    ${money(product.price)}
+                </div>
+
+                ${
+                    discount > 0
+                    ? `
+                        <span style="
+                            color:var(--success);
+                            font-weight:bold;
+                        ">
+                            🔥 Você economiza ${money(product.oldPrice-product.price)}
+                        </span>
+                      `
+                    : ""
+                }
+
             </div>
 
             <p style="
                 color:var(--muted);
                 line-height:1.6;
-                margin-bottom:15px;
+                margin:15px 0;
             ">
                 ${product.description}
             </p>
 
             <div class="detail-stock">
-                ${
-                    product.stock > 0
-                    ? `📦 ${product.stock} unidades disponíveis`
-                    : "❌ Produto sem estoque"
-                }
+                📦 ${product.stock} unidades disponíveis
             </div>
 
             <div class="detail-actions">
@@ -1542,10 +1777,39 @@ function openProduct(id){
                         addToCart(${product.id});
                         closeModal();
                     "
-                    ${product.stock <= 0 ? "disabled" : ""}
                 >
-                    🛒 Adicionar
+                    🛒 Adicionar ao carrinho
                 </button>
+
+            </div>
+
+            <div class="review-box">
+
+                <h3>
+                    ⭐ Avaliações
+                </h3>
+
+                ${
+                    product.reviewsList.map(review=>`
+
+                        <div class="review">
+
+                            <div class="review-name">
+                                👤 ${review.name}
+                            </div>
+
+                            <div class="review-stars">
+                                ${stars(review.rating)}
+                            </div>
+
+                            <div class="review-text">
+                                ${review.text}
+                            </div>
+
+                        </div>
+
+                    `).join("")
+                }
 
             </div>
 
@@ -1556,19 +1820,36 @@ function openProduct(id){
 }
 
 
+function changeDetailImage(image){
+
+    const main =
+        document.getElementById(
+            "mainDetailImage"
+        );
+
+    if(main){
+        main.src = image;
+    }
+
+}
+
+
 /* =====================================================
    CARRINHO
 ===================================================== */
 
 function addToCart(id){
 
-    const product = getProduct(id);
+    const product =
+        getProduct(id);
 
     if(!product) return;
 
     if(product.stock <= 0){
 
-        showToast("Produto sem estoque.");
+        showToast(
+            "Produto sem estoque."
+        );
 
         return;
 
@@ -1576,7 +1857,9 @@ function addToCart(id){
 
 
     const existing =
-        cart.find(item => item.id === id);
+        cart.find(
+            item => item.id === id
+        );
 
 
     if(existing){
@@ -1584,7 +1867,7 @@ function addToCart(id){
         if(existing.quantity >= product.stock){
 
             showToast(
-                "Limite de estoque atingido."
+                "Quantidade máxima disponível atingida."
             );
 
             return;
@@ -1652,7 +1935,9 @@ function cartTotal(){
 function changeQuantity(id,amount){
 
     const item =
-        cart.find(item => item.id === id);
+        cart.find(
+            item => item.id === id
+        );
 
     const product =
         getProduct(id);
@@ -1708,12 +1993,58 @@ function removeFromCart(id){
 }
 
 
+/* =====================================================
+   MODAL
+===================================================== */
+
+function openModal(title,content){
+
+    document
+        .getElementById("modalTitle")
+        .textContent = title;
+
+    document
+        .getElementById("modalContent")
+        .innerHTML = content;
+
+    document
+        .getElementById("modalBg")
+        .classList.add("show");
+
+}
+
+
+function closeModal(){
+
+    document
+        .getElementById("modalBg")
+        .classList.remove("show");
+
+}
+
+
+function closeModalOutside(event){
+
+    if(
+        event.target.id === "modalBg"
+    ){
+
+        closeModal();
+
+    }
+
+}
+
+
+/* =====================================================
+   ABRIR CARRINHO
+===================================================== */
+
 function openCart(){
 
     if(cart.length === 0){
 
         openModal(
-
             "🛒 Meu Carrinho",
 
             `
@@ -1732,10 +2063,7 @@ function openCart(){
 
                     <button
                         class="primary"
-                        onclick="
-                            closeModal();
-                            goProducts();
-                        "
+                        onclick="closeModal();goProducts();"
                     >
                         Ver produtos
                     </button>
@@ -1766,7 +2094,7 @@ function openCart(){
             <div class="cart-item">
 
                 <img
-                    src="${product.image}"
+                    src="${product.images[0]}"
                     alt="${product.name}"
                 >
 
@@ -1783,12 +2111,7 @@ function openCart(){
                     <div class="qty">
 
                         <button
-                            onclick="
-                                changeQuantity(
-                                    ${product.id},
-                                    -1
-                                )
-                            "
+                            onclick="changeQuantity(${product.id},-1)"
                         >
                             −
                         </button>
@@ -1798,12 +2121,7 @@ function openCart(){
                         </span>
 
                         <button
-                            onclick="
-                                changeQuantity(
-                                    ${product.id},
-                                    1
-                                )
-                            "
+                            onclick="changeQuantity(${product.id},1)"
                         >
                             +
                         </button>
@@ -1814,9 +2132,7 @@ function openCart(){
 
                 <button
                     class="remove"
-                    onclick="
-                        removeFromCart(${product.id})
-                    "
+                    onclick="removeFromCart(${product.id})"
                 >
                     🗑️
                 </button>
@@ -1828,7 +2144,8 @@ function openCart(){
     });
 
 
-    const subtotal = cartTotal();
+    const subtotal =
+        cartTotal();
 
     const discount =
         coupon === "FLOW10"
@@ -1847,7 +2164,7 @@ function openCart(){
 
             ${html}
 
-            <div class="summary">
+            <div class="cart-summary">
 
                 <div class="summary-line">
 
@@ -1863,16 +2180,11 @@ function openCart(){
 
                 ${
                     discount > 0
-
                     ? `
-
-                        <div
-                            class="summary-line"
-                            style="color:var(--success)"
-                        >
+                        <div class="summary-line discount">
 
                             <span>
-                                Desconto
+                                Desconto FLOW10
                             </span>
 
                             <strong>
@@ -1880,26 +2192,23 @@ function openCart(){
                             </strong>
 
                         </div>
-
-                    `
+                      `
                     : ""
                 }
 
-                <div class="summary-line">
+                <div class="total">
 
                     <span>
                         Total
                     </span>
 
-                    <strong>
+                    <span>
                         ${money(total)}
-                    </strong>
+                    </span>
 
                 </div>
 
             </div>
-
-            <br>
 
             <input
                 class="input"
@@ -1912,7 +2221,7 @@ function openCart(){
                 class="primary full"
                 onclick="applyCoupon()"
             >
-                🎟️ Aplicar cupom
+                🏷️ Aplicar cupom
             </button>
 
             <br><br>
@@ -1921,7 +2230,7 @@ function openCart(){
                 class="primary full"
                 onclick="openCheckout()"
             >
-                💳 Finalizar compra
+                📦 Finalizar compra
             </button>
 
         `
@@ -1997,29 +2306,41 @@ function openCheckout(){
     }
 
 
-    const subtotal = cartTotal();
-
-    const discount =
-        coupon === "FLOW10"
-        ? subtotal * .10
-        : 0;
-
     const total =
-        subtotal - discount;
+        cartTotal() *
+        (
+            coupon === "FLOW10"
+            ? .90
+            : 1
+        );
 
 
     openModal(
 
-        "💳 Finalizar pedido",
+        "📦 Finalizar pedido",
 
         `
 
-            <p style="
-                margin-bottom:20px;
-                color:var(--muted);
-            ">
-                Preencha seus dados para simular o pedido.
-            </p>
+            <div class="checkout-step">
+
+                <div class="checkout-number">
+                    1
+                </div>
+
+                <div>
+                    <strong>
+                        Dados pessoais
+                    </strong>
+
+                    <p style="
+                        color:var(--muted);
+                        margin-top:4px;
+                    ">
+                        Informe os dados para simular o pedido.
+                    </p>
+                </div>
+
+            </div>
 
             <div class="form-group">
 
@@ -2066,90 +2387,61 @@ function openCheckout(){
 
             </div>
 
-            <div class="form-group">
+            <div class="checkout-step">
 
-                <label>
-                    Forma de pagamento
-                </label>
-
-                <select
-                    class="select"
-                    id="paymentMethod"
-                >
-
-                    <option value="">
-                        Selecione
-                    </option>
-
-                    <option value="Pix">
-                        🟢 Pix
-                    </option>
-
-                    <option value="Cartão">
-                        💳 Cartão
-                    </option>
-
-                    <option value="Dinheiro">
-                        💵 Dinheiro
-                    </option>
-
-                </select>
-
-            </div>
-
-            <div class="summary">
-
-                <div class="summary-line">
-
-                    <span>
-                        Subtotal
-                    </span>
-
-                    <strong>
-                        ${money(subtotal)}
-                    </strong>
-
+                <div class="checkout-number">
+                    2
                 </div>
 
-                ${
-                    discount > 0
-
-                    ? `
-
-                        <div
-                            class="summary-line"
-                            style="color:var(--success)"
-                        >
-
-                            <span>
-                                Desconto
-                            </span>
-
-                            <strong>
-                                - ${money(discount)}
-                            </strong>
-
-                        </div>
-
-                    `
-                    : ""
-                }
-
-                <div class="summary-line">
-
+                <div>
                     <strong>
-                        Total
+                        Pagamento
                     </strong>
 
-                    <strong>
-                        ${money(total)}
-                    </strong>
-
+                    <p style="
+                        color:var(--muted);
+                        margin-top:4px;
+                    ">
+                        Pagamento apenas simulado nesta versão.
+                    </p>
                 </div>
 
             </div>
 
-            <br>
+            <select
+                class="input"
+                id="paymentMethod"
+            >
+
+                <option value="">
+                    Escolha uma forma de pagamento
+                </option>
+
+                <option value="Pix">
+                    💠 Pix
+                </option>
+
+                <option value="Cartão">
+                    💳 Cartão
+                </option>
+
+                <option value="Dinheiro">
+                    💵 Dinheiro
+                </option>
+
+            </select>
+
+            <div class="total">
+
+                <span>
+                    Total:
+                </span>
+
+                <span>
+                    ${money(total)}
+                </span>
+
+            </div>
 
             <button
                 class="primary full"
@@ -2231,26 +2523,6 @@ function confirmOrder(){
         );
 
 
-    /* REDUZ ESTOQUE */
-
-    cart.forEach(item => {
-
-        const product =
-            getProduct(item.id);
-
-        if(product){
-
-            product.stock -= item.quantity;
-
-            if(product.stock < 0){
-                product.stock = 0;
-            }
-
-        }
-
-    });
-
-
     const order = {
 
         id:
@@ -2302,8 +2574,6 @@ function confirmOrder(){
 
     saveData();
 
-    renderProducts();
-
 
     openModal(
 
@@ -2313,42 +2583,32 @@ function confirmOrder(){
 
             <div class="empty">
 
-                <div
-                    style="
-                        font-size:60px;
-                        margin-bottom:15px;
-                    "
-                >
-                    🎉
-                </div>
-
                 <h3>
-                    Pedido realizado com sucesso!
+                    Pedido simulado com sucesso!
                 </h3>
 
-                <p>
+                <p style="margin-top:10px;">
                     Obrigado,
                     <strong>${name}</strong>!
                 </p>
 
-                <p>
-                    Pedido:
+                <p style="margin-top:8px;">
+                    Número do pedido:
                     <strong>#${order.id}</strong>
                 </p>
 
-                <p>
-                    Pagamento:
-                    <strong>${payment}</strong>
+                <p style="
+                    margin-top:8px;
+                    color:var(--muted);
+                ">
+                    Pagamento: ${payment}
                 </p>
 
                 <br>
 
                 <button
                     class="primary"
-                    onclick="
-                        closeModal();
-                        openOrders();
-                    "
+                    onclick="closeModal();openOrders();"
                 >
                     📦 Ver meus pedidos
                 </button>
@@ -2422,7 +2682,7 @@ function openFavorites(){
                     </h3>
 
                     <p>
-                        Clique no ❤️ dos produtos que gostar.
+                        Clique no ❤️ dos produtos que você gostar.
                     </p>
 
                 </div>
@@ -2446,7 +2706,7 @@ function openFavorites(){
             <div class="cart-item">
 
                 <img
-                    src="${product.image}"
+                    src="${product.images[0]}"
                     alt="${product.name}"
                 >
 
@@ -2465,9 +2725,8 @@ function openFavorites(){
                 <button
                     class="primary"
                     onclick="
-                        addToCart(${product.id})
+                        addToCart(${product.id});
                     "
-                    ${product.stock <= 0 ? "disabled" : ""}
                 >
                     🛒
                 </button>
@@ -2515,8 +2774,7 @@ function openAccount(){
                         color:var(--muted);
                         margin:10px 0 20px;
                     ">
-                        Seus dados ficam salvos apenas
-                        neste navegador.
+                        Seus dados ficam salvos apenas neste navegador.
                     </p>
 
                     <input
@@ -2558,11 +2816,9 @@ function openAccount(){
             <div class="account-box">
 
                 <div class="account-avatar">
-
                     ${user.name
                         .charAt(0)
                         .toUpperCase()}
-
                 </div>
 
                 <h2>
@@ -2642,6 +2898,7 @@ function createAccount(){
     user = {
 
         name:name,
+
         email:email
 
     };
@@ -2731,13 +2988,65 @@ function openOrders(){
                     Total: ${money(order.total)}
                 </strong>
 
-                <p>
-                    💳 ${order.payment || "Não informado"}
+                <p style="
+                    color:var(--muted);
+                    margin-top:6px;
+                ">
+                    💳 ${order.payment || "Pagamento simulado"}
                 </p>
 
                 <p class="order-status">
                     ✅ ${order.status || "Pedido realizado"}
                 </p>
+
+                <div class="order-items">
+
+                    <strong>
+                        Produtos:
+                    </strong>
+
+                    ${
+                        order.items.map(item=>{
+
+                            const product =
+                                getProduct(item.id);
+
+                            if(!product){
+                                return "";
+                            }
+
+                            return `
+
+                                <div class="order-product">
+
+                                    <img
+                                        src="${product.images[0]}"
+                                        alt="${product.name}"
+                                    >
+
+                                    <div>
+
+                                        <strong>
+                                            ${product.name}
+                                        </strong>
+
+                                        <div style="
+                                            color:var(--muted);
+                                            font-size:13px;
+                                        ">
+                                            ${item.quantity}x
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            `;
+
+                        }).join("")
+                    }
+
+                </div>
 
             </div>
 
@@ -2750,725 +3059,6 @@ function openOrders(){
         "📦 Meus pedidos",
         html
     );
-
-}
-
-
-/* =====================================================
-   ADMIN
-===================================================== */
-
-function openAdmin(){
-
-    openModal(
-
-        "⚙️ Painel administrativo",
-
-        `
-
-            <div class="dashboard">
-
-                <div class="stat">
-
-                    🛍️ Produtos
-
-                    <strong>
-                        ${products.length}
-                    </strong>
-
-                </div>
-
-                <div class="stat">
-
-                    📦 Pedidos
-
-                    <strong>
-                        ${orders.length}
-                    </strong>
-
-                </div>
-
-                <div class="stat">
-
-                    💰 Vendas simuladas
-
-                    <strong>
-                        ${money(
-                            orders.reduce(
-                                (sum,order) =>
-                                    sum + Number(order.total),
-                                0
-                            )
-                        )}
-                    </strong>
-
-                </div>
-
-                <div class="stat">
-
-                    📊 Itens no estoque
-
-                    <strong>
-                        ${
-                            products.reduce(
-                                (sum,product) =>
-                                    sum + Number(product.stock),
-                                0
-                            )
-                        }
-                    </strong>
-
-                </div>
-
-            </div>
-
-            <div class="admin-tabs">
-
-                <button
-                    class="admin-tab active"
-                    onclick="adminProducts()"
-                >
-                    📦 Produtos
-                </button>
-
-                <button
-                    class="admin-tab"
-                    onclick="adminOrders()"
-                >
-                    🛍️ Pedidos
-                </button>
-
-                <button
-                    class="admin-tab"
-                    onclick="adminAddProduct()"
-                >
-                    ➕ Adicionar
-                </button>
-
-            </div>
-
-            <div id="adminContent">
-
-                ${adminProductsHTML()}
-
-            </div>
-
-        `
-
-    );
-
-}
-
-
-function adminProductsHTML(){
-
-    if(products.length === 0){
-
-        return `
-
-            <div class="empty">
-
-                <h3>
-                    Nenhum produto.
-                </h3>
-
-            </div>
-
-        `;
-
-    }
-
-
-    return products.map(product => `
-
-        <div class="admin-product">
-
-            <img
-                src="${product.image}"
-                alt="${product.name}"
-            >
-
-            <div class="admin-product-info">
-
-                <strong>
-                    ${product.name}
-                </strong>
-
-                <p>
-                    ${money(product.price)}
-                </p>
-
-                <p>
-                    📦 Estoque: ${product.stock}
-                </p>
-
-            </div>
-
-            <div class="admin-actions">
-
-                <button
-                    class="outline"
-                    onclick="adminEditProduct(${product.id})"
-                >
-                    ✏️
-                </button>
-
-                <button
-                    class="danger"
-                    onclick="deleteProduct(${product.id})"
-                >
-                    🗑️
-                </button>
-
-            </div>
-
-        </div>
-
-    `).join("");
-
-}
-
-
-function adminProducts(){
-
-    const content =
-        document.getElementById(
-            "adminContent"
-        );
-
-    if(content){
-
-        content.innerHTML =
-            adminProductsHTML();
-
-    }
-
-}
-
-
-function adminOrders(){
-
-    const content =
-        document.getElementById(
-            "adminContent"
-        );
-
-    if(!content) return;
-
-
-    if(orders.length === 0){
-
-        content.innerHTML = `
-
-            <div class="empty">
-
-                <h3>
-                    Nenhum pedido realizado.
-                </h3>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    content.innerHTML =
-        orders.map(order => `
-
-            <div class="order-card">
-
-                <strong>
-                    #${order.id}
-                </strong>
-
-                <p class="order-date">
-                    ${order.date}
-                </p>
-
-                <p>
-                    💳 ${order.payment}
-                </p>
-
-                <strong>
-                    ${money(order.total)}
-                </strong>
-
-                <p class="order-status">
-                    ${order.status}
-                </p>
-
-            </div>
-
-        `).join("");
-
-}
-
-
-function adminAddProduct(){
-
-    const content =
-        document.getElementById(
-            "adminContent"
-        );
-
-    if(!content) return;
-
-
-    content.innerHTML = `
-
-        <h3 style="margin-bottom:15px">
-            ➕ Novo produto
-        </h3>
-
-        <input
-            class="input"
-            id="adminName"
-            placeholder="Nome do produto"
-        >
-
-        <select
-            class="select"
-            id="adminCategory"
-        >
-
-            <option>
-                Eletrônicos
-            </option>
-
-            <option>
-                Acessórios
-            </option>
-
-            <option>
-                Moda
-            </option>
-
-            <option>
-                Casa
-            </option>
-
-        </select>
-
-        <input
-            class="input"
-            id="adminPrice"
-            type="number"
-            step="0.01"
-            placeholder="Preço"
-        >
-
-        <input
-            class="input"
-            id="adminStock"
-            type="number"
-            placeholder="Estoque"
-        >
-
-        <input
-            class="input"
-            id="adminRating"
-            type="number"
-            step="0.1"
-            min="0"
-            max="5"
-            placeholder="Avaliação"
-        >
-
-        <input
-            class="input"
-            id="adminImage"
-            placeholder="URL da imagem"
-        >
-
-        <textarea
-            class="input"
-            id="adminDescription"
-            rows="4"
-            placeholder="Descrição"
-        ></textarea>
-
-        <button
-            class="primary full"
-            onclick="createProduct()"
-        >
-            💾 Salvar produto
-        </button>
-
-    `;
-
-}
-
-
-function createProduct(){
-
-    const name =
-        document.getElementById("adminName")
-        .value.trim();
-
-    const category =
-        document.getElementById("adminCategory")
-        .value;
-
-    const price =
-        Number(
-            document.getElementById("adminPrice")
-            .value
-        );
-
-    const stock =
-        Number(
-            document.getElementById("adminStock")
-            .value
-        );
-
-    const rating =
-        Number(
-            document.getElementById("adminRating")
-            .value
-        ) || 5;
-
-    const image =
-        document.getElementById("adminImage")
-        .value.trim();
-
-    const description =
-        document.getElementById("adminDescription")
-        .value.trim();
-
-
-    if(
-        !name ||
-        !price ||
-        stock < 0 ||
-        !image
-    ){
-
-        showToast(
-            "Preencha os dados corretamente."
-        );
-
-        return;
-
-    }
-
-
-    const newProduct = {
-
-        id:
-            Date.now(),
-
-        name:name,
-
-        category:category,
-
-        price:price,
-
-        stock:stock,
-
-        rating:rating,
-
-        description:
-            description ||
-            "Produto disponível na FlowShop.",
-
-        image:image
-
-    };
-
-
-    products.push(newProduct);
-
-    saveData();
-
-    renderProducts();
-
-    showToast(
-        "Produto adicionado! 🎉"
-    );
-
-    openAdmin();
-
-}
-
-
-function adminEditProduct(id){
-
-    const product =
-        getProduct(id);
-
-    if(!product) return;
-
-
-    const content =
-        document.getElementById(
-            "adminContent"
-        );
-
-    if(!content) return;
-
-
-    content.innerHTML = `
-
-        <h3 style="margin-bottom:15px">
-            ✏️ Editar produto
-        </h3>
-
-        <input
-            class="input"
-            id="editName"
-            value="${product.name}"
-            placeholder="Nome"
-        >
-
-        <select
-            class="select"
-            id="editCategory"
-        >
-
-            <option
-                ${product.category === "Eletrônicos" ? "selected" : ""}
-            >
-                Eletrônicos
-            </option>
-
-            <option
-                ${product.category === "Acessórios" ? "selected" : ""}
-            >
-                Acessórios
-            </option>
-
-            <option
-                ${product.category === "Moda" ? "selected" : ""}
-            >
-                Moda
-            </option>
-
-            <option
-                ${product.category === "Casa" ? "selected" : ""}
-            >
-                Casa
-            </option>
-
-        </select>
-
-        <input
-            class="input"
-            id="editPrice"
-            type="number"
-            step="0.01"
-            value="${product.price}"
-            placeholder="Preço"
-        >
-
-        <input
-            class="input"
-            id="editStock"
-            type="number"
-            value="${product.stock}"
-            placeholder="Estoque"
-        >
-
-        <input
-            class="input"
-            id="editRating"
-            type="number"
-            step="0.1"
-            min="0"
-            max="5"
-            value="${product.rating}"
-            placeholder="Avaliação"
-        >
-
-        <input
-            class="input"
-            id="editImage"
-            value="${product.image}"
-            placeholder="Imagem"
-        >
-
-        <textarea
-            class="input"
-            id="editDescription"
-            rows="4"
-            placeholder="Descrição"
-        >${product.description}</textarea>
-
-        <button
-            class="primary full"
-            onclick="saveEditedProduct(${product.id})"
-        >
-            💾 Salvar alterações
-        </button>
-
-        <br><br>
-
-        <button
-            class="outline full"
-            onclick="adminProducts()"
-        >
-            ← Voltar
-        </button>
-
-    `;
-
-}
-
-
-function saveEditedProduct(id){
-
-    const product =
-        getProduct(id);
-
-    if(!product) return;
-
-
-    product.name =
-        document
-        .getElementById("editName")
-        .value.trim();
-
-    product.category =
-        document
-        .getElementById("editCategory")
-        .value;
-
-    product.price =
-        Number(
-            document
-            .getElementById("editPrice")
-            .value
-        );
-
-    product.stock =
-        Number(
-            document
-            .getElementById("editStock")
-            .value
-        );
-
-    product.rating =
-        Number(
-            document
-            .getElementById("editRating")
-            .value
-        );
-
-    product.image =
-        document
-        .getElementById("editImage")
-        .value.trim();
-
-    product.description =
-        document
-        .getElementById("editDescription")
-        .value.trim();
-
-
-    saveData();
-
-    renderProducts();
-
-    showToast(
-        "Produto atualizado! ✅"
-    );
-
-    openAdmin();
-
-}
-
-
-function deleteProduct(id){
-
-    const product =
-        getProduct(id);
-
-    if(!product) return;
-
-
-    const confirmDelete =
-        confirm(
-            `Excluir "${product.name}"?`
-        );
-
-    if(!confirmDelete) return;
-
-
-    products =
-        products.filter(
-            product =>
-                product.id !== id
-        );
-
-
-    cart =
-        cart.filter(
-            item =>
-                item.id !== id
-        );
-
-
-    favorites =
-        favorites.filter(
-            favoriteId =>
-                favoriteId !== id
-        );
-
-
-    saveData();
-
-    renderProducts();
-
-    showToast(
-        "Produto excluído."
-    );
-
-    openAdmin();
-
-}
-
-
-/* =====================================================
-   MODAL
-===================================================== */
-
-function openModal(title,content){
-
-    document
-        .getElementById("modalTitle")
-        .textContent = title;
-
-    document
-        .getElementById("modalContent")
-        .innerHTML = content;
-
-    document
-        .getElementById("modalBg")
-        .classList.add("show");
-
-}
-
-
-function closeModal(){
-
-    document
-        .getElementById("modalBg")
-        .classList.remove("show");
-
-}
-
-
-function closeModalOutside(event){
-
-    if(
-        event.target.id === "modalBg"
-    ){
-
-        closeModal();
-
-    }
 
 }
 
@@ -3528,6 +3118,9 @@ function goProducts(){
    TOAST
 ===================================================== */
 
+let toastTimer;
+
+
 function showToast(message){
 
     const toast =
@@ -3550,6 +3143,24 @@ function showToast(message){
         },2500);
 
 }
+
+
+/* =====================================================
+   TECLADO
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Escape"){
+
+            closeModal();
+
+        }
+
+    }
+);
 
 
 /* =====================================================

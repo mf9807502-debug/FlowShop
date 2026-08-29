@@ -7,6 +7,7 @@
 <title>FlowShop V10.0 | Sua Loja Online</title>
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -25,9 +26,7 @@
     --success:#12b76a;
     --danger:#f04438;
     --warning:#f79009;
-    --info:#7c3aed;
     --shadow:0 10px 30px rgba(16,24,40,.10);
-    --shadow-hover:0 18px 40px rgba(16,24,40,.16);
 }
 
 body.dark{
@@ -50,13 +49,13 @@ body{
     transition:.3s;
 }
 
-/* ================= HEADER ================= */
+/* HEADER */
 
 header{
     background:var(--header);
     color:white;
     min-height:70px;
-    padding:10px 5%;
+    padding:12px 5%;
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -64,14 +63,12 @@ header{
     position:sticky;
     top:0;
     z-index:1000;
-    box-shadow:0 4px 18px rgba(0,0,0,.15);
 }
 
 .logo{
     font-size:24px;
     font-weight:bold;
     white-space:nowrap;
-    cursor:pointer;
 }
 
 .logo span{
@@ -81,7 +78,7 @@ header{
 nav{
     display:flex;
     align-items:center;
-    gap:22px;
+    gap:20px;
 }
 
 nav a{
@@ -90,7 +87,6 @@ nav a{
     font-weight:bold;
     cursor:pointer;
     font-size:14px;
-    transition:.2s;
 }
 
 nav a:hover{
@@ -112,13 +108,10 @@ nav a:hover{
     cursor:pointer;
     font-size:18px;
     position:relative;
-    transition:.2s;
-    padding:0;
 }
 
 .icon-btn:hover{
     transform:scale(1.06);
-    background:#26364f;
 }
 
 .badge{
@@ -136,65 +129,34 @@ nav a:hover{
     justify-content:center;
 }
 
-/* ================= HERO ================= */
+/* HERO */
 
 .hero{
     min-height:470px;
-    padding:80px 20px;
+    padding:70px 20px;
     text-align:center;
     color:white;
+
     background:
-        radial-gradient(circle at 15% 20%,rgba(255,255,255,.16),transparent 25%),
-        radial-gradient(circle at 85% 15%,rgba(255,255,255,.18),transparent 28%),
+        radial-gradient(circle at top right,rgba(255,255,255,.18),transparent 30%),
+        radial-gradient(circle at bottom left,rgba(255,255,255,.12),transparent 30%),
         linear-gradient(120deg,#1597ff,#2838c7);
+
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    position:relative;
-    overflow:hidden;
-}
-
-.hero:before,
-.hero:after{
-    content:"";
-    position:absolute;
-    border-radius:50%;
-    background:rgba(255,255,255,.07);
-}
-
-.hero:before{
-    width:300px;
-    height:300px;
-    left:-120px;
-    bottom:-150px;
-}
-
-.hero:after{
-    width:420px;
-    height:420px;
-    right:-180px;
-    bottom:-220px;
-}
-
-.hero-content{
-    position:relative;
-    z-index:2;
-    max-width:850px;
 }
 
 .hero h1{
     font-size:clamp(35px,6vw,62px);
     margin-bottom:15px;
-    animation:heroIn .7s ease;
 }
 
 .hero p{
-    max-width:700px;
-    margin:auto;
-    font-size:18px;
+    max-width:720px;
+    font-size:19px;
     line-height:1.6;
-    opacity:.95;
 }
 
 .hero-buttons{
@@ -205,35 +167,7 @@ nav a:hover{
     margin-top:30px;
 }
 
-.hero-badges{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-top:25px;
-}
-
-.hero-badge{
-    background:rgba(255,255,255,.14);
-    border:1px solid rgba(255,255,255,.2);
-    padding:8px 13px;
-    border-radius:30px;
-    font-size:13px;
-    backdrop-filter:blur(5px);
-}
-
-@keyframes heroIn{
-    from{
-        opacity:0;
-        transform:translateY(20px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-/* ================= BUTTONS ================= */
+/* BUTTONS */
 
 button{
     border:none;
@@ -249,7 +183,7 @@ button:active{
 }
 
 button:disabled{
-    opacity:.55;
+    opacity:.5;
     cursor:not-allowed;
 }
 
@@ -288,8 +222,8 @@ button:disabled{
     color:white;
 }
 
-.success{
-    background:var(--success);
+.warning{
+    background:var(--warning);
     color:white;
 }
 
@@ -297,7 +231,7 @@ button:disabled{
     width:100%;
 }
 
-/* ================= OFFER ================= */
+/* OFFER */
 
 .offer{
     margin:30px 5%;
@@ -310,66 +244,13 @@ button:disabled{
     align-items:center;
     gap:20px;
     box-shadow:var(--shadow);
-    position:relative;
-    overflow:hidden;
-}
-
-.offer:after{
-    content:"🔥";
-    position:absolute;
-    right:28%;
-    top:-25px;
-    font-size:100px;
-    opacity:.08;
 }
 
 .offer h2{
     margin-bottom:8px;
 }
 
-/* ================= BENEFITS ================= */
-
-.benefits{
-    padding:10px 5% 30px;
-}
-
-.benefits-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
-}
-
-.benefit{
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:15px;
-    padding:20px;
-    text-align:center;
-    box-shadow:var(--shadow);
-    transition:.2s;
-}
-
-.benefit:hover{
-    transform:translateY(-4px);
-}
-
-.benefit-icon{
-    font-size:30px;
-    margin-bottom:10px;
-}
-
-.benefit h3{
-    font-size:16px;
-    margin-bottom:6px;
-}
-
-.benefit p{
-    color:var(--muted);
-    font-size:13px;
-    line-height:1.5;
-}
-
-/* ================= SECTION ================= */
+/* SECTION */
 
 .section{
     padding:55px 5%;
@@ -387,40 +268,26 @@ button:disabled{
     margin-bottom:30px;
 }
 
-/* ================= TOOLS ================= */
+/* TOOLS */
 
 .tools{
-    max-width:1000px;
+    max-width:950px;
     margin:auto auto 35px;
-}
-
-.search-wrap{
-    position:relative;
 }
 
 .search{
     width:100%;
-    padding:16px 18px 16px 48px;
+    padding:15px 18px;
     border:1px solid var(--border);
     background:var(--card);
     color:var(--text);
     border-radius:12px;
     outline:none;
     font-size:16px;
-    transition:.2s;
 }
 
 .search:focus{
     border-color:var(--primary);
-    box-shadow:0 0 0 4px rgba(22,119,255,.10);
-}
-
-.search-icon{
-    position:absolute;
-    left:17px;
-    top:50%;
-    transform:translateY(-50%);
-    font-size:20px;
 }
 
 .categories{
@@ -445,14 +312,7 @@ button:disabled{
     color:white;
 }
 
-.results-info{
-    text-align:center;
-    color:var(--muted);
-    font-size:13px;
-    margin-top:15px;
-}
-
-/* ================= PRODUCTS ================= */
+/* PRODUCTS */
 
 .products{
     display:grid;
@@ -471,8 +331,7 @@ button:disabled{
 }
 
 .product:hover{
-    transform:translateY(-6px);
-    box-shadow:var(--shadow-hover);
+    transform:translateY(-5px);
 }
 
 .product-image-box{
@@ -490,7 +349,7 @@ button:disabled{
 }
 
 .product:hover img{
-    transform:scale(1.05);
+    transform:scale(1.04);
 }
 
 .stock{
@@ -505,11 +364,11 @@ button:disabled{
 }
 
 .stock.low{
-    background:rgba(247,144,9,.95);
+    background:#f79009;
 }
 
 .stock.out{
-    background:rgba(240,68,56,.95);
+    background:#f04438;
 }
 
 .favorite{
@@ -524,11 +383,6 @@ button:disabled{
     color:#777;
     font-size:18px;
     z-index:2;
-    box-shadow:0 4px 12px rgba(0,0,0,.12);
-}
-
-.favorite:hover{
-    transform:scale(1.08);
 }
 
 .favorite.active{
@@ -561,13 +415,6 @@ button:disabled{
     margin:12px 0;
 }
 
-.old-price{
-    color:var(--muted);
-    text-decoration:line-through;
-    font-size:13px;
-    margin-bottom:3px;
-}
-
 .product-actions{
     display:flex;
     gap:8px;
@@ -578,7 +425,7 @@ button:disabled{
     padding:10px;
 }
 
-/* ================= EMPTY ================= */
+/* EMPTY */
 
 .empty{
     text-align:center;
@@ -592,31 +439,7 @@ button:disabled{
     margin-bottom:8px;
 }
 
-/* ================= FEATURED ================= */
-
-.featured-box{
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:20px;
-    padding:25px;
-    box-shadow:var(--shadow);
-    margin-bottom:30px;
-}
-
-.featured-title{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:10px;
-    margin-bottom:20px;
-}
-
-.featured-title span{
-    color:var(--muted);
-    font-size:13px;
-}
-
-/* ================= FOOTER ================= */
+/* FOOTER */
 
 footer{
     background:var(--header);
@@ -631,16 +454,7 @@ footer p{
     margin-top:8px;
 }
 
-.footer-version{
-    display:inline-block;
-    margin-top:15px;
-    padding:6px 12px;
-    border-radius:20px;
-    background:#1e293b;
-    font-size:12px;
-}
-
-/* ================= MODAL ================= */
+/* MODAL */
 
 .modal-bg{
     position:fixed;
@@ -651,7 +465,6 @@ footer p{
     justify-content:center;
     padding:20px;
     z-index:2000;
-    backdrop-filter:blur(4px);
 }
 
 .modal-bg.show{
@@ -667,18 +480,6 @@ footer p{
     border-radius:18px;
     padding:25px;
     box-shadow:0 20px 60px rgba(0,0,0,.3);
-    animation:modalIn .2s ease;
-}
-
-@keyframes modalIn{
-    from{
-        opacity:0;
-        transform:translateY(15px) scale(.98);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0) scale(1);
-    }
 }
 
 .modal-header{
@@ -686,7 +487,6 @@ footer p{
     justify-content:space-between;
     align-items:center;
     margin-bottom:20px;
-    gap:15px;
 }
 
 .close{
@@ -696,7 +496,7 @@ footer p{
     padding:3px 8px;
 }
 
-/* ================= PRODUCT DETAIL ================= */
+/* DETAIL */
 
 .detail-image{
     width:100%;
@@ -734,21 +534,10 @@ footer p{
     flex:1;
 }
 
-.detail-description{
-    color:var(--muted);
-    line-height:1.6;
-    margin:15px 0;
-}
+/* INPUT */
 
-.detail-stars{
-    color:#f79009;
-    font-size:18px;
-    margin:8px 0;
-}
-
-/* ================= INPUT ================= */
-
-.input{
+.input,
+.select{
     width:100%;
     padding:13px;
     border-radius:9px;
@@ -759,7 +548,8 @@ footer p{
     outline:none;
 }
 
-.input:focus{
+.input:focus,
+.select:focus{
     border-color:var(--primary);
 }
 
@@ -770,7 +560,7 @@ footer p{
     margin-bottom:6px;
 }
 
-/* ================= CART ================= */
+/* CART */
 
 .cart-item{
     display:flex;
@@ -811,6 +601,19 @@ footer p{
     padding:5px;
 }
 
+.summary{
+    background:var(--bg);
+    padding:15px;
+    border-radius:12px;
+    margin-top:15px;
+}
+
+.summary-line{
+    display:flex;
+    justify-content:space-between;
+    margin:8px 0;
+}
+
 .total{
     display:flex;
     justify-content:space-between;
@@ -819,18 +622,7 @@ footer p{
     margin:20px 0;
 }
 
-.summary-line{
-    display:flex;
-    justify-content:space-between;
-    margin:8px 0;
-    color:var(--muted);
-}
-
-.summary-line.discount{
-    color:var(--success);
-}
-
-/* ================= ACCOUNT ================= */
+/* ACCOUNT */
 
 .account-box{
     text-align:center;
@@ -849,7 +641,7 @@ footer p{
     font-size:32px;
 }
 
-/* ================= ORDER ================= */
+/* ORDERS */
 
 .order-card{
     border:1px solid var(--border);
@@ -869,13 +661,77 @@ footer p{
     font-weight:bold;
 }
 
-.order-items{
-    color:var(--muted);
-    font-size:13px;
-    margin-top:8px;
+/* ADMIN */
+
+.admin-tabs{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
 }
 
-/* ================= TOAST ================= */
+.admin-tab{
+    background:var(--bg);
+    color:var(--text);
+}
+
+.admin-tab.active{
+    background:var(--primary);
+    color:white;
+}
+
+.admin-product{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    padding:12px 0;
+    border-bottom:1px solid var(--border);
+}
+
+.admin-product img{
+    width:65px;
+    height:65px;
+    border-radius:9px;
+    object-fit:cover;
+}
+
+.admin-product-info{
+    flex:1;
+}
+
+.admin-actions{
+    display:flex;
+    gap:5px;
+    flex-wrap:wrap;
+}
+
+.admin-actions button{
+    padding:8px 10px;
+}
+
+/* DASHBOARD */
+
+.dashboard{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:var(--bg);
+    padding:18px;
+    border-radius:12px;
+}
+
+.stat strong{
+    display:block;
+    font-size:25px;
+    color:var(--primary);
+    margin-top:5px;
+}
+
+/* TOAST */
 
 .toast{
     position:fixed;
@@ -890,7 +746,6 @@ footer p{
     transition:.3s;
     z-index:5000;
     box-shadow:0 10px 30px rgba(0,0,0,.25);
-    max-width:calc(100% - 40px);
 }
 
 .toast.show{
@@ -898,39 +753,7 @@ footer p{
     opacity:1;
 }
 
-/* ================= BACK TO TOP ================= */
-
-.back-top{
-    position:fixed;
-    right:20px;
-    bottom:80px;
-    width:43px;
-    height:43px;
-    padding:0;
-    border-radius:50%;
-    background:var(--primary);
-    color:white;
-    display:none;
-    z-index:1500;
-    box-shadow:var(--shadow);
-}
-
-.back-top.show{
-    display:block;
-}
-
-/* ================= RESPONSIVE ================= */
-
-@media(max-width:850px){
-
-    .benefits-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    nav{
-        gap:14px;
-    }
-}
+/* RESPONSIVE */
 
 @media(max-width:750px){
 
@@ -943,8 +766,9 @@ footer p{
         order:3;
         width:100%;
         justify-content:center;
-        gap:14px;
+        gap:12px;
         padding-bottom:5px;
+        flex-wrap:wrap;
     }
 
     .hero{
@@ -958,6 +782,10 @@ footer p{
 
     .products{
         grid-template-columns:repeat(2,1fr);
+    }
+
+    .admin-product{
+        align-items:flex-start;
     }
 
 }
@@ -989,46 +817,33 @@ footer p{
         height:230px;
     }
 
-    .benefits-grid{
-        grid-template-columns:1fr;
-    }
-
-    .section{
-        padding:45px 4%;
-    }
-
-    .hero h1{
-        font-size:38px;
-    }
-
     .detail-actions{
         flex-direction:column;
     }
 
+    .dashboard{
+        grid-template-columns:1fr;
+    }
+
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- ================= HEADER ================= -->
-
 <header>
 
-    <div class="logo" onclick="goHome()">
+    <div class="logo">
         🛍️ Flow<span>Shop</span>
     </div>
 
     <nav>
-
         <a onclick="goHome()">Início</a>
-
         <a onclick="goProducts()">Produtos</a>
-
         <a onclick="openAccount()">Minha conta</a>
-
         <a onclick="openOrders()">Pedidos</a>
-
+        <a onclick="openAdmin()">⚙️ Admin</a>
     </nav>
 
     <div class="header-buttons">
@@ -1037,7 +852,6 @@ footer p{
             class="icon-btn"
             onclick="toggleTheme()"
             title="Tema"
-            id="themeButton"
         >
             🌙
         </button>
@@ -1048,13 +862,6 @@ footer p{
             title="Favoritos"
         >
             ❤️
-            <span
-                class="badge"
-                id="favoriteCount"
-                style="display:none"
-            >
-                0
-            </span>
         </button>
 
         <button
@@ -1063,12 +870,7 @@ footer p{
             title="Carrinho"
         >
             🛒
-            <span
-                class="badge"
-                id="cartCount"
-            >
-                0
-            </span>
+            <span class="badge" id="cartCount">0</span>
         </button>
 
     </div>
@@ -1076,69 +878,41 @@ footer p{
 </header>
 
 
-<!-- ================= HERO ================= -->
-
 <section class="hero" id="home">
 
-    <div class="hero-content">
+    <h1>Bem-vindo à FlowShop 🚀</h1>
 
-        <h1>
-            Bem-vindo à FlowShop 🚀
-        </h1>
+    <p>
+        Produtos incríveis, preços especiais e uma
+        experiência simples, rápida e moderna.
+    </p>
 
-        <p>
-            Produtos incríveis, preços especiais e uma
-            experiência simples, rápida e moderna.
-        </p>
+    <div class="hero-buttons">
 
-        <div class="hero-buttons">
+        <button
+            class="secondary"
+            onclick="goProducts()"
+        >
+            🛍️ Ver produtos
+        </button>
 
-            <button
-                class="secondary"
-                onclick="goProducts()"
-            >
-                🛍️ Ver produtos
-            </button>
-
-            <button
-                class="secondary"
-                onclick="openFavorites()"
-            >
-                ❤️ Favoritos
-            </button>
-
-        </div>
-
-        <div class="hero-badges">
-
-            <span class="hero-badge">
-                ⚡ Experiência rápida
-            </span>
-
-            <span class="hero-badge">
-                🔒 Compra simulada
-            </span>
-
-            <span class="hero-badge">
-                📱 100% responsivo
-            </span>
-
-        </div>
+        <button
+            class="secondary"
+            onclick="openFavorites()"
+        >
+            ❤️ Favoritos
+        </button>
 
     </div>
 
 </section>
 
 
-<!-- ================= OFFER ================= -->
-
 <div class="offer">
 
     <div>
 
-        <h2>
-            🔥 Oferta especial
-        </h2>
+        <h2>🔥 Oferta especial</h2>
 
         <p>
             Use o cupom
@@ -1158,83 +932,6 @@ footer p{
 </div>
 
 
-<!-- ================= BENEFITS ================= -->
-
-<section class="benefits">
-
-    <div class="benefits-grid">
-
-        <div class="benefit">
-
-            <div class="benefit-icon">
-                🚀
-            </div>
-
-            <h3>
-                Rápido
-            </h3>
-
-            <p>
-                Navegação simples e rápida.
-            </p>
-
-        </div>
-
-        <div class="benefit">
-
-            <div class="benefit-icon">
-                🛡️
-            </div>
-
-            <h3>
-                Seguro
-            </h3>
-
-            <p>
-                Seus dados ficam neste navegador.
-            </p>
-
-        </div>
-
-        <div class="benefit">
-
-            <div class="benefit-icon">
-                💰
-            </div>
-
-            <h3>
-                Ofertas
-            </h3>
-
-            <p>
-                Encontre preços especiais.
-            </p>
-
-        </div>
-
-        <div class="benefit">
-
-            <div class="benefit-icon">
-                📱
-            </div>
-
-            <h3>
-                Responsivo
-            </h3>
-
-            <p>
-                Funciona no celular e computador.
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ================= PRODUCTS ================= -->
-
 <section
     class="section"
     id="productsSection"
@@ -1250,21 +947,13 @@ footer p{
 
     <div class="tools">
 
-        <div class="search-wrap">
-
-            <span class="search-icon">
-                🔎
-            </span>
-
-            <input
-                type="text"
-                class="search"
-                id="search"
-                placeholder="Procurar produto..."
-                oninput="renderProducts()"
-            >
-
-        </div>
+        <input
+            type="text"
+            class="search"
+            id="search"
+            placeholder="🔎 Procurar produto..."
+            oninput="renderProducts()"
+        >
 
         <div class="categories">
 
@@ -1296,12 +985,14 @@ footer p{
                 👟 Moda
             </button>
 
-        </div>
+            <button
+                class="category"
+                onclick="setCategory('Casa',this)"
+            >
+                🏠 Casa
+            </button>
 
-        <div
-            class="results-info"
-            id="resultsInfo"
-        ></div>
+        </div>
 
     </div>
 
@@ -1313,13 +1004,9 @@ footer p{
 </section>
 
 
-<!-- ================= FOOTER ================= -->
-
 <footer>
 
-    <h2>
-        🛍️ FlowShop
-    </h2>
+    <h2>🛍️ FlowShop</h2>
 
     <p>
         Sua loja online — Projeto desenvolvido para aprendizado.
@@ -1329,26 +1016,8 @@ footer p{
         FlowShop V10.0 © 2026
     </p>
 
-    <span class="footer-version">
-        Versão 10.0
-    </span>
-
 </footer>
 
-
-<!-- ================= BACK TOP ================= -->
-
-<button
-    class="back-top"
-    id="backTop"
-    onclick="goHome()"
-    title="Voltar ao topo"
->
-    ↑
-</button>
-
-
-<!-- ================= MODAL ================= -->
 
 <div
     class="modal-bg"
@@ -1356,10 +1025,7 @@ footer p{
     onclick="closeModalOutside(event)"
 >
 
-    <div
-        class="modal"
-        id="modal"
-    >
+    <div class="modal">
 
         <div class="modal-header">
 
@@ -1392,17 +1058,16 @@ footer p{
 <script>
 
 /* =====================================================
-   PRODUTOS
+   PRODUTOS PADRÃO
 ===================================================== */
 
-const products = [
+const defaultProducts = [
 
     {
         id:1,
         name:"Fone Bluetooth",
         category:"Acessórios",
         price:89.90,
-        oldPrice:109.90,
         stock:12,
         rating:4.8,
         description:
@@ -1416,7 +1081,6 @@ const products = [
         name:"Relógio Digital",
         category:"Acessórios",
         price:129.90,
-        oldPrice:159.90,
         stock:8,
         rating:4.6,
         description:
@@ -1430,7 +1094,6 @@ const products = [
         name:"Câmera Digital",
         category:"Eletrônicos",
         price:499.90,
-        oldPrice:559.90,
         stock:5,
         rating:4.9,
         description:
@@ -1444,7 +1107,6 @@ const products = [
         name:"Tênis Esportivo",
         category:"Moda",
         price:199.90,
-        oldPrice:229.90,
         stock:15,
         rating:4.7,
         description:
@@ -1458,7 +1120,6 @@ const products = [
         name:"Notebook",
         category:"Eletrônicos",
         price:2499.90,
-        oldPrice:2799.90,
         stock:4,
         rating:4.9,
         description:
@@ -1472,7 +1133,6 @@ const products = [
         name:"Smartphone",
         category:"Eletrônicos",
         price:1499.90,
-        oldPrice:1699.90,
         stock:7,
         rating:4.8,
         description:
@@ -1486,7 +1146,6 @@ const products = [
         name:"Mochila",
         category:"Acessórios",
         price:119.90,
-        oldPrice:139.90,
         stock:10,
         rating:4.5,
         description:
@@ -1500,13 +1159,38 @@ const products = [
         name:"Óculos de Sol",
         category:"Moda",
         price:159.90,
-        oldPrice:189.90,
         stock:9,
         rating:4.7,
         description:
         "Óculos de sol com visual moderno para completar seu estilo.",
         image:
         "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=700&q=80"
+    },
+
+    {
+        id:9,
+        name:"Luminária LED",
+        category:"Casa",
+        price:79.90,
+        stock:14,
+        rating:4.6,
+        description:
+        "Luminária LED moderna para deixar seu ambiente mais confortável.",
+        image:
+        "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=700&q=80"
+    },
+
+    {
+        id:10,
+        name:"Caixa de Som",
+        category:"Eletrônicos",
+        price:179.90,
+        stock:11,
+        rating:4.8,
+        description:
+        "Caixa de som portátil para ouvir suas músicas favoritas.",
+        image:
+        "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=700&q=80"
     }
 
 ];
@@ -1515,6 +1199,11 @@ const products = [
 /* =====================================================
    ESTADO
 ===================================================== */
+
+let products =
+    JSON.parse(
+        localStorage.getItem("flowshop_products")
+    ) || defaultProducts;
 
 let cart =
     JSON.parse(
@@ -1541,6 +1230,8 @@ let coupon =
 
 let currentCategory = "Todos";
 
+let toastTimer;
+
 
 /* =====================================================
    UTILIDADES
@@ -1548,7 +1239,7 @@ let currentCategory = "Todos";
 
 function money(value){
 
-    return value.toLocaleString(
+    return Number(value).toLocaleString(
         "pt-BR",
         {
             style:"currency",
@@ -1560,6 +1251,11 @@ function money(value){
 
 
 function saveData(){
+
+    localStorage.setItem(
+        "flowshop_products",
+        JSON.stringify(products)
+    );
 
     localStorage.setItem(
         "flowshop_cart",
@@ -1586,7 +1282,6 @@ function saveData(){
     }
 
     updateCartCount();
-    updateFavoriteCount();
 
 }
 
@@ -1594,53 +1289,14 @@ function saveData(){
 function getProduct(id){
 
     return products.find(
-        product => product.id === id
+        product => product.id === Number(id)
     );
 
 }
 
 
 /* =====================================================
-   CONTADORES
-===================================================== */
-
-function updateCartCount(){
-
-    const count =
-        cart.reduce(
-            (total,item) =>
-                total + item.quantity,
-            0
-        );
-
-    document
-        .getElementById("cartCount")
-        .textContent = count;
-
-}
-
-
-function updateFavoriteCount(){
-
-    const badge =
-        document.getElementById("favoriteCount");
-
-    if(favorites.length === 0){
-
-        badge.style.display = "none";
-
-    }else{
-
-        badge.style.display = "flex";
-        badge.textContent = favorites.length;
-
-    }
-
-}
-
-
-/* =====================================================
-   PRODUTOS
+   RENDER PRODUTOS
 ===================================================== */
 
 function renderProducts(){
@@ -1648,13 +1304,12 @@ function renderProducts(){
     const container =
         document.getElementById("products");
 
-    const searchInput =
-        document.getElementById("search");
-
     const search =
-        searchInput
-        ? searchInput.value.toLowerCase().trim()
-        : "";
+        document
+        .getElementById("search")
+        .value
+        .toLowerCase()
+        .trim();
 
     const filtered =
         products.filter(product => {
@@ -1666,25 +1321,11 @@ function renderProducts(){
             const searchOk =
                 product.name
                 .toLowerCase()
-                .includes(search) ||
-                product.category
-                .toLowerCase()
                 .includes(search);
 
             return categoryOk && searchOk;
 
         });
-
-
-    const resultsInfo =
-        document.getElementById("resultsInfo");
-
-    if(resultsInfo){
-
-        resultsInfo.textContent =
-            `${filtered.length} produto${filtered.length !== 1 ? "s" : ""} encontrado${filtered.length !== 1 ? "s" : ""}`;
-
-    }
 
 
     if(filtered.length === 0){
@@ -1700,15 +1341,6 @@ function renderProducts(){
                 <p>
                     Tente outra busca ou categoria.
                 </p>
-
-                <br>
-
-                <button
-                    class="outline"
-                    onclick="clearFilters()"
-                >
-                    Limpar filtros
-                </button>
 
             </div>
 
@@ -1731,7 +1363,7 @@ function renderProducts(){
 
                 stockClass = "out";
 
-            }else if(product.stock <= 5){
+            }else if(product.stock <= 3){
 
                 stockClass = "low";
 
@@ -1745,7 +1377,6 @@ function renderProducts(){
                     <button
                         class="favorite ${isFavorite ? "active" : ""}"
                         onclick="toggleFavorite(${product.id})"
-                        title="Favoritar"
                     >
                         ${isFavorite ? "❤️" : "♡"}
                     </button>
@@ -1764,13 +1395,11 @@ function renderProducts(){
                         >
 
                         <span class="stock ${stockClass}">
-
                             ${
-                                product.stock <= 0
-                                ? "❌ Sem estoque"
-                                : `📦 ${product.stock} disponíveis`
+                                product.stock > 0
+                                ? `📦 ${product.stock} disponíveis`
+                                : "❌ Sem estoque"
                             }
-
                         </span>
 
                     </div>
@@ -1788,16 +1417,6 @@ function renderProducts(){
                         <div class="rating">
                             ⭐ ${product.rating}
                         </div>
-
-                        ${
-                            product.oldPrice
-                            ? `
-                                <div class="old-price">
-                                    ${money(product.oldPrice)}
-                                </div>
-                              `
-                            : ""
-                        }
 
                         <div class="price">
                             ${money(product.price)}
@@ -1833,33 +1452,6 @@ function renderProducts(){
 }
 
 
-function clearFilters(){
-
-    currentCategory = "Todos";
-
-    const search =
-        document.getElementById("search");
-
-    if(search){
-        search.value = "";
-    }
-
-    document
-        .querySelectorAll(".category")
-        .forEach((btn,index) => {
-
-            btn.classList.toggle(
-                "active",
-                index === 0
-            );
-
-        });
-
-    renderProducts();
-
-}
-
-
 function setCategory(category,button){
 
     currentCategory = category;
@@ -1878,7 +1470,7 @@ function setCategory(category,button){
 
 
 /* =====================================================
-   DETALHES DO PRODUTO
+   DETALHE DO PRODUTO
 ===================================================== */
 
 function openProduct(id){
@@ -1889,15 +1481,6 @@ function openProduct(id){
 
     const isFavorite =
         favorites.includes(product.id);
-
-    const stars =
-        "★".repeat(
-            Math.round(product.rating)
-        ) +
-        "☆".repeat(
-            5 - Math.round(product.rating)
-        );
-
 
     openModal(
 
@@ -1911,39 +1494,25 @@ function openProduct(id){
                 alt="${product.name}"
             >
 
-            <h2>
-                ${product.name}
-            </h2>
+            <h2>${product.name}</h2>
 
             <div class="detail-category">
                 🏷️ Categoria: ${product.category}
             </div>
 
-            <div class="detail-stars">
-                ${stars}
-                <span style="
-                    color:var(--muted);
-                    font-size:14px;
-                ">
-                    ${product.rating} / 5.0
-                </span>
+            <div class="rating">
+                ⭐ ${product.rating} / 5.0
             </div>
-
-            ${
-                product.oldPrice
-                ? `
-                    <div class="old-price">
-                        ${money(product.oldPrice)}
-                    </div>
-                  `
-                : ""
-            }
 
             <div class="detail-price">
                 ${money(product.price)}
             </div>
 
-            <p class="detail-description">
+            <p style="
+                color:var(--muted);
+                line-height:1.6;
+                margin-bottom:15px;
+            ">
                 ${product.description}
             </p>
 
@@ -1961,7 +1530,7 @@ function openProduct(id){
                     class="outline"
                     onclick="
                         toggleFavorite(${product.id});
-                        openProduct(${product.id})
+                        openProduct(${product.id});
                     "
                 >
                     ${isFavorite ? "❤️ Favoritado" : "♡ Favoritar"}
@@ -1971,11 +1540,11 @@ function openProduct(id){
                     class="primary"
                     onclick="
                         addToCart(${product.id});
-                        closeModal()
+                        closeModal();
                     "
                     ${product.stock <= 0 ? "disabled" : ""}
                 >
-                    🛒 Adicionar ao carrinho
+                    🛒 Adicionar
                 </button>
 
             </div>
@@ -1999,9 +1568,7 @@ function addToCart(id){
 
     if(product.stock <= 0){
 
-        showToast(
-            "Produto sem estoque."
-        );
+        showToast("Produto sem estoque.");
 
         return;
 
@@ -2017,7 +1584,7 @@ function addToCart(id){
         if(existing.quantity >= product.stock){
 
             showToast(
-                "Quantidade máxima disponível atingida."
+                "Limite de estoque atingido."
             );
 
             return;
@@ -2041,6 +1608,22 @@ function addToCart(id){
     showToast(
         `${product.name} foi adicionado ao carrinho! 🛒`
     );
+
+}
+
+
+function updateCartCount(){
+
+    const count =
+        cart.reduce(
+            (total,item) =>
+                total + item.quantity,
+            0
+        );
+
+    document
+        .getElementById("cartCount")
+        .textContent = count;
 
 }
 
@@ -2122,65 +1705,15 @@ function removeFromCart(id){
 
     openCart();
 
-    showToast(
-        "Produto removido do carrinho."
-    );
-
 }
 
-
-/* =====================================================
-   MODAL
-===================================================== */
-
-function openModal(title,content){
-
-    document
-        .getElementById("modalTitle")
-        .textContent = title;
-
-    document
-        .getElementById("modalContent")
-        .innerHTML = content;
-
-    document
-        .getElementById("modalBg")
-        .classList.add("show");
-
-}
-
-
-function closeModal(){
-
-    document
-        .getElementById("modalBg")
-        .classList.remove("show");
-
-}
-
-
-function closeModalOutside(event){
-
-    if(
-        event.target.id === "modalBg"
-    ){
-
-        closeModal();
-
-    }
-
-}
-
-
-/* =====================================================
-   ABRIR CARRINHO
-===================================================== */
 
 function openCart(){
 
     if(cart.length === 0){
 
         openModal(
+
             "🛒 Meu Carrinho",
 
             `
@@ -2199,7 +1732,10 @@ function openCart(){
 
                     <button
                         class="primary"
-                        onclick="closeModal();goProducts();"
+                        onclick="
+                            closeModal();
+                            goProducts();
+                        "
                     >
                         Ver produtos
                     </button>
@@ -2247,7 +1783,12 @@ function openCart(){
                     <div class="qty">
 
                         <button
-                            onclick="changeQuantity(${product.id},-1)"
+                            onclick="
+                                changeQuantity(
+                                    ${product.id},
+                                    -1
+                                )
+                            "
                         >
                             −
                         </button>
@@ -2257,7 +1798,12 @@ function openCart(){
                         </span>
 
                         <button
-                            onclick="changeQuantity(${product.id},1)"
+                            onclick="
+                                changeQuantity(
+                                    ${product.id},
+                                    1
+                                )
+                            "
                         >
                             +
                         </button>
@@ -2268,7 +1814,9 @@ function openCart(){
 
                 <button
                     class="remove"
-                    onclick="removeFromCart(${product.id})"
+                    onclick="
+                        removeFromCart(${product.id})
+                    "
                 >
                     🗑️
                 </button>
@@ -2280,8 +1828,7 @@ function openCart(){
     });
 
 
-    const subtotal =
-        cartTotal();
+    const subtotal = cartTotal();
 
     const discount =
         coupon === "FLOW10"
@@ -2300,54 +1847,59 @@ function openCart(){
 
             ${html}
 
-            <div style="
-                margin-top:18px;
-                padding-top:12px;
-                border-top:1px solid var(--border);
-            ">
+            <div class="summary">
 
                 <div class="summary-line">
-                    <span>Subtotal</span>
-                    <strong>${money(subtotal)}</strong>
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong>
+                        ${money(subtotal)}
+                    </strong>
+
                 </div>
 
                 ${
                     discount > 0
+
                     ? `
-                        <div class="summary-line discount">
-                            <span>Desconto</span>
-                            <strong>- ${money(discount)}</strong>
+
+                        <div
+                            class="summary-line"
+                            style="color:var(--success)"
+                        >
+
+                            <span>
+                                Desconto
+                            </span>
+
+                            <strong>
+                                - ${money(discount)}
+                            </strong>
+
                         </div>
-                      `
+
+                    `
                     : ""
                 }
 
-                <div class="total">
+                <div class="summary-line">
 
                     <span>
-                        Total:
+                        Total
                     </span>
 
-                    <span>
+                    <strong>
                         ${money(total)}
-                    </span>
+                    </strong>
 
                 </div>
 
             </div>
 
-            ${
-                discount > 0
-                ? `
-                    <p style="
-                        color:var(--success);
-                        margin-bottom:10px;
-                    ">
-                        🎉 Cupom FLOW10 aplicado!
-                    </p>
-                  `
-                : ""
-            }
+            <br>
 
             <input
                 class="input"
@@ -2369,7 +1921,7 @@ function openCart(){
                 class="primary full"
                 onclick="openCheckout()"
             >
-                📦 Finalizar compra
+                💳 Finalizar compra
             </button>
 
         `
@@ -2445,8 +1997,7 @@ function openCheckout(){
     }
 
 
-    const subtotal =
-        cartTotal();
+    const subtotal = cartTotal();
 
     const discount =
         coupon === "FLOW10"
@@ -2459,7 +2010,7 @@ function openCheckout(){
 
     openModal(
 
-        "📦 Finalizar pedido",
+        "💳 Finalizar pedido",
 
         `
 
@@ -2515,42 +2066,90 @@ function openCheckout(){
 
             </div>
 
-            <div style="
-                background:var(--bg);
-                padding:15px;
-                border-radius:12px;
-                margin:10px 0 20px;
-            ">
+            <div class="form-group">
+
+                <label>
+                    Forma de pagamento
+                </label>
+
+                <select
+                    class="select"
+                    id="paymentMethod"
+                >
+
+                    <option value="">
+                        Selecione
+                    </option>
+
+                    <option value="Pix">
+                        🟢 Pix
+                    </option>
+
+                    <option value="Cartão">
+                        💳 Cartão
+                    </option>
+
+                    <option value="Dinheiro">
+                        💵 Dinheiro
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="summary">
 
                 <div class="summary-line">
-                    <span>Subtotal</span>
-                    <strong>${money(subtotal)}</strong>
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong>
+                        ${money(subtotal)}
+                    </strong>
+
                 </div>
 
                 ${
                     discount > 0
+
                     ? `
-                        <div class="summary-line discount">
-                            <span>Desconto FLOW10</span>
-                            <strong>- ${money(discount)}</strong>
+
+                        <div
+                            class="summary-line"
+                            style="color:var(--success)"
+                        >
+
+                            <span>
+                                Desconto
+                            </span>
+
+                            <strong>
+                                - ${money(discount)}
+                            </strong>
+
                         </div>
-                      `
+
+                    `
                     : ""
                 }
 
-                <div class="total" style="margin-bottom:0">
+                <div class="summary-line">
 
-                    <span>
-                        Total:
-                    </span>
+                    <strong>
+                        Total
+                    </strong>
 
-                    <span>
+                    <strong>
                         ${money(total)}
-                    </span>
+                    </strong>
 
                 </div>
 
             </div>
+
+            <br>
 
             <button
                 class="primary full"
@@ -2590,8 +2189,18 @@ function confirmOrder(){
         .value
         .trim();
 
+    const payment =
+        document
+        .getElementById("paymentMethod")
+        .value;
 
-    if(!name || !email || !address){
+
+    if(
+        !name ||
+        !email ||
+        !address ||
+        !payment
+    ){
 
         showToast(
             "Preencha todos os campos."
@@ -2613,16 +2222,33 @@ function confirmOrder(){
     }
 
 
-    const subtotal =
-        cartTotal();
-
-    const discount =
-        coupon === "FLOW10"
-        ? subtotal * .10
-        : 0;
-
     const total =
-        subtotal - discount;
+        cartTotal() *
+        (
+            coupon === "FLOW10"
+            ? .90
+            : 1
+        );
+
+
+    /* REDUZ ESTOQUE */
+
+    cart.forEach(item => {
+
+        const product =
+            getProduct(item.id);
+
+        if(product){
+
+            product.stock -= item.quantity;
+
+            if(product.stock < 0){
+                product.stock = 0;
+            }
+
+        }
+
+    });
 
 
     const order = {
@@ -2637,11 +2263,13 @@ function confirmOrder(){
             new Date()
             .toLocaleString("pt-BR"),
 
-        subtotal:subtotal,
-
-        discount:discount,
-
         total:total,
+
+        payment:payment,
+
+        address:address,
+
+        status:"Pedido realizado",
 
         items:[
             ...cart
@@ -2674,6 +2302,8 @@ function confirmOrder(){
 
     saveData();
 
+    renderProducts();
+
 
     openModal(
 
@@ -2683,46 +2313,44 @@ function confirmOrder(){
 
             <div class="empty">
 
-                <div style="
-                    font-size:55px;
-                    margin-bottom:15px;
-                ">
+                <div
+                    style="
+                        font-size:60px;
+                        margin-bottom:15px;
+                    "
+                >
                     🎉
                 </div>
 
                 <h3>
-                    Pedido simulado com sucesso!
+                    Pedido realizado com sucesso!
                 </h3>
 
-                <p style="
-                    margin-top:10px;
-                ">
+                <p>
                     Obrigado,
                     <strong>${name}</strong>!
                 </p>
 
-                <p style="
-                    margin-top:8px;
-                ">
-                    Número do pedido:
+                <p>
+                    Pedido:
                     <strong>#${order.id}</strong>
                 </p>
 
-                <p style="
-                    margin-top:8px;
-                    color:var(--muted);
-                ">
-                    Total:
-                    <strong>${money(total)}</strong>
+                <p>
+                    Pagamento:
+                    <strong>${payment}</strong>
                 </p>
 
                 <br>
 
                 <button
                     class="primary"
-                    onclick="closeModal();openOrders();"
+                    onclick="
+                        closeModal();
+                        openOrders();
+                    "
                 >
-                    Ver meus pedidos
+                    📦 Ver meus pedidos
                 </button>
 
             </div>
@@ -2794,7 +2422,7 @@ function openFavorites(){
                     </h3>
 
                     <p>
-                        Clique no ❤️ dos produtos que você gostar.
+                        Clique no ❤️ dos produtos que gostar.
                     </p>
 
                 </div>
@@ -2836,7 +2464,10 @@ function openFavorites(){
 
                 <button
                     class="primary"
-                    onclick="addToCart(${product.id})"
+                    onclick="
+                        addToCart(${product.id})
+                    "
+                    ${product.stock <= 0 ? "disabled" : ""}
                 >
                     🛒
                 </button>
@@ -2884,7 +2515,8 @@ function openAccount(){
                         color:var(--muted);
                         margin:10px 0 20px;
                     ">
-                        Seus dados ficam salvos apenas neste navegador.
+                        Seus dados ficam salvos apenas
+                        neste navegador.
                     </p>
 
                     <input
@@ -2926,9 +2558,11 @@ function openAccount(){
             <div class="account-box">
 
                 <div class="account-avatar">
+
                     ${user.name
                         .charAt(0)
                         .toUpperCase()}
+
                 </div>
 
                 <h2>
@@ -3008,7 +2642,6 @@ function createAccount(){
     user = {
 
         name:name,
-
         email:email
 
     };
@@ -3066,15 +2699,6 @@ function openOrders(){
                         Seus pedidos aparecerão aqui.
                     </p>
 
-                    <br>
-
-                    <button
-                        class="primary"
-                        onclick="closeModal();goProducts();"
-                    >
-                        Comprar agora
-                    </button>
-
                 </div>
 
             `
@@ -3091,16 +2715,6 @@ function openOrders(){
 
     orders.forEach(order => {
 
-        const itemCount =
-            order.items
-            ? order.items.reduce(
-                (sum,item) =>
-                    sum + item.quantity,
-                0
-              )
-            : 0;
-
-
         html += `
 
             <div class="order-card">
@@ -3113,28 +2727,16 @@ function openOrders(){
                     ${order.date}
                 </p>
 
-                <div class="summary-line">
-
-                    <span>
-                        Itens
-                    </span>
-
-                    <strong>
-                        ${itemCount}
-                    </strong>
-
-                </div>
-
                 <strong>
                     Total: ${money(order.total)}
                 </strong>
 
-                <p class="order-status">
-                    ✅ Pedido realizado
+                <p>
+                    💳 ${order.payment || "Não informado"}
                 </p>
 
-                <p class="order-items">
-                    Obrigado por comprar na FlowShop.
+                <p class="order-status">
+                    ✅ ${order.status || "Pedido realizado"}
                 </p>
 
             </div>
@@ -3148,6 +2750,725 @@ function openOrders(){
         "📦 Meus pedidos",
         html
     );
+
+}
+
+
+/* =====================================================
+   ADMIN
+===================================================== */
+
+function openAdmin(){
+
+    openModal(
+
+        "⚙️ Painel administrativo",
+
+        `
+
+            <div class="dashboard">
+
+                <div class="stat">
+
+                    🛍️ Produtos
+
+                    <strong>
+                        ${products.length}
+                    </strong>
+
+                </div>
+
+                <div class="stat">
+
+                    📦 Pedidos
+
+                    <strong>
+                        ${orders.length}
+                    </strong>
+
+                </div>
+
+                <div class="stat">
+
+                    💰 Vendas simuladas
+
+                    <strong>
+                        ${money(
+                            orders.reduce(
+                                (sum,order) =>
+                                    sum + Number(order.total),
+                                0
+                            )
+                        )}
+                    </strong>
+
+                </div>
+
+                <div class="stat">
+
+                    📊 Itens no estoque
+
+                    <strong>
+                        ${
+                            products.reduce(
+                                (sum,product) =>
+                                    sum + Number(product.stock),
+                                0
+                            )
+                        }
+                    </strong>
+
+                </div>
+
+            </div>
+
+            <div class="admin-tabs">
+
+                <button
+                    class="admin-tab active"
+                    onclick="adminProducts()"
+                >
+                    📦 Produtos
+                </button>
+
+                <button
+                    class="admin-tab"
+                    onclick="adminOrders()"
+                >
+                    🛍️ Pedidos
+                </button>
+
+                <button
+                    class="admin-tab"
+                    onclick="adminAddProduct()"
+                >
+                    ➕ Adicionar
+                </button>
+
+            </div>
+
+            <div id="adminContent">
+
+                ${adminProductsHTML()}
+
+            </div>
+
+        `
+
+    );
+
+}
+
+
+function adminProductsHTML(){
+
+    if(products.length === 0){
+
+        return `
+
+            <div class="empty">
+
+                <h3>
+                    Nenhum produto.
+                </h3>
+
+            </div>
+
+        `;
+
+    }
+
+
+    return products.map(product => `
+
+        <div class="admin-product">
+
+            <img
+                src="${product.image}"
+                alt="${product.name}"
+            >
+
+            <div class="admin-product-info">
+
+                <strong>
+                    ${product.name}
+                </strong>
+
+                <p>
+                    ${money(product.price)}
+                </p>
+
+                <p>
+                    📦 Estoque: ${product.stock}
+                </p>
+
+            </div>
+
+            <div class="admin-actions">
+
+                <button
+                    class="outline"
+                    onclick="adminEditProduct(${product.id})"
+                >
+                    ✏️
+                </button>
+
+                <button
+                    class="danger"
+                    onclick="deleteProduct(${product.id})"
+                >
+                    🗑️
+                </button>
+
+            </div>
+
+        </div>
+
+    `).join("");
+
+}
+
+
+function adminProducts(){
+
+    const content =
+        document.getElementById(
+            "adminContent"
+        );
+
+    if(content){
+
+        content.innerHTML =
+            adminProductsHTML();
+
+    }
+
+}
+
+
+function adminOrders(){
+
+    const content =
+        document.getElementById(
+            "adminContent"
+        );
+
+    if(!content) return;
+
+
+    if(orders.length === 0){
+
+        content.innerHTML = `
+
+            <div class="empty">
+
+                <h3>
+                    Nenhum pedido realizado.
+                </h3>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    content.innerHTML =
+        orders.map(order => `
+
+            <div class="order-card">
+
+                <strong>
+                    #${order.id}
+                </strong>
+
+                <p class="order-date">
+                    ${order.date}
+                </p>
+
+                <p>
+                    💳 ${order.payment}
+                </p>
+
+                <strong>
+                    ${money(order.total)}
+                </strong>
+
+                <p class="order-status">
+                    ${order.status}
+                </p>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+function adminAddProduct(){
+
+    const content =
+        document.getElementById(
+            "adminContent"
+        );
+
+    if(!content) return;
+
+
+    content.innerHTML = `
+
+        <h3 style="margin-bottom:15px">
+            ➕ Novo produto
+        </h3>
+
+        <input
+            class="input"
+            id="adminName"
+            placeholder="Nome do produto"
+        >
+
+        <select
+            class="select"
+            id="adminCategory"
+        >
+
+            <option>
+                Eletrônicos
+            </option>
+
+            <option>
+                Acessórios
+            </option>
+
+            <option>
+                Moda
+            </option>
+
+            <option>
+                Casa
+            </option>
+
+        </select>
+
+        <input
+            class="input"
+            id="adminPrice"
+            type="number"
+            step="0.01"
+            placeholder="Preço"
+        >
+
+        <input
+            class="input"
+            id="adminStock"
+            type="number"
+            placeholder="Estoque"
+        >
+
+        <input
+            class="input"
+            id="adminRating"
+            type="number"
+            step="0.1"
+            min="0"
+            max="5"
+            placeholder="Avaliação"
+        >
+
+        <input
+            class="input"
+            id="adminImage"
+            placeholder="URL da imagem"
+        >
+
+        <textarea
+            class="input"
+            id="adminDescription"
+            rows="4"
+            placeholder="Descrição"
+        ></textarea>
+
+        <button
+            class="primary full"
+            onclick="createProduct()"
+        >
+            💾 Salvar produto
+        </button>
+
+    `;
+
+}
+
+
+function createProduct(){
+
+    const name =
+        document.getElementById("adminName")
+        .value.trim();
+
+    const category =
+        document.getElementById("adminCategory")
+        .value;
+
+    const price =
+        Number(
+            document.getElementById("adminPrice")
+            .value
+        );
+
+    const stock =
+        Number(
+            document.getElementById("adminStock")
+            .value
+        );
+
+    const rating =
+        Number(
+            document.getElementById("adminRating")
+            .value
+        ) || 5;
+
+    const image =
+        document.getElementById("adminImage")
+        .value.trim();
+
+    const description =
+        document.getElementById("adminDescription")
+        .value.trim();
+
+
+    if(
+        !name ||
+        !price ||
+        stock < 0 ||
+        !image
+    ){
+
+        showToast(
+            "Preencha os dados corretamente."
+        );
+
+        return;
+
+    }
+
+
+    const newProduct = {
+
+        id:
+            Date.now(),
+
+        name:name,
+
+        category:category,
+
+        price:price,
+
+        stock:stock,
+
+        rating:rating,
+
+        description:
+            description ||
+            "Produto disponível na FlowShop.",
+
+        image:image
+
+    };
+
+
+    products.push(newProduct);
+
+    saveData();
+
+    renderProducts();
+
+    showToast(
+        "Produto adicionado! 🎉"
+    );
+
+    openAdmin();
+
+}
+
+
+function adminEditProduct(id){
+
+    const product =
+        getProduct(id);
+
+    if(!product) return;
+
+
+    const content =
+        document.getElementById(
+            "adminContent"
+        );
+
+    if(!content) return;
+
+
+    content.innerHTML = `
+
+        <h3 style="margin-bottom:15px">
+            ✏️ Editar produto
+        </h3>
+
+        <input
+            class="input"
+            id="editName"
+            value="${product.name}"
+            placeholder="Nome"
+        >
+
+        <select
+            class="select"
+            id="editCategory"
+        >
+
+            <option
+                ${product.category === "Eletrônicos" ? "selected" : ""}
+            >
+                Eletrônicos
+            </option>
+
+            <option
+                ${product.category === "Acessórios" ? "selected" : ""}
+            >
+                Acessórios
+            </option>
+
+            <option
+                ${product.category === "Moda" ? "selected" : ""}
+            >
+                Moda
+            </option>
+
+            <option
+                ${product.category === "Casa" ? "selected" : ""}
+            >
+                Casa
+            </option>
+
+        </select>
+
+        <input
+            class="input"
+            id="editPrice"
+            type="number"
+            step="0.01"
+            value="${product.price}"
+            placeholder="Preço"
+        >
+
+        <input
+            class="input"
+            id="editStock"
+            type="number"
+            value="${product.stock}"
+            placeholder="Estoque"
+        >
+
+        <input
+            class="input"
+            id="editRating"
+            type="number"
+            step="0.1"
+            min="0"
+            max="5"
+            value="${product.rating}"
+            placeholder="Avaliação"
+        >
+
+        <input
+            class="input"
+            id="editImage"
+            value="${product.image}"
+            placeholder="Imagem"
+        >
+
+        <textarea
+            class="input"
+            id="editDescription"
+            rows="4"
+            placeholder="Descrição"
+        >${product.description}</textarea>
+
+        <button
+            class="primary full"
+            onclick="saveEditedProduct(${product.id})"
+        >
+            💾 Salvar alterações
+        </button>
+
+        <br><br>
+
+        <button
+            class="outline full"
+            onclick="adminProducts()"
+        >
+            ← Voltar
+        </button>
+
+    `;
+
+}
+
+
+function saveEditedProduct(id){
+
+    const product =
+        getProduct(id);
+
+    if(!product) return;
+
+
+    product.name =
+        document
+        .getElementById("editName")
+        .value.trim();
+
+    product.category =
+        document
+        .getElementById("editCategory")
+        .value;
+
+    product.price =
+        Number(
+            document
+            .getElementById("editPrice")
+            .value
+        );
+
+    product.stock =
+        Number(
+            document
+            .getElementById("editStock")
+            .value
+        );
+
+    product.rating =
+        Number(
+            document
+            .getElementById("editRating")
+            .value
+        );
+
+    product.image =
+        document
+        .getElementById("editImage")
+        .value.trim();
+
+    product.description =
+        document
+        .getElementById("editDescription")
+        .value.trim();
+
+
+    saveData();
+
+    renderProducts();
+
+    showToast(
+        "Produto atualizado! ✅"
+    );
+
+    openAdmin();
+
+}
+
+
+function deleteProduct(id){
+
+    const product =
+        getProduct(id);
+
+    if(!product) return;
+
+
+    const confirmDelete =
+        confirm(
+            `Excluir "${product.name}"?`
+        );
+
+    if(!confirmDelete) return;
+
+
+    products =
+        products.filter(
+            product =>
+                product.id !== id
+        );
+
+
+    cart =
+        cart.filter(
+            item =>
+                item.id !== id
+        );
+
+
+    favorites =
+        favorites.filter(
+            favoriteId =>
+                favoriteId !== id
+        );
+
+
+    saveData();
+
+    renderProducts();
+
+    showToast(
+        "Produto excluído."
+    );
+
+    openAdmin();
+
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+function openModal(title,content){
+
+    document
+        .getElementById("modalTitle")
+        .textContent = title;
+
+    document
+        .getElementById("modalContent")
+        .innerHTML = content;
+
+    document
+        .getElementById("modalBg")
+        .classList.add("show");
+
+}
+
+
+function closeModal(){
+
+    document
+        .getElementById("modalBg")
+        .classList.remove("show");
+
+}
+
+
+function closeModalOutside(event){
+
+    if(
+        event.target.id === "modalBg"
+    ){
+
+        closeModal();
+
+    }
 
 }
 
@@ -3174,33 +3495,6 @@ function toggleTheme(){
         "flowshop_theme",
         dark ? "dark" : "light"
     );
-
-
-    updateThemeButton();
-
-}
-
-
-function updateThemeButton(){
-
-    const button =
-        document.getElementById(
-            "themeButton"
-        );
-
-    if(!button) return;
-
-    const dark =
-        document
-        .body
-        .classList
-        .contains("dark");
-
-    button.textContent =
-        dark ? "☀️" : "🌙";
-
-    button.title =
-        dark ? "Tema claro" : "Tema escuro";
 
 }
 
@@ -3231,56 +3525,8 @@ function goProducts(){
 
 
 /* =====================================================
-   BACK TO TOP
-===================================================== */
-
-window.addEventListener(
-    "scroll",
-    () => {
-
-        const button =
-            document.getElementById(
-                "backTop"
-            );
-
-        if(window.scrollY > 500){
-
-            button.classList.add("show");
-
-        }else{
-
-            button.classList.remove("show");
-
-        }
-
-    }
-);
-
-
-/* =====================================================
-   TECLADO
-===================================================== */
-
-document.addEventListener(
-    "keydown",
-    event => {
-
-        if(event.key === "Escape"){
-
-            closeModal();
-
-        }
-
-    }
-);
-
-
-/* =====================================================
    TOAST
 ===================================================== */
-
-let toastTimer;
-
 
 function showToast(message){
 
@@ -3331,10 +3577,6 @@ function init(){
     renderProducts();
 
     updateCartCount();
-
-    updateFavoriteCount();
-
-    updateThemeButton();
 
 }
 

@@ -1,0 +1,2599 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FlowShop V9.9 | Sua Loja Online</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --bg:#f4f7fb;
+    --card:#ffffff;
+    --text:#172033;
+    --muted:#667085;
+    --primary:#1677ff;
+    --primary-dark:#095ccc;
+    --header:#101828;
+    --border:#e4e7ec;
+    --success:#12b76a;
+    --danger:#f04438;
+    --warning:#f79009;
+    --shadow:0 10px 30px rgba(16,24,40,.10);
+}
+
+body.dark{
+    --bg:#0b1220;
+    --card:#111c2e;
+    --text:#f5f7fa;
+    --muted:#aab4c3;
+    --border:#26344a;
+    --header:#070d18;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    transition:.3s;
+}
+
+/* ================= HEADER ================= */
+
+header{
+    background:var(--header);
+    color:white;
+    min-height:70px;
+    padding:0 5%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.logo span{
+    color:#39b6ff;
+}
+
+nav{
+    display:flex;
+    align-items:center;
+    gap:22px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+    cursor:pointer;
+    font-size:14px;
+}
+
+nav a:hover{
+    color:#48c6ff;
+}
+
+.header-buttons{
+    display:flex;
+    gap:8px;
+}
+
+.icon-btn{
+    border:none;
+    background:#1e293b;
+    color:white;
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:18px;
+    position:relative;
+    transition:.2s;
+}
+
+.icon-btn:hover{
+    transform:scale(1.06);
+}
+
+.badge{
+    position:absolute;
+    top:-4px;
+    right:-3px;
+    background:#f04438;
+    color:white;
+    width:19px;
+    height:19px;
+    font-size:11px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    min-height:430px;
+    padding:80px 20px;
+    text-align:center;
+    color:white;
+    background:
+        radial-gradient(circle at top right,rgba(255,255,255,.18),transparent 30%),
+        linear-gradient(120deg,#1597ff,#2838c7);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+
+.hero h1{
+    font-size:clamp(35px,6vw,60px);
+    margin-bottom:15px;
+}
+
+.hero p{
+    max-width:700px;
+    margin:auto;
+    font-size:18px;
+    line-height:1.6;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:12px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-top:30px;
+}
+
+/* ================= BUTTONS ================= */
+
+button{
+    border:none;
+    cursor:pointer;
+    font-weight:bold;
+    border-radius:10px;
+    padding:12px 20px;
+    transition:.2s;
+}
+
+button:active{
+    transform:scale(.97);
+}
+
+.primary{
+    background:var(--primary);
+    color:white;
+}
+
+.primary:hover{
+    background:var(--primary-dark);
+    transform:translateY(-2px);
+}
+
+.secondary{
+    background:white;
+    color:#1677ff;
+}
+
+.secondary:hover{
+    transform:translateY(-2px);
+}
+
+.outline{
+    background:transparent;
+    color:var(--primary);
+    border:1px solid var(--primary);
+}
+
+.outline:hover{
+    background:var(--primary);
+    color:white;
+}
+
+.danger{
+    background:var(--danger);
+    color:white;
+}
+
+.full{
+    width:100%;
+}
+
+/* ================= OFFER ================= */
+
+.offer{
+    margin:30px 5%;
+    padding:30px;
+    border-radius:18px;
+    color:white;
+    background:linear-gradient(120deg,#ef4444,#d92d20);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    box-shadow:var(--shadow);
+}
+
+.offer h2{
+    margin-bottom:8px;
+}
+
+/* ================= SECTION ================= */
+
+.section{
+    padding:55px 5%;
+}
+
+.section-title{
+    text-align:center;
+    font-size:32px;
+    margin-bottom:10px;
+}
+
+.section-subtitle{
+    text-align:center;
+    color:var(--muted);
+    margin-bottom:30px;
+}
+
+/* ================= TOOLS ================= */
+
+.tools{
+    max-width:900px;
+    margin:auto auto 35px;
+}
+
+.search{
+    width:100%;
+    padding:15px 18px;
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+    border-radius:12px;
+    outline:none;
+    font-size:16px;
+}
+
+.search:focus{
+    border-color:var(--primary);
+}
+
+.categories{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:15px;
+}
+
+.category{
+    padding:10px 18px;
+    border-radius:30px;
+    background:var(--card);
+    color:var(--text);
+    border:1px solid var(--border);
+}
+
+.category.active,
+.category:hover{
+    background:var(--primary);
+    color:white;
+}
+
+/* ================= PRODUCTS ================= */
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:22px;
+}
+
+.product{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    position:relative;
+    transition:.25s;
+}
+
+.product:hover{
+    transform:translateY(-5px);
+}
+
+.product-image-box{
+    position:relative;
+    cursor:pointer;
+    overflow:hidden;
+}
+
+.product img{
+    width:100%;
+    height:210px;
+    object-fit:cover;
+    display:block;
+    transition:.3s;
+}
+
+.product:hover img{
+    transform:scale(1.04);
+}
+
+.stock{
+    position:absolute;
+    left:10px;
+    bottom:10px;
+    background:rgba(16,24,40,.85);
+    color:white;
+    padding:5px 9px;
+    border-radius:7px;
+    font-size:12px;
+}
+
+.favorite{
+    position:absolute;
+    top:12px;
+    right:12px;
+    width:38px;
+    height:38px;
+    padding:0;
+    border-radius:50%;
+    background:white;
+    color:#777;
+    font-size:18px;
+    z-index:2;
+}
+
+.favorite.active{
+    color:#f04438;
+}
+
+.product-info{
+    padding:17px;
+}
+
+.product-info h3{
+    margin-bottom:7px;
+}
+
+.category-text{
+    color:var(--muted);
+    font-size:13px;
+}
+
+.rating{
+    color:#f79009;
+    margin-top:7px;
+    font-size:14px;
+}
+
+.price{
+    font-size:21px;
+    color:var(--primary);
+    font-weight:bold;
+    margin:12px 0;
+}
+
+.product-actions{
+    display:flex;
+    gap:8px;
+}
+
+.product-actions button{
+    flex:1;
+    padding:10px;
+}
+
+/* ================= EMPTY ================= */
+
+.empty{
+    text-align:center;
+    padding:30px;
+    color:var(--muted);
+    grid-column:1/-1;
+}
+
+.empty h3{
+    color:var(--text);
+    margin-bottom:8px;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    background:var(--header);
+    color:white;
+    text-align:center;
+    padding:35px 20px;
+    margin-top:40px;
+}
+
+footer p{
+    color:#b8c1cf;
+    margin-top:8px;
+}
+
+/* ================= MODAL ================= */
+
+.modal-bg{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.65);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:2000;
+}
+
+.modal-bg.show{
+    display:flex;
+}
+
+.modal{
+    width:min(600px,100%);
+    max-height:90vh;
+    overflow-y:auto;
+    background:var(--card);
+    color:var(--text);
+    border-radius:18px;
+    padding:25px;
+    box-shadow:0 20px 60px rgba(0,0,0,.3);
+    animation:modalIn .2s ease;
+}
+
+@keyframes modalIn{
+    from{
+        opacity:0;
+        transform:translateY(15px) scale(.98);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.close{
+    background:transparent;
+    color:var(--text);
+    font-size:25px;
+    padding:3px 8px;
+}
+
+/* ================= PRODUCT DETAIL ================= */
+
+.detail-image{
+    width:100%;
+    height:300px;
+    object-fit:cover;
+    border-radius:14px;
+    margin-bottom:18px;
+}
+
+.detail-category{
+    color:var(--muted);
+    font-size:14px;
+    margin:7px 0;
+}
+
+.detail-price{
+    color:var(--primary);
+    font-size:28px;
+    font-weight:bold;
+    margin:15px 0;
+}
+
+.detail-stock{
+    color:var(--success);
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.detail-actions{
+    display:flex;
+    gap:10px;
+}
+
+.detail-actions button{
+    flex:1;
+}
+
+/* ================= INPUT ================= */
+
+.input{
+    width:100%;
+    padding:13px;
+    border-radius:9px;
+    border:1px solid var(--border);
+    background:var(--bg);
+    color:var(--text);
+    margin-bottom:13px;
+    outline:none;
+}
+
+.input:focus{
+    border-color:var(--primary);
+}
+
+.form-group label{
+    display:block;
+    font-size:14px;
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+/* ================= CART ================= */
+
+.cart-item{
+    display:flex;
+    gap:12px;
+    padding:13px 0;
+    border-bottom:1px solid var(--border);
+    align-items:center;
+}
+
+.cart-item img{
+    width:65px;
+    height:65px;
+    object-fit:cover;
+    border-radius:9px;
+}
+
+.cart-info{
+    flex:1;
+}
+
+.qty{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:7px;
+}
+
+.qty button{
+    padding:5px 10px;
+    border-radius:7px;
+    background:var(--bg);
+    color:var(--text);
+}
+
+.remove{
+    background:transparent;
+    color:var(--danger);
+    padding:5px;
+}
+
+.total{
+    display:flex;
+    justify-content:space-between;
+    font-size:20px;
+    font-weight:bold;
+    margin:20px 0;
+}
+
+/* ================= ACCOUNT ================= */
+
+.account-box{
+    text-align:center;
+}
+
+.account-avatar{
+    width:80px;
+    height:80px;
+    margin:0 auto 15px;
+    border-radius:50%;
+    background:var(--primary);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:32px;
+}
+
+/* ================= ORDER ================= */
+
+.order-card{
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:12px;
+}
+
+.order-date{
+    color:var(--muted);
+    margin:6px 0;
+}
+
+.order-status{
+    color:var(--success);
+    margin-top:7px;
+    font-weight:bold;
+}
+
+/* ================= TOAST ================= */
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#101828;
+    color:white;
+    padding:15px 20px;
+    border-radius:10px;
+    transform:translateY(120px);
+    opacity:0;
+    transition:.3s;
+    z-index:5000;
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:750px){
+
+    header{
+        padding:12px 4%;
+        flex-wrap:wrap;
+    }
+
+    nav{
+        order:3;
+        width:100%;
+        justify-content:center;
+        gap:14px;
+        padding-bottom:5px;
+    }
+
+    .hero{
+        padding:60px 20px;
+    }
+
+    .offer{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .products{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:470px){
+
+    .products{
+        grid-template-columns:1fr;
+    }
+
+    .product img{
+        height:230px;
+    }
+
+    .logo{
+        font-size:20px;
+    }
+
+    .header-buttons{
+        gap:4px;
+    }
+
+    .icon-btn{
+        width:37px;
+        height:37px;
+    }
+
+    .detail-image{
+        height:230px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+    <div class="logo">
+        🛍️ Flow<span>Shop</span>
+    </div>
+
+    <nav>
+
+        <a onclick="goHome()">Início</a>
+
+        <a onclick="goProducts()">Produtos</a>
+
+        <a onclick="openAccount()">Minha conta</a>
+
+        <a onclick="openOrders()">Pedidos</a>
+
+    </nav>
+
+    <div class="header-buttons">
+
+        <button
+            class="icon-btn"
+            onclick="toggleTheme()"
+            title="Tema"
+        >
+            🌙
+        </button>
+
+        <button
+            class="icon-btn"
+            onclick="openFavorites()"
+            title="Favoritos"
+        >
+            ❤️
+        </button>
+
+        <button
+            class="icon-btn"
+            onclick="openCart()"
+            title="Carrinho"
+        >
+            🛒
+
+            <span
+                class="badge"
+                id="cartCount"
+            >
+                0
+            </span>
+
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero" id="home">
+
+    <h1>
+        Bem-vindo à FlowShop 🚀
+    </h1>
+
+    <p>
+        Produtos incríveis, preços especiais e uma
+        experiência simples, rápida e moderna.
+    </p>
+
+    <div class="hero-buttons">
+
+        <button
+            class="secondary"
+            onclick="goProducts()"
+        >
+            🛍️ Ver produtos
+        </button>
+
+        <button
+            class="secondary"
+            onclick="openFavorites()"
+        >
+            ❤️ Favoritos
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ================= OFFER ================= -->
+
+<div class="offer">
+
+    <div>
+
+        <h2>
+            🔥 Oferta especial
+        </h2>
+
+        <p>
+            Use o cupom
+            <strong>FLOW10</strong>
+            e ganhe 10% de desconto.
+        </p>
+
+    </div>
+
+    <button
+        class="secondary"
+        onclick="applyCoupon('FLOW10')"
+    >
+        Usar cupom
+    </button>
+
+</div>
+
+
+<!-- ================= PRODUCTS ================= -->
+
+<section
+    class="section"
+    id="productsSection"
+>
+
+    <h2 class="section-title">
+        🔥 Produtos em destaque
+    </h2>
+
+    <p class="section-subtitle">
+        Encontre o produto perfeito para você.
+    </p>
+
+    <div class="tools">
+
+        <input
+            type="text"
+            class="search"
+            id="search"
+            placeholder="🔎 Procurar produto..."
+            oninput="renderProducts()"
+        >
+
+        <div class="categories">
+
+            <button
+                class="category active"
+                onclick="setCategory('Todos',this)"
+            >
+                Todos
+            </button>
+
+            <button
+                class="category"
+                onclick="setCategory('Eletrônicos',this)"
+            >
+                💻 Eletrônicos
+            </button>
+
+            <button
+                class="category"
+                onclick="setCategory('Acessórios',this)"
+            >
+                🎧 Acessórios
+            </button>
+
+            <button
+                class="category"
+                onclick="setCategory('Moda',this)"
+            >
+                👟 Moda
+            </button>
+
+        </div>
+
+    </div>
+
+    <div
+        class="products"
+        id="products"
+    ></div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <h2>
+        🛍️ FlowShop
+    </h2>
+
+    <p>
+        Sua loja online — Projeto desenvolvido para aprendizado.
+    </p>
+
+    <p>
+        FlowShop V9.9 © 2026
+    </p>
+
+</footer>
+
+
+<!-- ================= MODAL ================= -->
+
+<div
+    class="modal-bg"
+    id="modalBg"
+    onclick="closeModalOutside(event)"
+>
+
+    <div
+        class="modal"
+        id="modal"
+    >
+
+        <div class="modal-header">
+
+            <h2 id="modalTitle">
+                FlowShop
+            </h2>
+
+            <button
+                class="close"
+                onclick="closeModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <div id="modalContent"></div>
+
+    </div>
+
+</div>
+
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<script>
+
+/* =====================================================
+   PRODUTOS
+===================================================== */
+
+const products = [
+
+    {
+        id:1,
+        name:"Fone Bluetooth",
+        category:"Acessórios",
+        price:89.90,
+        stock:12,
+        rating:4.8,
+        description:
+        "Fone Bluetooth moderno, confortável e ideal para ouvir suas músicas no dia a dia.",
+        image:
+        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=700&q=80"
+    },
+
+    {
+        id:2,
+        name:"Relógio Digital",
+        category:"Acessórios",
+        price:129.90,
+        stock:8,
+        rating:4.6,
+        description:
+        "Relógio digital moderno para combinar com diferentes estilos.",
+        image:
+        "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=700&q=80"
+    },
+
+    {
+        id:3,
+        name:"Câmera Digital",
+        category:"Eletrônicos",
+        price:499.90,
+        stock:5,
+        rating:4.9,
+        description:
+        "Câmera digital para registrar seus melhores momentos com qualidade.",
+        image:
+        "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=700&q=80"
+    },
+
+    {
+        id:4,
+        name:"Tênis Esportivo",
+        category:"Moda",
+        price:199.90,
+        stock:15,
+        rating:4.7,
+        description:
+        "Tênis esportivo confortável para atividades e uso casual.",
+        image:
+        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80"
+    },
+
+    {
+        id:5,
+        name:"Notebook",
+        category:"Eletrônicos",
+        price:2499.90,
+        stock:4,
+        rating:4.9,
+        description:
+        "Notebook moderno para estudos, trabalho, programação e tarefas do dia a dia.",
+        image:
+        "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=700&q=80"
+    },
+
+    {
+        id:6,
+        name:"Smartphone",
+        category:"Eletrônicos",
+        price:1499.90,
+        stock:7,
+        rating:4.8,
+        description:
+        "Smartphone moderno com ótimo desempenho para aplicativos e entretenimento.",
+        image:
+        "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=700&q=80"
+    },
+
+    {
+        id:7,
+        name:"Mochila",
+        category:"Acessórios",
+        price:119.90,
+        stock:10,
+        rating:4.5,
+        description:
+        "Mochila prática para escola, trabalho e uso cotidiano.",
+        image:
+        "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=700&q=80"
+    },
+
+    {
+        id:8,
+        name:"Óculos de Sol",
+        category:"Moda",
+        price:159.90,
+        stock:9,
+        rating:4.7,
+        description:
+        "Óculos de sol com visual moderno para completar seu estilo.",
+        image:
+        "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=700&q=80"
+    }
+
+];
+
+
+/* =====================================================
+   ESTADO
+===================================================== */
+
+let cart =
+    JSON.parse(
+        localStorage.getItem("flowshop_cart")
+    ) || [];
+
+let favorites =
+    JSON.parse(
+        localStorage.getItem("flowshop_favorites")
+    ) || [];
+
+let orders =
+    JSON.parse(
+        localStorage.getItem("flowshop_orders")
+    ) || [];
+
+let user =
+    JSON.parse(
+        localStorage.getItem("flowshop_user")
+    ) || null;
+
+let coupon =
+    localStorage.getItem("flowshop_coupon") || "";
+
+let currentCategory = "Todos";
+
+
+/* =====================================================
+   UTILIDADES
+===================================================== */
+
+function money(value){
+
+    return value.toLocaleString(
+        "pt-BR",
+        {
+            style:"currency",
+            currency:"BRL"
+        }
+    );
+
+}
+
+
+function saveData(){
+
+    localStorage.setItem(
+        "flowshop_cart",
+        JSON.stringify(cart)
+    );
+
+    localStorage.setItem(
+        "flowshop_favorites",
+        JSON.stringify(favorites)
+    );
+
+    localStorage.setItem(
+        "flowshop_orders",
+        JSON.stringify(orders)
+    );
+
+    if(user){
+
+        localStorage.setItem(
+            "flowshop_user",
+            JSON.stringify(user)
+        );
+
+    }
+
+    updateCartCount();
+
+}
+
+
+function getProduct(id){
+
+    return products.find(
+        product => product.id === id
+    );
+
+}
+
+
+/* =====================================================
+   PRODUTOS
+===================================================== */
+
+function renderProducts(){
+
+    const container =
+        document.getElementById("products");
+
+    const search =
+        document
+        .getElementById("search")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const filtered =
+        products.filter(product => {
+
+            const categoryOk =
+                currentCategory === "Todos" ||
+                product.category === currentCategory;
+
+            const searchOk =
+                product.name
+                .toLowerCase()
+                .includes(search);
+
+            return categoryOk && searchOk;
+
+        });
+
+
+    if(filtered.length === 0){
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                <h3>
+                    😕 Nenhum produto encontrado
+                </h3>
+
+                <p>
+                    Tente outra busca ou categoria.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        filtered.map(product => {
+
+            const isFavorite =
+                favorites.includes(product.id);
+
+            return `
+
+                <div class="product">
+
+                    <button
+                        class="favorite ${isFavorite ? "active" : ""}"
+                        onclick="toggleFavorite(${product.id})"
+                    >
+                        ${isFavorite ? "❤️" : "♡"}
+                    </button>
+
+                    <div
+                        class="product-image-box"
+                        onclick="openProduct(${product.id})"
+                    >
+
+                        <img
+                            src="${product.image}"
+                            alt="${product.name}"
+                            onerror="
+                                this.src='https://via.placeholder.com/500?text=FlowShop'
+                            "
+                        >
+
+                        <span class="stock">
+                            📦 ${product.stock} disponíveis
+                        </span>
+
+                    </div>
+
+                    <div class="product-info">
+
+                        <h3>
+                            ${product.name}
+                        </h3>
+
+                        <div class="category-text">
+                            🏷️ ${product.category}
+                        </div>
+
+                        <div class="rating">
+                            ⭐ ${product.rating}
+                        </div>
+
+                        <div class="price">
+                            ${money(product.price)}
+                        </div>
+
+                        <div class="product-actions">
+
+                            <button
+                                class="outline"
+                                onclick="openProduct(${product.id})"
+                            >
+                                👁️ Ver
+                            </button>
+
+                            <button
+                                class="primary"
+                                onclick="addToCart(${product.id})"
+                                ${product.stock <= 0 ? "disabled" : ""}
+                            >
+                                🛒
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+function setCategory(category,button){
+
+    currentCategory = category;
+
+    document
+        .querySelectorAll(".category")
+        .forEach(btn =>
+            btn.classList.remove("active")
+        );
+
+    button.classList.add("active");
+
+    renderProducts();
+
+}
+
+
+/* =====================================================
+   DETALHES DO PRODUTO
+===================================================== */
+
+function openProduct(id){
+
+    const product = getProduct(id);
+
+    if(!product) return;
+
+    const isFavorite =
+        favorites.includes(product.id);
+
+    openModal(
+
+        product.name,
+
+        `
+
+            <img
+                class="detail-image"
+                src="${product.image}"
+                alt="${product.name}"
+            >
+
+            <h2>
+                ${product.name}
+            </h2>
+
+            <div class="detail-category">
+                🏷️ Categoria: ${product.category}
+            </div>
+
+            <div class="rating">
+                ⭐ ${product.rating} / 5.0
+            </div>
+
+            <div class="detail-price">
+                ${money(product.price)}
+            </div>
+
+            <p style="
+                color:var(--muted);
+                line-height:1.6;
+                margin-bottom:15px;
+            ">
+                ${product.description}
+            </p>
+
+            <div class="detail-stock">
+                📦 ${product.stock} unidades disponíveis
+            </div>
+
+            <div class="detail-actions">
+
+                <button
+                    class="outline"
+                    onclick="toggleFavorite(${product.id}); openProduct(${product.id})"
+                >
+                    ${isFavorite ? "❤️ Favoritado" : "♡ Favoritar"}
+                </button>
+
+                <button
+                    class="primary"
+                    onclick="addToCart(${product.id}); closeModal()"
+                >
+                    🛒 Adicionar ao carrinho
+                </button>
+
+            </div>
+
+        `
+
+    );
+
+}
+
+
+/* =====================================================
+   CARRINHO
+===================================================== */
+
+function addToCart(id){
+
+    const product = getProduct(id);
+
+    if(!product) return;
+
+    if(product.stock <= 0){
+
+        showToast(
+            "Produto sem estoque."
+        );
+
+        return;
+
+    }
+
+
+    const existing =
+        cart.find(item => item.id === id);
+
+
+    if(existing){
+
+        if(existing.quantity >= product.stock){
+
+            showToast(
+                "Quantidade máxima disponível atingida."
+            );
+
+            return;
+
+        }
+
+        existing.quantity++;
+
+    }else{
+
+        cart.push({
+            id:id,
+            quantity:1
+        });
+
+    }
+
+
+    saveData();
+
+    showToast(
+        `${product.name} foi adicionado ao carrinho! 🛒`
+    );
+
+}
+
+
+function updateCartCount(){
+
+    const count =
+        cart.reduce(
+            (total,item) =>
+                total + item.quantity,
+            0
+        );
+
+    document
+        .getElementById("cartCount")
+        .textContent = count;
+
+}
+
+
+function cartTotal(){
+
+    return cart.reduce(
+        (total,item) => {
+
+            const product =
+                getProduct(item.id);
+
+            if(!product) return total;
+
+            return total +
+                product.price *
+                item.quantity;
+
+        },
+        0
+    );
+
+}
+
+
+function changeQuantity(id,amount){
+
+    const item =
+        cart.find(item => item.id === id);
+
+    const product =
+        getProduct(id);
+
+    if(!item || !product) return;
+
+
+    if(
+        amount > 0 &&
+        item.quantity >= product.stock
+    ){
+
+        showToast(
+            "Você atingiu o limite de estoque."
+        );
+
+        return;
+
+    }
+
+
+    item.quantity += amount;
+
+
+    if(item.quantity <= 0){
+
+        cart =
+            cart.filter(
+                item => item.id !== id
+            );
+
+    }
+
+
+    saveData();
+
+    openCart();
+
+}
+
+
+function removeFromCart(id){
+
+    cart =
+        cart.filter(
+            item => item.id !== id
+        );
+
+    saveData();
+
+    openCart();
+
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+function openModal(title,content){
+
+    document
+        .getElementById("modalTitle")
+        .textContent = title;
+
+    document
+        .getElementById("modalContent")
+        .innerHTML = content;
+
+    document
+        .getElementById("modalBg")
+        .classList.add("show");
+
+}
+
+
+function closeModal(){
+
+    document
+        .getElementById("modalBg")
+        .classList.remove("show");
+
+}
+
+
+function closeModalOutside(event){
+
+    if(
+        event.target.id === "modalBg"
+    ){
+
+        closeModal();
+
+    }
+
+}
+
+
+/* =====================================================
+   ABRIR CARRINHO
+===================================================== */
+
+function openCart(){
+
+    if(cart.length === 0){
+
+        openModal(
+            "🛒 Meu Carrinho",
+
+            `
+
+                <div class="empty">
+
+                    <h3>
+                        Seu carrinho está vazio.
+                    </h3>
+
+                    <p>
+                        Adicione alguns produtos para começar.
+                    </p>
+
+                    <br>
+
+                    <button
+                        class="primary"
+                        onclick="closeModal();goProducts();"
+                    >
+                        Ver produtos
+                    </button>
+
+                </div>
+
+            `
+        );
+
+        return;
+
+    }
+
+
+    let html = "";
+
+
+    cart.forEach(item => {
+
+        const product =
+            getProduct(item.id);
+
+        if(!product) return;
+
+
+        html += `
+
+            <div class="cart-item">
+
+                <img
+                    src="${product.image}"
+                    alt="${product.name}"
+                >
+
+                <div class="cart-info">
+
+                    <strong>
+                        ${product.name}
+                    </strong>
+
+                    <div>
+                        ${money(product.price)}
+                    </div>
+
+                    <div class="qty">
+
+                        <button
+                            onclick="changeQuantity(${product.id},-1)"
+                        >
+                            −
+                        </button>
+
+                        <span>
+                            ${item.quantity}
+                        </span>
+
+                        <button
+                            onclick="changeQuantity(${product.id},1)"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <button
+                    class="remove"
+                    onclick="removeFromCart(${product.id})"
+                >
+                    🗑️
+                </button>
+
+            </div>
+
+        `;
+
+    });
+
+
+    const subtotal =
+        cartTotal();
+
+    const discount =
+        coupon === "FLOW10"
+        ? subtotal * .10
+        : 0;
+
+    const total =
+        subtotal - discount;
+
+
+    openModal(
+
+        "🛒 Meu Carrinho",
+
+        `
+
+            ${html}
+
+            <div class="total">
+
+                <span>
+                    Total:
+                </span>
+
+                <span>
+                    ${money(total)}
+                </span>
+
+            </div>
+
+            ${
+                discount > 0
+
+                ? `
+
+                    <p style="
+                        color:var(--success);
+                        margin-bottom:10px;
+                    ">
+                        🎉 Desconto de 10% aplicado!
+                    </p>
+
+                  `
+
+                : ""
+            }
+
+            <input
+                class="input"
+                id="couponInput"
+                placeholder="Cupom de desconto"
+                value="${coupon}"
+            >
+
+            <button
+                class="primary full"
+                onclick="applyCoupon()"
+            >
+                Aplicar cupom
+            </button>
+
+            <br><br>
+
+            <button
+                class="primary full"
+                onclick="openCheckout()"
+            >
+                Finalizar compra
+            </button>
+
+        `
+
+    );
+
+}
+
+
+/* =====================================================
+   CUPOM
+===================================================== */
+
+function applyCoupon(code){
+
+    if(!code){
+
+        const input =
+            document.getElementById(
+                "couponInput"
+            );
+
+        code =
+            input
+            ? input.value
+                .trim()
+                .toUpperCase()
+            : "";
+
+    }
+
+
+    if(code === "FLOW10"){
+
+        coupon = "FLOW10";
+
+        localStorage.setItem(
+            "flowshop_coupon",
+            coupon
+        );
+
+        showToast(
+            "Cupom FLOW10 aplicado! 🎉"
+        );
+
+        openCart();
+
+    }else{
+
+        showToast(
+            "Cupom inválido."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   CHECKOUT
+===================================================== */
+
+function openCheckout(){
+
+    if(cart.length === 0){
+
+        showToast(
+            "Seu carrinho está vazio."
+        );
+
+        return;
+
+    }
+
+
+    const total =
+        cartTotal() *
+        (
+            coupon === "FLOW10"
+            ? .90
+            : 1
+        );
+
+
+    openModal(
+
+        "📦 Finalizar pedido",
+
+        `
+
+            <p style="
+                margin-bottom:20px;
+                color:var(--muted);
+            ">
+                Preencha seus dados para simular o pedido.
+            </p>
+
+            <div class="form-group">
+
+                <label>
+                    Nome
+                </label>
+
+                <input
+                    class="input"
+                    id="checkoutName"
+                    placeholder="Seu nome"
+                    value="${user ? user.name : ""}"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    E-mail
+                </label>
+
+                <input
+                    class="input"
+                    id="checkoutEmail"
+                    placeholder="seu@email.com"
+                    value="${user ? user.email : ""}"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Endereço
+                </label>
+
+                <textarea
+                    class="input"
+                    id="checkoutAddress"
+                    placeholder="Rua, número, bairro..."
+                    rows="3"
+                ></textarea>
+
+            </div>
+
+            <div class="total">
+
+                <span>
+                    Total:
+                </span>
+
+                <span>
+                    ${money(total)}
+                </span>
+
+            </div>
+
+            <button
+                class="primary full"
+                onclick="confirmOrder()"
+            >
+                ✅ Confirmar pedido
+            </button>
+
+        `
+
+    );
+
+}
+
+
+/* =====================================================
+   CONFIRMAR PEDIDO
+===================================================== */
+
+function confirmOrder(){
+
+    const name =
+        document
+        .getElementById("checkoutName")
+        .value
+        .trim();
+
+    const email =
+        document
+        .getElementById("checkoutEmail")
+        .value
+        .trim();
+
+    const address =
+        document
+        .getElementById("checkoutAddress")
+        .value
+        .trim();
+
+
+    if(!name || !email || !address){
+
+        showToast(
+            "Preencha todos os campos."
+        );
+
+        return;
+
+    }
+
+
+    if(!email.includes("@")){
+
+        showToast(
+            "Digite um e-mail válido."
+        );
+
+        return;
+
+    }
+
+
+    const total =
+        cartTotal() *
+        (
+            coupon === "FLOW10"
+            ? .90
+            : 1
+        );
+
+
+    const order = {
+
+        id:
+            Math.floor(
+                100000 +
+                Math.random() * 900000
+            ),
+
+        date:
+            new Date()
+            .toLocaleString("pt-BR"),
+
+        total:total,
+
+        items:[
+            ...cart
+        ]
+
+    };
+
+
+    orders.unshift(order);
+
+
+    user = {
+
+        name:name,
+
+        email:email
+
+    };
+
+
+    cart = [];
+
+    coupon = "";
+
+
+    localStorage.removeItem(
+        "flowshop_coupon"
+    );
+
+
+    saveData();
+
+
+    openModal(
+
+        "🎉 Pedido realizado!",
+
+        `
+
+            <div class="empty">
+
+                <h3>
+                    Pedido simulado com sucesso!
+                </h3>
+
+                <p>
+                    Obrigado,
+                    <strong>${name}</strong>!
+                </p>
+
+                <p>
+                    Número do pedido:
+                    <strong>#${order.id}</strong>
+                </p>
+
+                <br>
+
+                <button
+                    class="primary"
+                    onclick="closeModal();openOrders();"
+                >
+                    Ver meus pedidos
+                </button>
+
+            </div>
+
+        `
+
+    );
+
+}
+
+
+/* =====================================================
+   FAVORITOS
+===================================================== */
+
+function toggleFavorite(id){
+
+    if(favorites.includes(id)){
+
+        favorites =
+            favorites.filter(
+                favoriteId =>
+                    favoriteId !== id
+            );
+
+        showToast(
+            "Removido dos favoritos."
+        );
+
+    }else{
+
+        favorites.push(id);
+
+        showToast(
+            "Adicionado aos favoritos! ❤️"
+        );
+
+    }
+
+
+    saveData();
+
+    renderProducts();
+
+}
+
+
+function openFavorites(){
+
+    const favoriteProducts =
+        products.filter(
+            product =>
+                favorites.includes(product.id)
+        );
+
+
+    if(favoriteProducts.length === 0){
+
+        openModal(
+
+            "❤️ Favoritos",
+
+            `
+
+                <div class="empty">
+
+                    <h3>
+                        Você ainda não tem favoritos.
+                    </h3>
+
+                    <p>
+                        Clique no ❤️ dos produtos que você gostar.
+                    </p>
+
+                </div>
+
+            `
+
+        );
+
+        return;
+
+    }
+
+
+    let html = "";
+
+
+    favoriteProducts.forEach(product => {
+
+        html += `
+
+            <div class="cart-item">
+
+                <img
+                    src="${product.image}"
+                    alt="${product.name}"
+                >
+
+                <div class="cart-info">
+
+                    <strong>
+                        ${product.name}
+                    </strong>
+
+                    <p>
+                        ${money(product.price)}
+                    </p>
+
+                </div>
+
+                <button
+                    class="primary"
+                    onclick="addToCart(${product.id})"
+                >
+                    🛒
+                </button>
+
+            </div>
+
+        `;
+
+    });
+
+
+    openModal(
+        "❤️ Meus favoritos",
+        html
+    );
+
+}
+
+
+/* =====================================================
+   CONTA
+===================================================== */
+
+function openAccount(){
+
+    if(!user){
+
+        openModal(
+
+            "👤 Minha conta",
+
+            `
+
+                <div class="account-box">
+
+                    <div class="account-avatar">
+                        👤
+                    </div>
+
+                    <h3>
+                        Criar sua conta
+                    </h3>
+
+                    <p style="
+                        color:var(--muted);
+                        margin:10px 0 20px;
+                    ">
+                        Seus dados ficam salvos apenas neste navegador.
+                    </p>
+
+                    <input
+                        class="input"
+                        id="accountName"
+                        placeholder="Seu nome"
+                    >
+
+                    <input
+                        class="input"
+                        id="accountEmail"
+                        placeholder="Seu e-mail"
+                    >
+
+                    <button
+                        class="primary full"
+                        onclick="createAccount()"
+                    >
+                        Criar conta
+                    </button>
+
+                </div>
+
+            `
+
+        );
+
+        return;
+
+    }
+
+
+    openModal(
+
+        "👤 Minha conta",
+
+        `
+
+            <div class="account-box">
+
+                <div class="account-avatar">
+                    ${user.name
+                        .charAt(0)
+                        .toUpperCase()}
+                </div>
+
+                <h2>
+                    ${user.name}
+                </h2>
+
+                <p style="
+                    color:var(--muted);
+                ">
+                    ${user.email}
+                </p>
+
+                <br>
+
+                <button
+                    class="primary full"
+                    onclick="openOrders()"
+                >
+                    📦 Meus pedidos
+                </button>
+
+                <br><br>
+
+                <button
+                    class="danger full"
+                    onclick="logout()"
+                >
+                    Sair da conta
+                </button>
+
+            </div>
+
+        `
+
+    );
+
+}
+
+
+function createAccount(){
+
+    const name =
+        document
+        .getElementById("accountName")
+        .value
+        .trim();
+
+    const email =
+        document
+        .getElementById("accountEmail")
+        .value
+        .trim();
+
+
+    if(!name || !email){
+
+        showToast(
+            "Preencha os dados."
+        );
+
+        return;
+
+    }
+
+
+    if(!email.includes("@")){
+
+        showToast(
+            "Digite um e-mail válido."
+        );
+
+        return;
+
+    }
+
+
+    user = {
+
+        name:name,
+
+        email:email
+
+    };
+
+
+    saveData();
+
+    showToast(
+        "Conta criada! 👤"
+    );
+
+    openAccount();
+
+}
+
+
+function logout(){
+
+    user = null;
+
+    localStorage.removeItem(
+        "flowshop_user"
+    );
+
+    closeModal();
+
+    showToast(
+        "Você saiu da conta."
+    );
+
+}
+
+
+/* =====================================================
+   PEDIDOS
+===================================================== */
+
+function openOrders(){
+
+    if(orders.length === 0){
+
+        openModal(
+
+            "📦 Meus pedidos",
+
+            `
+
+                <div class="empty">
+
+                    <h3>
+                        Nenhum pedido ainda.
+                    </h3>
+
+                    <p>
+                        Seus pedidos aparecerão aqui.
+                    </p>
+
+                </div>
+
+            `
+
+        );
+
+        return;
+
+    }
+
+
+    let html = "";
+
+
+    orders.forEach(order => {
+
+        html += `
+
+            <div class="order-card">
+
+                <strong>
+                    Pedido #${order.id}
+                </strong>
+
+                <p class="order-date">
+                    ${order.date}
+                </p>
+
+                <strong>
+                    Total: ${money(order.total)}
+                </strong>
+
+                <p class="order-status">
+                    ✅ Pedido realizado
+                </p>
+
+            </div>
+
+        `;
+
+    });
+
+
+    openModal(
+        "📦 Meus pedidos",
+        html
+    );
+
+}
+
+
+/* =====================================================
+   TEMA
+===================================================== */
+
+function toggleTheme(){
+
+    document
+        .body
+        .classList
+        .toggle("dark");
+
+    const dark =
+        document
+        .body
+        .classList
+        .contains("dark");
+
+
+    localStorage.setItem(
+        "flowshop_theme",
+        dark ? "dark" : "light"
+    );
+
+}
+
+
+/* =====================================================
+   NAVEGAÇÃO
+===================================================== */
+
+function goHome(){
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+function goProducts(){
+
+    document
+        .getElementById("productsSection")
+        .scrollIntoView({
+            behavior:"smooth"
+        });
+
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+let toastTimer;
+
+
+function showToast(message){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent =
+        message;
+
+    toast.classList.add("show");
+
+
+    clearTimeout(toastTimer);
+
+
+    toastTimer =
+        setTimeout(() => {
+
+            toast.classList.remove("show");
+
+        },2500);
+
+}
+
+
+/* =====================================================
+   INICIALIZAÇÃO
+===================================================== */
+
+function init(){
+
+    const savedTheme =
+        localStorage.getItem(
+            "flowshop_theme"
+        );
+
+
+    if(savedTheme === "dark"){
+
+        document
+            .body
+            .classList
+            .add("dark");
+
+    }
+
+
+    renderProducts();
+
+    updateCartCount();
+
+}
+
+
+init();
+
+</script>
+
+</body>
+</html>

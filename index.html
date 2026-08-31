@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FlowShop V10.2 | Sua Loja Online</title>
+<title>FlowShop V10.3 | Sua Loja Online</title>
 
 <style>
 
@@ -26,7 +26,6 @@
     --success:#12b76a;
     --danger:#f04438;
     --warning:#f79009;
-    --gold:#ffb000;
     --shadow:0 10px 30px rgba(16,24,40,.10);
 }
 
@@ -67,7 +66,7 @@ header{
 }
 
 .logo{
-    font-size:24px;
+    font-size:25px;
     font-weight:bold;
     white-space:nowrap;
 }
@@ -113,14 +112,14 @@ nav a:hover{
 }
 
 .icon-btn:hover{
-    transform:scale(1.06);
+    transform:scale(1.07);
 }
 
 .badge{
     position:absolute;
     top:-4px;
     right:-3px;
-    background:var(--danger);
+    background:#f04438;
     color:white;
     width:19px;
     height:19px;
@@ -140,8 +139,8 @@ nav a:hover{
     color:white;
 
     background:
-        radial-gradient(circle at 10% 20%,rgba(255,255,255,.15),transparent 25%),
-        radial-gradient(circle at 90% 10%,rgba(255,255,255,.18),transparent 30%),
+        radial-gradient(circle at top right,rgba(255,255,255,.20),transparent 30%),
+        radial-gradient(circle at bottom left,rgba(255,255,255,.10),transparent 35%),
         linear-gradient(120deg,#1597ff,#2838c7);
 
     display:flex;
@@ -220,8 +219,18 @@ button:active{
     color:white;
 }
 
+.success{
+    background:var(--success);
+    color:white;
+}
+
 .full{
     width:100%;
+}
+
+button:disabled{
+    opacity:.5;
+    cursor:not-allowed;
 }
 
 /* ================= OFFER ================= */
@@ -245,15 +254,6 @@ button:active{
 
 .offer h2{
     margin-bottom:8px;
-}
-
-.offer-code{
-    display:inline-block;
-    background:rgba(255,255,255,.18);
-    padding:6px 10px;
-    border-radius:7px;
-    margin-top:8px;
-    font-weight:bold;
 }
 
 /* ================= SECTION ================= */
@@ -294,7 +294,6 @@ button:active{
 
 .search:focus{
     border-color:var(--primary);
-    box-shadow:0 0 0 3px rgba(22,119,255,.1);
 }
 
 .categories{
@@ -323,7 +322,7 @@ button:active{
 
 .products{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
     gap:22px;
 }
 
@@ -349,7 +348,7 @@ button:active{
 
 .product img{
     width:100%;
-    height:220px;
+    height:210px;
     object-fit:cover;
     display:block;
     transition:.3s;
@@ -370,39 +369,22 @@ button:active{
     font-size:12px;
 }
 
-.stock.low{
-    background:rgba(240,68,56,.9);
-}
-
 .favorite{
     position:absolute;
     top:12px;
     right:12px;
-    width:38px;
-    height:38px;
+    width:40px;
+    height:40px;
     padding:0;
     border-radius:50%;
     background:white;
     color:#777;
-    font-size:18px;
+    font-size:19px;
     z-index:2;
 }
 
 .favorite.active{
     color:#f04438;
-}
-
-.discount{
-    position:absolute;
-    top:12px;
-    left:12px;
-    background:var(--danger);
-    color:white;
-    padding:6px 9px;
-    border-radius:7px;
-    font-size:12px;
-    font-weight:bold;
-    z-index:2;
 }
 
 .product-info{
@@ -419,29 +401,16 @@ button:active{
 }
 
 .rating{
-    color:var(--gold);
+    color:#f79009;
     margin-top:7px;
     font-size:14px;
-}
-
-.reviews{
-    color:var(--muted);
-    font-size:12px;
-    margin-left:4px;
-}
-
-.price-old{
-    color:var(--muted);
-    text-decoration:line-through;
-    font-size:13px;
-    margin-top:10px;
 }
 
 .price{
     font-size:21px;
     color:var(--primary);
     font-weight:bold;
-    margin:5px 0 12px;
+    margin:12px 0;
 }
 
 .product-actions{
@@ -458,7 +427,7 @@ button:active{
 
 .empty{
     text-align:center;
-    padding:30px;
+    padding:35px;
     color:var(--muted);
     grid-column:1/-1;
 }
@@ -468,13 +437,45 @@ button:active{
     margin-bottom:8px;
 }
 
+/* ================= FEATURES ================= */
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:20px;
+    margin-top:20px;
+}
+
+.feature{
+    background:var(--card);
+    border:1px solid var(--border);
+    padding:25px;
+    border-radius:16px;
+    text-align:center;
+    box-shadow:var(--shadow);
+}
+
+.feature-icon{
+    font-size:35px;
+    margin-bottom:12px;
+}
+
+.feature h3{
+    margin-bottom:8px;
+}
+
+.feature p{
+    color:var(--muted);
+    line-height:1.5;
+}
+
 /* ================= FOOTER ================= */
 
 footer{
     background:var(--header);
     color:white;
     text-align:center;
-    padding:35px 20px;
+    padding:40px 20px;
     margin-top:40px;
 }
 
@@ -501,7 +502,7 @@ footer p{
 }
 
 .modal{
-    width:min(650px,100%);
+    width:min(620px,100%);
     max-height:90vh;
     overflow-y:auto;
     background:var(--card);
@@ -513,7 +514,6 @@ footer p{
 }
 
 @keyframes modalIn{
-
     from{
         opacity:0;
         transform:translateY(15px) scale(.98);
@@ -523,7 +523,6 @@ footer p{
         opacity:1;
         transform:translateY(0) scale(1);
     }
-
 }
 
 .modal-header{
@@ -560,12 +559,7 @@ footer p{
     color:var(--primary);
     font-size:28px;
     font-weight:bold;
-    margin:8px 0 15px;
-}
-
-.detail-old-price{
-    color:var(--muted);
-    text-decoration:line-through;
+    margin:15px 0;
 }
 
 .detail-stock{
@@ -594,6 +588,7 @@ footer p{
     color:var(--text);
     margin-bottom:13px;
     outline:none;
+    font-family:inherit;
 }
 
 .input:focus{
@@ -648,29 +643,30 @@ footer p{
     padding:5px;
 }
 
-.summary{
-    border-top:1px solid var(--border);
-    margin-top:15px;
-    padding-top:15px;
+.total{
+    display:flex;
+    justify-content:space-between;
+    font-size:20px;
+    font-weight:bold;
+    margin:20px 0;
 }
 
-.summary-row{
+.summary-box{
+    background:var(--bg);
+    border:1px solid var(--border);
+    padding:15px;
+    border-radius:12px;
+    margin-top:15px;
+}
+
+.summary-line{
     display:flex;
     justify-content:space-between;
     margin:8px 0;
-    color:var(--muted);
 }
 
-.summary-row.total-row{
-    color:var(--text);
-    font-size:21px;
-    font-weight:bold;
-    margin-top:15px;
-}
-
-.discount-text{
+.discount{
     color:var(--success);
-    font-weight:bold;
 }
 
 /* ================= ACCOUNT ================= */
@@ -713,9 +709,9 @@ footer p{
 }
 
 .order-products{
-    margin-top:10px;
     color:var(--muted);
-    font-size:13px;
+    font-size:14px;
+    margin-top:8px;
 }
 
 /* ================= TOAST ================= */
@@ -724,6 +720,7 @@ footer p{
     position:fixed;
     right:20px;
     bottom:20px;
+    max-width:350px;
     background:#101828;
     color:white;
     padding:15px 20px;
@@ -803,6 +800,13 @@ footer p{
         flex-direction:column;
     }
 
+    .toast{
+        left:15px;
+        right:15px;
+        bottom:15px;
+        max-width:none;
+    }
+
 }
 
 </style>
@@ -837,7 +841,7 @@ footer p{
             onclick="toggleTheme()"
             title="Tema"
         >
-            🌙
+            <span id="themeIcon">🌙</span>
         </button>
 
         <button
@@ -846,13 +850,14 @@ footer p{
             title="Favoritos"
         >
             ❤️
+
             <span
                 class="badge"
                 id="favoriteCount"
-                style="background:#1677ff;"
             >
                 0
             </span>
+
         </button>
 
         <button
@@ -925,10 +930,6 @@ footer p{
             <strong>FLOW10</strong>
             e ganhe 10% de desconto.
         </p>
-
-        <div class="offer-code">
-            FLOW10
-        </div>
 
     </div>
 
@@ -1009,6 +1010,90 @@ footer p{
 </section>
 
 
+<!-- ================= FEATURES ================= -->
+
+<section class="section">
+
+    <h2 class="section-title">
+        Por que comprar na FlowShop?
+    </h2>
+
+    <p class="section-subtitle">
+        Uma experiência simples e moderna.
+    </p>
+
+    <div class="features">
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                🚀
+            </div>
+
+            <h3>
+                Compra rápida
+            </h3>
+
+            <p>
+                Encontre seus produtos de forma simples e rápida.
+            </p>
+
+        </div>
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                🔒
+            </div>
+
+            <h3>
+                Experiência segura
+            </h3>
+
+            <p>
+                Seus dados desta demonstração ficam armazenados
+                somente no navegador.
+            </p>
+
+        </div>
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                💰
+            </div>
+
+            <h3>
+                Ofertas especiais
+            </h3>
+
+            <p>
+                Aproveite descontos e produtos selecionados.
+            </p>
+
+        </div>
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                ❤️
+            </div>
+
+            <h3>
+                Seus favoritos
+            </h3>
+
+            <p>
+                Salve produtos para encontrar novamente depois.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
 <!-- ================= FOOTER ================= -->
 
 <footer>
@@ -1022,7 +1107,7 @@ footer p{
     </p>
 
     <p>
-        FlowShop V10.2 © 2026
+        FlowShop V10.3 © 2026
     </p>
 
 </footer>
@@ -1082,10 +1167,8 @@ const products = [
         name:"Fone Bluetooth",
         category:"Acessórios",
         price:89.90,
-        oldPrice:109.90,
         stock:12,
         rating:4.8,
-        reviews:124,
         description:
         "Fone Bluetooth moderno, confortável e ideal para ouvir suas músicas no dia a dia.",
         image:
@@ -1097,10 +1180,8 @@ const products = [
         name:"Relógio Digital",
         category:"Acessórios",
         price:129.90,
-        oldPrice:159.90,
         stock:8,
         rating:4.6,
-        reviews:87,
         description:
         "Relógio digital moderno para combinar com diferentes estilos.",
         image:
@@ -1112,10 +1193,8 @@ const products = [
         name:"Câmera Digital",
         category:"Eletrônicos",
         price:499.90,
-        oldPrice:579.90,
         stock:5,
         rating:4.9,
-        reviews:76,
         description:
         "Câmera digital para registrar seus melhores momentos com qualidade.",
         image:
@@ -1127,10 +1206,8 @@ const products = [
         name:"Tênis Esportivo",
         category:"Moda",
         price:199.90,
-        oldPrice:239.90,
         stock:15,
         rating:4.7,
-        reviews:211,
         description:
         "Tênis esportivo confortável para atividades e uso casual.",
         image:
@@ -1142,10 +1219,8 @@ const products = [
         name:"Notebook",
         category:"Eletrônicos",
         price:2499.90,
-        oldPrice:2799.90,
         stock:4,
         rating:4.9,
-        reviews:58,
         description:
         "Notebook moderno para estudos, trabalho, programação e tarefas do dia a dia.",
         image:
@@ -1157,10 +1232,8 @@ const products = [
         name:"Smartphone",
         category:"Eletrônicos",
         price:1499.90,
-        oldPrice:1699.90,
         stock:7,
         rating:4.8,
-        reviews:302,
         description:
         "Smartphone moderno com ótimo desempenho para aplicativos e entretenimento.",
         image:
@@ -1172,10 +1245,8 @@ const products = [
         name:"Mochila",
         category:"Acessórios",
         price:119.90,
-        oldPrice:149.90,
         stock:10,
         rating:4.5,
-        reviews:93,
         description:
         "Mochila prática para escola, trabalho e uso cotidiano.",
         image:
@@ -1187,10 +1258,8 @@ const products = [
         name:"Óculos de Sol",
         category:"Moda",
         price:159.90,
-        oldPrice:189.90,
         stock:9,
         rating:4.7,
-        reviews:145,
         description:
         "Óculos de sol com visual moderno para completar seu estilo.",
         image:
@@ -1228,6 +1297,8 @@ let coupon =
     localStorage.getItem("flowshop_coupon") || "";
 
 let currentCategory = "Todos";
+
+let toastTimer;
 
 
 /* =====================================================
@@ -1282,18 +1353,6 @@ function getProduct(id){
 
     return products.find(
         product => product.id === id
-    );
-
-}
-
-
-function getDiscount(product){
-
-    if(!product.oldPrice) return 0;
-
-    return Math.round(
-        ((product.oldPrice - product.price) /
-        product.oldPrice) * 100
     );
 
 }
@@ -1372,6 +1431,15 @@ function renderProducts(){
                     Tente outra busca ou categoria.
                 </p>
 
+                <br>
+
+                <button
+                    class="primary"
+                    onclick="clearSearch()"
+                >
+                    Limpar busca
+                </button>
+
             </div>
 
         `;
@@ -1387,24 +1455,9 @@ function renderProducts(){
             const isFavorite =
                 favorites.includes(product.id);
 
-            const discount =
-                getDiscount(product);
-
             return `
 
                 <div class="product">
-
-                    ${
-                        discount > 0
-
-                        ? `
-                            <span class="discount">
-                                -${discount}%
-                            </span>
-                          `
-
-                        : ""
-                    }
 
                     <button
                         class="favorite ${isFavorite ? "active" : ""}"
@@ -1426,9 +1479,7 @@ function renderProducts(){
                             "
                         >
 
-                        <span
-                            class="stock ${product.stock <= 5 ? "low" : ""}"
-                        >
+                        <span class="stock">
                             📦 ${product.stock} disponíveis
                         </span>
 
@@ -1445,26 +1496,8 @@ function renderProducts(){
                         </div>
 
                         <div class="rating">
-
                             ⭐ ${product.rating}
-
-                            <span class="reviews">
-                                (${product.reviews} avaliações)
-                            </span>
-
                         </div>
-
-                        ${
-                            product.oldPrice
-
-                            ? `
-                                <div class="price-old">
-                                    ${money(product.oldPrice)}
-                                </div>
-                              `
-
-                            : ""
-                        }
 
                         <div class="price">
                             ${money(product.price)}
@@ -1500,6 +1533,29 @@ function renderProducts(){
 }
 
 
+function clearSearch(){
+
+    document
+        .getElementById("search")
+        .value = "";
+
+    currentCategory = "Todos";
+
+    document
+        .querySelectorAll(".category")
+        .forEach(btn =>
+            btn.classList.remove("active")
+        );
+
+    document
+        .querySelector(".category")
+        .classList.add("active");
+
+    renderProducts();
+
+}
+
+
 function setCategory(category,button){
 
     currentCategory = category;
@@ -1531,9 +1587,6 @@ function openProduct(id){
     const isFavorite =
         favorites.includes(product.id);
 
-    const discount =
-        getDiscount(product);
-
 
     openModal(
 
@@ -1557,41 +1610,10 @@ function openProduct(id){
 
             <div class="rating">
                 ⭐ ${product.rating} / 5.0
-                <span class="reviews">
-                    (${product.reviews} avaliações)
-                </span>
             </div>
-
-            ${
-                product.oldPrice
-
-                ? `
-                    <div class="detail-old-price">
-                        ${money(product.oldPrice)}
-                    </div>
-                  `
-
-                : ""
-            }
 
             <div class="detail-price">
                 ${money(product.price)}
-
-                ${
-                    discount > 0
-
-                    ? `
-                        <small style="
-                            color:var(--success);
-                            font-size:13px;
-                        ">
-                            -${discount}%
-                        </small>
-                      `
-
-                    : ""
-                }
-
             </div>
 
             <p style="
@@ -1615,11 +1637,9 @@ function openProduct(id){
                         openProduct(${product.id})
                     "
                 >
-                    ${
-                        isFavorite
+                    ${isFavorite
                         ? "❤️ Favoritado"
-                        : "♡ Favoritar"
-                    }
+                        : "♡ Favoritar"}
                 </button>
 
                 <button
@@ -1655,7 +1675,7 @@ function addToCart(id){
     if(product.stock <= 0){
 
         showToast(
-            "Produto sem estoque."
+            "❌ Produto sem estoque."
         );
 
         return;
@@ -1664,7 +1684,9 @@ function addToCart(id){
 
 
     const existing =
-        cart.find(item => item.id === id);
+        cart.find(
+            item => item.id === id
+        );
 
 
     if(existing){
@@ -1672,7 +1694,7 @@ function addToCart(id){
         if(existing.quantity >= product.stock){
 
             showToast(
-                "Quantidade máxima disponível atingida."
+                "⚠️ Limite de estoque atingido."
             );
 
             return;
@@ -1724,10 +1746,13 @@ function cartTotal(){
 function changeQuantity(id,amount){
 
     const item =
-        cart.find(item => item.id === id);
+        cart.find(
+            item => item.id === id
+        );
 
     const product =
         getProduct(id);
+
 
     if(!item || !product) return;
 
@@ -1738,7 +1763,7 @@ function changeQuantity(id,amount){
     ){
 
         showToast(
-            "Você atingiu o limite de estoque."
+            "⚠️ Você atingiu o limite de estoque."
         );
 
         return;
@@ -1768,15 +1793,20 @@ function changeQuantity(id,amount){
 
 function removeFromCart(id){
 
+    const product =
+        getProduct(id);
+
+
     cart =
         cart.filter(
             item => item.id !== id
         );
 
+
     saveData();
 
     showToast(
-        "Produto removido do carrinho."
+        `${product ? product.name : "Produto"} removido do carrinho.`
     );
 
     openCart();
@@ -1784,45 +1814,30 @@ function removeFromCart(id){
 }
 
 
-/* =====================================================
-   MODAL
-===================================================== */
+function clearCart(){
 
-function openModal(title,content){
+    if(cart.length === 0){
 
-    document
-        .getElementById("modalTitle")
-        .textContent = title;
-
-    document
-        .getElementById("modalContent")
-        .innerHTML = content;
-
-    document
-        .getElementById("modalBg")
-        .classList.add("show");
-
-}
-
-
-function closeModal(){
-
-    document
-        .getElementById("modalBg")
-        .classList.remove("show");
-
-}
-
-
-function closeModalOutside(event){
-
-    if(
-        event.target.id === "modalBg"
-    ){
-
-        closeModal();
+        return;
 
     }
+
+
+    cart = [];
+
+    coupon = "";
+
+    localStorage.removeItem(
+        "flowshop_coupon"
+    );
+
+    saveData();
+
+    showToast(
+        "Carrinho limpo."
+    );
+
+    closeModal();
 
 }
 
@@ -1836,11 +1851,16 @@ function openCart(){
     if(cart.length === 0){
 
         openModal(
+
             "🛒 Meu Carrinho",
 
             `
 
                 <div class="empty">
+
+                    <div style="font-size:55px;">
+                        🛒
+                    </div>
 
                     <h3>
                         Seu carrinho está vazio.
@@ -1865,6 +1885,7 @@ function openCart(){
                 </div>
 
             `
+
         );
 
         return;
@@ -1915,9 +1936,9 @@ function openCart(){
                             −
                         </button>
 
-                        <span>
+                        <strong>
                             ${item.quantity}
-                        </span>
+                        </strong>
 
                         <button
                             onclick="
@@ -1955,10 +1976,12 @@ function openCart(){
     const subtotal =
         cartTotal();
 
+
     const discount =
         coupon === "FLOW10"
         ? subtotal * .10
         : 0;
+
 
     const total =
         subtotal - discount;
@@ -1972,17 +1995,17 @@ function openCart(){
 
             ${html}
 
-            <div class="summary">
+            <div class="summary-box">
 
-                <div class="summary-row">
+                <div class="summary-line">
 
                     <span>
                         Subtotal
                     </span>
 
-                    <span>
+                    <strong>
                         ${money(subtotal)}
-                    </span>
+                    </strong>
 
                 </div>
 
@@ -1990,23 +2013,24 @@ function openCart(){
                     discount > 0
 
                     ? `
-                        <div class="summary-row">
 
-                            <span class="discount-text">
-                                🎉 Desconto FLOW10
+                        <div class="summary-line discount">
+
+                            <span>
+                                Desconto
                             </span>
 
-                            <span class="discount-text">
-                                -${money(discount)}
-                            </span>
+                            <strong>
+                                - ${money(discount)}
+                            </strong>
 
                         </div>
-                      `
 
+                    `
                     : ""
                 }
 
-                <div class="summary-row total-row">
+                <div class="total">
 
                     <span>
                         Total
@@ -2020,12 +2044,14 @@ function openCart(){
 
             </div>
 
+
             <input
                 class="input"
                 id="couponInput"
                 placeholder="Cupom de desconto"
                 value="${coupon}"
             >
+
 
             <button
                 class="primary full"
@@ -2034,13 +2060,26 @@ function openCart(){
                 🎟️ Aplicar cupom
             </button>
 
+
             <br><br>
+
 
             <button
                 class="primary full"
                 onclick="openCheckout()"
             >
                 💳 Finalizar compra
+            </button>
+
+
+            <br><br>
+
+
+            <button
+                class="outline full"
+                onclick="clearCart()"
+            >
+                🗑️ Limpar carrinho
             </button>
 
         `
@@ -2083,7 +2122,7 @@ function applyCoupon(code){
         );
 
         showToast(
-            "Cupom FLOW10 aplicado! 🎉"
+            "🎉 Cupom FLOW10 aplicado!"
         );
 
         openCart();
@@ -2091,7 +2130,7 @@ function applyCoupon(code){
     }else{
 
         showToast(
-            "Cupom inválido."
+            "❌ Cupom inválido."
         );
 
     }
@@ -2119,10 +2158,12 @@ function openCheckout(){
     const subtotal =
         cartTotal();
 
+
     const discount =
         coupon === "FLOW10"
         ? subtotal * .10
         : 0;
+
 
     const total =
         subtotal - discount;
@@ -2141,6 +2182,7 @@ function openCheckout(){
                 Preencha seus dados para simular o pedido.
             </p>
 
+
             <div class="form-group">
 
                 <label>
@@ -2155,6 +2197,7 @@ function openCheckout(){
                 >
 
             </div>
+
 
             <div class="form-group">
 
@@ -2171,6 +2214,7 @@ function openCheckout(){
 
             </div>
 
+
             <div class="form-group">
 
                 <label>
@@ -2186,41 +2230,45 @@ function openCheckout(){
 
             </div>
 
-            <div class="summary">
 
-                <div class="summary-row">
+            <div class="summary-box">
+
+                <div class="summary-line">
 
                     <span>
                         Subtotal
                     </span>
 
-                    <span>
+                    <strong>
                         ${money(subtotal)}
-                    </span>
+                    </strong>
 
                 </div>
+
 
                 ${
                     discount > 0
 
                     ? `
-                        <div class="summary-row">
 
-                            <span class="discount-text">
+                        <div class="summary-line discount">
+
+                            <span>
                                 Desconto
                             </span>
 
-                            <span class="discount-text">
-                                -${money(discount)}
-                            </span>
+                            <strong>
+                                - ${money(discount)}
+                            </strong>
 
                         </div>
-                      `
 
+                    `
                     : ""
                 }
 
-                <div class="summary-row total-row">
+
+                <div class="total">
 
                     <span>
                         Total
@@ -2234,10 +2282,9 @@ function openCheckout(){
 
             </div>
 
-            <br>
 
             <button
-                class="primary full"
+                class="success full"
                 onclick="confirmOrder()"
             >
                 ✅ Confirmar pedido
@@ -2262,11 +2309,13 @@ function confirmOrder(){
         .value
         .trim();
 
+
     const email =
         document
         .getElementById("checkoutEmail")
         .value
         .trim();
+
 
     const address =
         document
@@ -2278,7 +2327,7 @@ function confirmOrder(){
     if(!name || !email || !address){
 
         showToast(
-            "Preencha todos os campos."
+            "⚠️ Preencha todos os campos."
         );
 
         return;
@@ -2289,7 +2338,7 @@ function confirmOrder(){
     if(!email.includes("@")){
 
         showToast(
-            "Digite um e-mail válido."
+            "⚠️ Digite um e-mail válido."
         );
 
         return;
@@ -2304,6 +2353,19 @@ function confirmOrder(){
             ? .90
             : 1
         );
+
+
+    const itemNames =
+        cart.map(item => {
+
+            const product =
+                getProduct(item.id);
+
+            return product
+                ? `${product.name} x${item.quantity}`
+                : "";
+
+        }).filter(Boolean);
 
 
     const order = {
@@ -2322,7 +2384,10 @@ function confirmOrder(){
 
         items:[
             ...cart
-        ]
+        ],
+
+        products:
+            itemNames
 
     };
 
@@ -2360,19 +2425,31 @@ function confirmOrder(){
 
             <div class="empty">
 
+                <div style="font-size:60px;">
+                    🎉
+                </div>
+
                 <h3>
                     Pedido simulado com sucesso!
                 </h3>
 
-                <p style="margin-top:10px;">
+                <p>
                     Obrigado,
                     <strong>${name}</strong>!
                 </p>
 
-                <p style="margin-top:8px;">
+                <br>
+
+                <p>
                     Número do pedido:
-                    <strong>#${order.id}</strong>
                 </p>
+
+                <h2 style="
+                    color:var(--primary);
+                    margin:8px 0;
+                ">
+                    #${order.id}
+                </h2>
 
                 <br>
 
@@ -2383,7 +2460,7 @@ function confirmOrder(){
                         openOrders();
                     "
                 >
-                    Ver meus pedidos
+                    📦 Ver meus pedidos
                 </button>
 
             </div>
@@ -2410,7 +2487,7 @@ function toggleFavorite(id){
             );
 
         showToast(
-            "Removido dos favoritos."
+            "💔 Removido dos favoritos."
         );
 
     }else{
@@ -2418,7 +2495,7 @@ function toggleFavorite(id){
         favorites.push(id);
 
         showToast(
-            "Adicionado aos favoritos! ❤️"
+            "❤️ Adicionado aos favoritos!"
         );
 
     }
@@ -2449,6 +2526,10 @@ function openFavorites(){
             `
 
                 <div class="empty">
+
+                    <div style="font-size:55px;">
+                        ❤️
+                    </div>
 
                     <h3>
                         Você ainda não tem favoritos.
@@ -2495,6 +2576,7 @@ function openFavorites(){
 
                 </div>
 
+
                 <button
                     class="primary"
                     onclick="
@@ -2502,6 +2584,17 @@ function openFavorites(){
                     "
                 >
                     🛒
+                </button>
+
+
+                <button
+                    class="remove"
+                    onclick="
+                        toggleFavorite(${product.id});
+                        openFavorites();
+                    "
+                >
+                    💔
                 </button>
 
             </div>
@@ -2550,17 +2643,20 @@ function openAccount(){
                         Seus dados ficam salvos apenas neste navegador.
                     </p>
 
+
                     <input
                         class="input"
                         id="accountName"
                         placeholder="Seu nome"
                     >
 
+
                     <input
                         class="input"
                         id="accountEmail"
                         placeholder="Seu e-mail"
                     >
+
 
                     <button
                         class="primary full"
@@ -2596,9 +2692,11 @@ function openAccount(){
 
                 </div>
 
+
                 <h2>
                     ${user.name}
                 </h2>
+
 
                 <p style="
                     color:var(--muted);
@@ -2606,7 +2704,9 @@ function openAccount(){
                     ${user.email}
                 </p>
 
+
                 <br>
+
 
                 <button
                     class="primary full"
@@ -2615,7 +2715,20 @@ function openAccount(){
                     📦 Meus pedidos
                 </button>
 
+
                 <br><br>
+
+
+                <button
+                    class="outline full"
+                    onclick="openFavorites()"
+                >
+                    ❤️ Meus favoritos
+                </button>
+
+
+                <br><br>
+
 
                 <button
                     class="danger full"
@@ -2641,6 +2754,7 @@ function createAccount(){
         .value
         .trim();
 
+
     const email =
         document
         .getElementById("accountEmail")
@@ -2651,7 +2765,7 @@ function createAccount(){
     if(!name || !email){
 
         showToast(
-            "Preencha os dados."
+            "⚠️ Preencha os dados."
         );
 
         return;
@@ -2662,7 +2776,7 @@ function createAccount(){
     if(!email.includes("@")){
 
         showToast(
-            "Digite um e-mail válido."
+            "⚠️ Digite um e-mail válido."
         );
 
         return;
@@ -2681,9 +2795,11 @@ function createAccount(){
 
     saveData();
 
+
     showToast(
-        "Conta criada! 👤"
+        "👤 Conta criada!"
     );
+
 
     openAccount();
 
@@ -2699,6 +2815,7 @@ function logout(){
     );
 
     closeModal();
+
 
     showToast(
         "Você saiu da conta."
@@ -2722,6 +2839,10 @@ function openOrders(){
             `
 
                 <div class="empty">
+
+                    <div style="font-size:55px;">
+                        📦
+                    </div>
 
                     <h3>
                         Nenhum pedido ainda.
@@ -2747,22 +2868,10 @@ function openOrders(){
 
     orders.forEach(order => {
 
-        let productNames = [];
-
-        order.items.forEach(item => {
-
-            const product =
-                getProduct(item.id);
-
-            if(product){
-
-                productNames.push(
-                    `${product.name} (${item.quantity}x)`
-                );
-
-            }
-
-        });
+        const productsText =
+            order.products
+            ? order.products.join(", ")
+            : "Produtos";
 
 
         html += `
@@ -2770,20 +2879,27 @@ function openOrders(){
             <div class="order-card">
 
                 <strong>
-                    Pedido #${order.id}
+                    📦 Pedido #${order.id}
                 </strong>
+
 
                 <p class="order-date">
                     ${order.date}
                 </p>
 
+
+                <p class="order-products">
+                    ${productsText}
+                </p>
+
+
+                <br>
+
+
                 <strong>
                     Total: ${money(order.total)}
                 </strong>
 
-                <div class="order-products">
-                    🛍️ ${productNames.join(", ")}
-                </div>
 
                 <p class="order-status">
                     ✅ Pedido realizado
@@ -2815,6 +2931,7 @@ function toggleTheme(){
         .classList
         .toggle("dark");
 
+
     const dark =
         document
         .body
@@ -2827,6 +2944,73 @@ function toggleTheme(){
         dark ? "dark" : "light"
     );
 
+
+    updateThemeIcon();
+
+}
+
+
+function updateThemeIcon(){
+
+    const dark =
+        document
+        .body
+        .classList
+        .contains("dark");
+
+
+    document
+        .getElementById("themeIcon")
+        .textContent =
+        dark ? "☀️" : "🌙";
+
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+function openModal(title,content){
+
+    document
+        .getElementById("modalTitle")
+        .textContent = title;
+
+
+    document
+        .getElementById("modalContent")
+        .innerHTML = content;
+
+
+    document
+        .getElementById("modalBg")
+        .classList
+        .add("show");
+
+}
+
+
+function closeModal(){
+
+    document
+        .getElementById("modalBg")
+        .classList
+        .remove("show");
+
+}
+
+
+function closeModalOutside(event){
+
+    if(
+        event.target.id === "modalBg"
+    ){
+
+        closeModal();
+
+    }
+
 }
 
 
@@ -2837,8 +3021,11 @@ function toggleTheme(){
 function goHome(){
 
     window.scrollTo({
+
         top:0,
+
         behavior:"smooth"
+
     });
 
 }
@@ -2849,7 +3036,9 @@ function goProducts(){
     document
         .getElementById("productsSection")
         .scrollIntoView({
+
             behavior:"smooth"
+
         });
 
 }
@@ -2859,27 +3048,33 @@ function goProducts(){
    TOAST
 ===================================================== */
 
-let toastTimer;
-
-
 function showToast(message){
 
     const toast =
-        document.getElementById("toast");
+        document
+        .getElementById("toast");
+
 
     toast.textContent =
         message;
 
-    toast.classList.add("show");
+
+    toast.classList.add(
+        "show"
+    );
 
 
-    clearTimeout(toastTimer);
+    clearTimeout(
+        toastTimer
+    );
 
 
     toastTimer =
         setTimeout(() => {
 
-            toast.classList.remove("show");
+            toast.classList.remove(
+                "show"
+            );
 
         },2500);
 
@@ -2911,6 +3106,8 @@ function init(){
     renderProducts();
 
     updateCounters();
+
+    updateThemeIcon();
 
 }
 

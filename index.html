@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FlowShop V12.2 | Sua Loja Online</title>
+<title>FlowShop V12.2.1 | Sua Loja Online</title>
 
 <style>
 *{
@@ -1609,7 +1609,7 @@ footer p{
     </p>
 
     <p>
-        FlowShop V12.2 © 2026
+        FlowShop V12.2.1 © 2026
     </p>
 
     <br>
@@ -2228,7 +2228,7 @@ function renderProducts(){
         filtered.map(product => {
 
             const isFavorite =
-                favorites.includes(product.id);
+                isFavorite(product.id);
 
             const discount =
                 discountPercent(product);
@@ -2254,7 +2254,7 @@ function renderProducts(){
 
                     <button
                         class="favorite ${isFavorite ? "active" : ""}"
-                        onclick="toggleFavorite(${product.id})"
+                        onclick="toggleFavorite(${product.id}, event)"
                     >
                         ${isFavorite ? "❤️" : "♡"}
                     </button>
@@ -2457,7 +2457,7 @@ function openProduct(id){
     addRecentViewed(id);
 
     const isFavorite =
-        favorites.includes(product.id);
+        isFavorite(product.id);
 
     const discount =
         discountPercent(product);
@@ -4133,6 +4133,49 @@ function openAccount(){
     );
 }
 
+
+
+function isFavorite(productId){
+    return Array.isArray(favorites) && favorites.includes(Number(productId));
+}
+
+function toggleFavorite(productId, event){
+
+    if(event){
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    productId = Number(productId);
+
+    if(!Array.isArray(favorites)){
+        favorites = [];
+    }
+
+    const index = favorites.indexOf(productId);
+
+    if(index >= 0){
+        favorites.splice(index, 1);
+        showToast("Removido dos favoritos.");
+    }else{
+        favorites.push(productId);
+        showToast("Adicionado aos favoritos! ❤️");
+    }
+
+    localStorage.setItem("flowshop_favorites", JSON.stringify(favorites));
+
+    if(typeof saveData === "function"){
+        try { saveData(); } catch(e) {}
+    }
+
+    if(typeof renderProducts === "function"){
+        try { renderProducts(); } catch(e) {}
+    }
+
+    if(typeof renderRecent === "function"){
+        try { renderRecent(); } catch(e) {}
+    }
+}
 
 function openFavorites(){
 

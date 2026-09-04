@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FlowShop V12.2.1 | Sua Loja Online</title>
+<title>FlowShop V12.2.2.2 | Sua Loja Online</title>
 
 <style>
 *{
@@ -1609,7 +1609,7 @@ footer p{
     </p>
 
     <p>
-        FlowShop V12.2.1 © 2026
+        FlowShop V12.2.2.2 © 2026
     </p>
 
     <br>
@@ -1800,6 +1800,20 @@ let selectedRating = 5;
 
 let selectedPayment = "pix";
 
+/* V12.2.2 - normalização dos dados antigos */
+favorites = Array.isArray(favorites)
+    ? favorites.map(Number).filter(Number.isFinite)
+    : [];
+
+recentViewed = Array.isArray(recentViewed)
+    ? recentViewed.map(Number).filter(Number.isFinite)
+    : [];
+
+orders = Array.isArray(orders) ? orders : [];
+customProducts = Array.isArray(customProducts) ? customProducts : [];
+cart = Array.isArray(cart) ? cart : [];
+
+
 /* =====================================================
    V11.1 - PREPARAÇÃO PARA PAGAMENTO AUTOMÁTICO
    -----------------------------------------------------
@@ -1847,8 +1861,10 @@ function getAllProducts(){
 
 function getProduct(id){
 
+    const wantedId = Number(id);
+
     return getAllProducts().find(
-        product => product.id === id
+        product => Number(product.id) === wantedId
     );
 }
 
@@ -2124,42 +2140,26 @@ function renderOffers(){
 ===================================================== */
 
 
-function renderSearchState(visibleCount){
-
-    const count = document.getElementById("searchCount");
-
-    if(count){
-        count.textContent = visibleCount === 1
-            ? "1 produto encontrado"
-            : `${visibleCount} produtos encontrados`;
-    }
-
-    const grid = document.getElementById("productsGrid");
-
-    if(grid && visibleCount === 0){
-        grid.innerHTML = `
-            <div class="empty" style="grid-column:1/-1;">
-                <h3>🔎 Nenhum produto encontrado</h3>
-                <p>Tente outro nome, categoria ou preço.</p>
-            </div>
-        `;
-    }
-}
-
 function renderProducts(){
 
     const container =
         document.getElementById("products");
 
+    if(!container) return;
+
+    const searchInput =
+        document.getElementById("search");
+
+    const sortInput =
+        document.getElementById("sort");
+
     const search =
-        document
-        .getElementById("search")
-        .value
+        (searchInput?.value || "")
         .toLowerCase()
         .trim();
 
     const sort =
-        document.getElementById("sort").value;
+        sortInput?.value || "";
 
     let filtered =
         getAllProducts().filter(product => {
@@ -2227,8 +2227,8 @@ function renderProducts(){
     container.innerHTML =
         filtered.map(product => {
 
-            const isFavorite =
-                isFavorite(product.id);
+            const favoriteActive =
+                productIsFavorite(product.id);
 
             const discount =
                 discountPercent(product);
@@ -2253,10 +2253,10 @@ function renderProducts(){
                     }
 
                     <button
-                        class="favorite ${isFavorite ? "active" : ""}"
+                        class="favorite ${favoriteActive ? "active" : ""}"
                         onclick="toggleFavorite(${product.id}, event)"
                     >
-                        ${isFavorite ? "❤️" : "♡"}
+                        ${favoriteActive ? "❤️" : "♡"}
                     </button>
 
                     <div
@@ -2457,7 +2457,7 @@ function openProduct(id){
     addRecentViewed(id);
 
     const isFavorite =
-        isFavorite(product.id);
+        productIsFavorite(product.id);
 
     const discount =
         discountPercent(product);
@@ -4045,6 +4045,7 @@ function saveCustomerProfile(){
     }
 
     customerProfile = { name, email };
+    user = { name, email };
     localStorage.setItem("flowshop_customer_profile", JSON.stringify(customerProfile));
 
     showToast("Perfil salvo com sucesso! ✅");
@@ -4080,6 +4081,7 @@ function editProfile(){
 
 function openAccount(){
 
+    const accountUser = user || customerProfile || {};
     const totalSpent = orders
         .filter(order => order.paymentStatus === "paid")
         .reduce((sum, order) => sum + Number(order.total || 0), 0);
@@ -4093,10 +4095,10 @@ function openAccount(){
                 👤
             </div>
 
-            <h3>Minha conta</h3>
+            <h3>${escapeHtml(accountUser.name || "Cliente FlowShop")}</h3>
 
             <p style="margin:8px 0 20px;color:var(--muted);">
-                Consulte seus pedidos e seus dados da loja.
+                ${escapeHtml(accountUser.email || "Seu perfil ainda não foi preenchido.")}
             </p>
 
             <div class="stats-grid">
@@ -4135,7 +4137,7 @@ function openAccount(){
 
 
 
-function isFavorite(productId){
+function productIsFavorite(productId){
     return Array.isArray(favorites) && favorites.includes(Number(productId));
 }
 
@@ -5286,9 +5288,6 @@ function resumePendingAutomaticPayments(){
 resumePendingAutomaticPayments();
 
 
-document.addEventListener("DOMContentLoaded", () => {
-    try { setupSearchEnter(); } catch(e) {}
-});
 </script>
 
 </body>

@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101828">
+<meta name="description" content="FlowShop — loja online moderna para demonstração e aprendizado.">
 
-<title>FlowShop V12.3.2 | Sua Loja Online</title>
+<title>FlowShop V13.0 FINAL | Sua Loja Online</title>
 
 <style>
 *{
@@ -1671,7 +1673,7 @@ footer p{
     </p>
 
     <p>
-        FlowShop V12.3.2 © 2026
+        FlowShop V13.0 FINAL © 2026
     </p>
 
     <br>
@@ -2223,6 +2225,8 @@ function renderProducts(){
     const sort =
         sortInput?.value || "";
 
+    const priceFilter = window.flowshopPriceFilter || {min:0, max:Infinity};
+
     let filtered =
         getAllProducts().filter(product => {
 
@@ -2235,7 +2239,12 @@ function renderProducts(){
                 .toLowerCase()
                 .includes(search);
 
-            return categoryOk && searchOk;
+            const priceOk =
+                Number(product.price) >= Number(priceFilter.min || 0) &&
+                (!Number.isFinite(priceFilter.max) ||
+                 Number(product.price) <= Number(priceFilter.max));
+
+            return categoryOk && searchOk && priceOk;
         });
 
     if(sort === "priceAsc"){
@@ -2261,8 +2270,14 @@ function renderProducts(){
         document.getElementById("searchCount");
 
     if(searchCount){
+        const activeFilters = [];
+        if(search) activeFilters.push("busca");
+        if(currentCategory !== "Todos") activeFilters.push(currentCategory);
+        if(Number(priceFilter.min) > 0) activeFilters.push(`mín. ${money(priceFilter.min)}`);
+        if(Number.isFinite(priceFilter.max)) activeFilters.push(`máx. ${money(priceFilter.max)}`);
+
         searchCount.textContent =
-            `${filtered.length} produto${filtered.length === 1 ? "" : "s"} encontrado${filtered.length === 1 ? "" : "s"}.`;
+            `${filtered.length} produto${filtered.length === 1 ? "" : "s"} encontrado${filtered.length === 1 ? "" : "s"}${activeFilters.length ? " • Filtros: " + activeFilters.join(" • ") : ""}.`;
     }
 
     if(filtered.length === 0){
@@ -2407,6 +2422,13 @@ function clearProductFilters(){
 
     if(searchInput) searchInput.value = "";
     if(sortInput) sortInput.value = "";
+
+    const minPrice = document.getElementById("minPrice");
+    const maxPrice = document.getElementById("maxPrice");
+    if(minPrice) minPrice.value = "";
+    if(maxPrice) maxPrice.value = "";
+
+    window.flowshopPriceFilter = {min:0, max:Infinity};
 
     currentCategory = "Todos";
 
@@ -4656,7 +4678,7 @@ function openAdmin(){
                     margin-top:7px;
                     opacity:.8;
                 ">
-                    Área de demonstração da FlowShop.
+                    Painel de demonstração da FlowShop. Pagamentos reais exigem backend e provedor configurados.
                 </p>
 
             </div>
@@ -4709,7 +4731,9 @@ function openAdmin(){
                         ${money(
                             orders.reduce(
                                 (total,order) =>
-                                    total + order.total,
+                                    (order.paymentStatus || "paid") === "paid"
+                                        ? total + Number(order.total || 0)
+                                        : total,
                                 0
                             )
                         )}
@@ -5202,8 +5226,16 @@ function changeOrderStatus(id,status){
 
     if(!order) return;
 
+    const nextStatus = Number(status);
+
+    if((order.paymentStatus || "pending") !== "paid" && nextStatus > 1){
+        showToast("Confirme o pagamento antes de avançar o pedido. 🔒");
+        openAdminOrders();
+        return;
+    }
+
     order.status =
-        Number(status);
+        Math.max(1, Math.min(4, nextStatus));
 
     saveData();
 
@@ -5396,6 +5428,15 @@ function init(){
     updateNotificationCount();
 
     updateCountdown();
+
+    ["minPrice","maxPrice"].forEach(id => {
+        const field = document.getElementById(id);
+        if(field){
+            field.addEventListener("keydown", event => {
+                if(event.key === "Enter") applyPriceFilter();
+            });
+        }
+    });
 
     setInterval(
         updateCountdown,

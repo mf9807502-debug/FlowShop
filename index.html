@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FlowShop V12.1.2 | Sua Loja Online</title>
+<title>FlowShop V12.2 | Sua Loja Online</title>
 
 <style>
 *{
@@ -1274,6 +1274,73 @@ footer p{
         flex-wrap:wrap;
     }
 }
+
+.profile-form{
+    display:grid;
+    gap:10px;
+}
+.profile-form label{
+    font-weight:700;
+    margin-top:4px;
+}
+.profile-form input{
+    width:100%;
+    padding:12px 14px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:var(--card);
+    color:var(--text);
+    outline:none;
+}
+.profile-form input:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 0 3px rgba(37,99,235,.12);
+}
+.full{
+    width:100%;
+}
+.order-card-v22{
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:15px;
+    margin-bottom:12px;
+    background:var(--card);
+}
+.order-card-v22 .order-head{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    align-items:flex-start;
+}
+.order-card-v22 .order-id{
+    font-weight:800;
+}
+.order-card-v22 .order-date{
+    color:var(--muted);
+    font-size:.88rem;
+    margin-top:4px;
+}
+.order-card-v22 .order-total{
+    font-weight:900;
+    white-space:nowrap;
+}
+.status-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    padding:6px 10px;
+    border-radius:999px;
+    background:var(--bg);
+    font-size:.85rem;
+    margin-top:10px;
+}
+.order-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:12px;
+}
+
 </style>
 </head>
 
@@ -1542,7 +1609,7 @@ footer p{
     </p>
 
     <p>
-        FlowShop V12.1.2 © 2026
+        FlowShop V12.2 © 2026
     </p>
 
     <br>
@@ -1705,6 +1772,7 @@ let cart =
 let favorites =
     JSON.parse(localStorage.getItem("flowshop_favorites")) || [];
 
+let customerProfile = JSON.parse(localStorage.getItem('flowshop_customer_profile') || 'null');
 let orders =
     JSON.parse(localStorage.getItem("flowshop_orders")) || [];
 
@@ -2054,6 +2122,29 @@ function renderOffers(){
 /* =====================================================
    PRODUTOS
 ===================================================== */
+
+
+function renderSearchState(visibleCount){
+
+    const count = document.getElementById("searchCount");
+
+    if(count){
+        count.textContent = visibleCount === 1
+            ? "1 produto encontrado"
+            : `${visibleCount} produtos encontrados`;
+    }
+
+    const grid = document.getElementById("productsGrid");
+
+    if(grid && visibleCount === 0){
+        grid.innerHTML = `
+            <div class="empty" style="grid-column:1/-1;">
+                <h3>🔎 Nenhum produto encontrado</h3>
+                <p>Tente outro nome, categoria ou preço.</p>
+            </div>
+        `;
+    }
+}
 
 function renderProducts(){
 
@@ -3937,6 +4028,56 @@ function openPixWaitingModal(order, apiError=false){
 ===================================================== */
 
 
+
+function saveCustomerProfile(){
+
+    const name = document.getElementById("profileName")?.value.trim() || "";
+    const email = document.getElementById("profileEmail")?.value.trim() || "";
+
+    if(!name){
+        showToast("Informe seu nome.");
+        return;
+    }
+
+    if(email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+        showToast("Digite um e-mail válido.");
+        return;
+    }
+
+    customerProfile = { name, email };
+    localStorage.setItem("flowshop_customer_profile", JSON.stringify(customerProfile));
+
+    showToast("Perfil salvo com sucesso! ✅");
+    closeModal();
+    openAccount();
+}
+
+function editProfile(){
+
+    const profile = customerProfile || {name:"", email:""};
+
+    openModal(
+        "👤 Meu perfil",
+        `
+        <div class="profile-form">
+            <label>Nome</label>
+            <input id="profileName" type="text" maxlength="80"
+                   value="${escapeHtml(profile.name || "")}"
+                   placeholder="Seu nome">
+
+            <label>E-mail</label>
+            <input id="profileEmail" type="email" maxlength="120"
+                   value="${escapeHtml(profile.email || "")}"
+                   placeholder="seuemail@exemplo.com">
+
+            <button class="primary full" onclick="saveCustomerProfile()">
+                💾 Salvar perfil
+            </button>
+        </div>
+        `
+    );
+}
+
 function openAccount(){
 
     const totalSpent = orders
@@ -5101,6 +5242,10 @@ function resumePendingAutomaticPayments(){
 
 resumePendingAutomaticPayments();
 
+
+document.addEventListener("DOMContentLoaded", () => {
+    try { setupSearchEnter(); } catch(e) {}
+});
 </script>
 
 </body>

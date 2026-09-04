@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FlowShop V10.5 | Sua Loja Online</title>
+<title>FlowShop V10.6 | Sua Loja Online</title>
 
 <style>
 *{
@@ -103,6 +103,11 @@ button:disabled{
     color:white;
 }
 
+.purple{
+    background:var(--purple);
+    color:white;
+}
+
 .full{
     width:100%;
 }
@@ -169,10 +174,6 @@ nav a:hover{
     padding:0;
 }
 
-.icon-btn:hover{
-    background:#334155;
-}
-
 .badge{
     position:absolute;
     top:-4px;
@@ -191,13 +192,12 @@ nav a:hover{
 /* HERO */
 
 .hero{
-    min-height:450px;
+    min-height:430px;
     padding:80px 20px;
     text-align:center;
     color:white;
     background:
         radial-gradient(circle at top right,rgba(255,255,255,.18),transparent 30%),
-        radial-gradient(circle at bottom left,rgba(255,255,255,.12),transparent 25%),
         linear-gradient(120deg,#1597ff,#2838c7);
     display:flex;
     flex-direction:column;
@@ -228,16 +228,18 @@ nav a:hover{
 
 .benefits{
     display:grid;
-    grid-template-columns:repeat(4,1fr);
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
     gap:15px;
-    padding:25px 5%;
-    background:var(--card);
-    border-bottom:1px solid var(--border);
+    padding:30px 5%;
 }
 
 .benefit{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:20px;
     text-align:center;
-    padding:15px;
+    box-shadow:var(--shadow);
 }
 
 .benefit-icon{
@@ -245,12 +247,11 @@ nav a:hover{
     margin-bottom:8px;
 }
 
-.benefit strong{
-    display:block;
-    margin-bottom:5px;
+.benefit h3{
+    margin-bottom:6px;
 }
 
-.benefit span{
+.benefit p{
     color:var(--muted);
     font-size:13px;
 }
@@ -258,7 +259,7 @@ nav a:hover{
 /* OFFER */
 
 .offer{
-    margin:30px 5%;
+    margin:10px 5% 30px;
     padding:30px;
     border-radius:18px;
     color:white;
@@ -286,7 +287,6 @@ nav a:hover{
     padding:8px 12px;
     border-radius:8px;
     text-align:center;
-    min-width:65px;
 }
 
 .time-box strong{
@@ -332,13 +332,6 @@ nav a:hover{
     border-radius:12px;
     outline:none;
     font-size:16px;
-}
-
-.search:focus,
-.input:focus,
-.select:focus{
-    border-color:var(--primary);
-    box-shadow:0 0 0 3px rgba(22,119,255,.12);
 }
 
 .filters{
@@ -395,11 +388,6 @@ nav a:hover{
     overflow:hidden;
     box-shadow:var(--shadow);
     position:relative;
-    transition:.25s;
-}
-
-.offer-card:hover{
-    transform:translateY(-5px);
 }
 
 .offer-card img{
@@ -504,10 +492,6 @@ nav a:hover{
     background:var(--warning);
 }
 
-.stock.out{
-    background:var(--danger);
-}
-
 .favorite{
     position:absolute;
     top:12px;
@@ -519,7 +503,7 @@ nav a:hover{
     background:white;
     color:#777;
     font-size:18px;
-    z-index:5;
+    z-index:3;
 }
 
 .favorite.active{
@@ -687,7 +671,6 @@ nav a:hover{
     color:var(--text);
     margin-bottom:13px;
     outline:none;
-    font-family:inherit;
 }
 
 .form-group label{
@@ -827,69 +810,6 @@ nav a:hover{
     font-size:32px;
 }
 
-/* CHECKOUT */
-
-.checkout-summary{
-    background:var(--bg);
-    border:1px solid var(--border);
-    border-radius:12px;
-    padding:15px;
-    margin:15px 0;
-}
-
-.checkout-product{
-    display:flex;
-    justify-content:space-between;
-    gap:10px;
-    padding:7px 0;
-    border-bottom:1px solid var(--border);
-}
-
-.payment-options{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:10px;
-    margin:15px 0;
-}
-
-.payment-option{
-    border:1px solid var(--border);
-    background:var(--card);
-    color:var(--text);
-    padding:15px 8px;
-    border-radius:10px;
-    text-align:center;
-    cursor:pointer;
-}
-
-.payment-option.active{
-    border:2px solid var(--primary);
-    background:rgba(22,119,255,.08);
-}
-
-.payment-icon{
-    font-size:25px;
-    display:block;
-    margin-bottom:5px;
-}
-
-.pix-box{
-    background:rgba(18,183,106,.10);
-    border:1px solid var(--success);
-    padding:15px;
-    border-radius:10px;
-    margin:10px 0;
-}
-
-.pix-code{
-    word-break:break-all;
-    font-size:12px;
-    margin-top:8px;
-    padding:10px;
-    background:var(--card);
-    border-radius:7px;
-}
-
 /* ORDER */
 
 .order-card{
@@ -908,12 +828,6 @@ nav a:hover{
     color:var(--success);
     margin-top:7px;
     font-weight:bold;
-}
-
-.order-items{
-    margin-top:12px;
-    color:var(--muted);
-    font-size:13px;
 }
 
 .progress{
@@ -965,16 +879,131 @@ nav a:hover{
     background:var(--success);
 }
 
-/* SUCCESS */
+/* PAYMENT */
 
-.success-box{
-    text-align:center;
-    padding:20px;
+.payment-options{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin:15px 0;
 }
 
-.success-icon{
-    font-size:65px;
-    margin-bottom:15px;
+.payment-option{
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:15px 8px;
+    text-align:center;
+    background:var(--card);
+    color:var(--text);
+}
+
+.payment-option.selected{
+    border:2px solid var(--primary);
+    background:rgba(22,119,255,.08);
+}
+
+.payment-icon{
+    font-size:25px;
+    margin-bottom:5px;
+}
+
+.pix-box{
+    background:var(--bg);
+    border:1px dashed var(--primary);
+    padding:15px;
+    border-radius:10px;
+    text-align:center;
+    margin:12px 0;
+}
+
+.fake-code{
+    background:var(--card);
+    border:1px solid var(--border);
+    padding:10px;
+    border-radius:8px;
+    font-size:12px;
+    word-break:break-all;
+    margin-top:10px;
+}
+
+/* ADMIN */
+
+.admin-header{
+    background:linear-gradient(120deg,#101828,#344054);
+    color:white;
+    padding:25px;
+    border-radius:16px;
+    margin-bottom:20px;
+}
+
+.admin-stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.admin-stat{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:20px;
+    box-shadow:var(--shadow);
+}
+
+.admin-stat small{
+    color:var(--muted);
+}
+
+.admin-stat strong{
+    display:block;
+    font-size:26px;
+    margin-top:7px;
+}
+
+.admin-product{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    padding:12px 0;
+    border-bottom:1px solid var(--border);
+}
+
+.admin-product img{
+    width:55px;
+    height:55px;
+    object-fit:cover;
+    border-radius:8px;
+}
+
+.admin-product-info{
+    flex:1;
+}
+
+.admin-actions{
+    display:flex;
+    gap:6px;
+}
+
+/* NOTIFICATIONS */
+
+.notification{
+    display:flex;
+    gap:12px;
+    padding:14px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    margin-bottom:10px;
+}
+
+.notification-icon{
+    font-size:24px;
+}
+
+.notification p{
+    color:var(--muted);
+    font-size:13px;
+    margin-top:4px;
 }
 
 /* TOAST */
@@ -992,7 +1021,6 @@ nav a:hover{
     transition:.3s;
     z-index:5000;
     box-shadow:0 10px 30px rgba(0,0,0,.25);
-    max-width:350px;
 }
 
 .toast.show{
@@ -1016,14 +1044,6 @@ footer p{
 }
 
 /* RESPONSIVE */
-
-@media(max-width:850px){
-
-    .benefits{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-}
 
 @media(max-width:750px){
 
@@ -1053,21 +1073,16 @@ footer p{
         grid-template-columns:repeat(2,1fr);
     }
 
+    .filters{
+        justify-content:center;
+    }
+
+    .payment-options{
+        grid-template-columns:1fr;
+    }
 }
 
 @media(max-width:470px){
-
-    .benefits{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .benefit{
-        padding:10px 5px;
-    }
-
-    .benefit-icon{
-        font-size:25px;
-    }
 
     .products{
         grid-template-columns:1fr;
@@ -1098,19 +1113,13 @@ footer p{
         flex-direction:column;
     }
 
-    .payment-options{
-        grid-template-columns:1fr 1fr 1fr;
-    }
-
-    .payment-option{
-        padding:10px 5px;
-        font-size:12px;
-    }
-
     .progress-step{
         font-size:9px;
     }
 
+    .admin-product{
+        flex-wrap:wrap;
+    }
 }
 </style>
 </head>
@@ -1136,6 +1145,13 @@ footer p{
                 onclick="toggleTheme()"
                 title="Tema">
             🌙
+        </button>
+
+        <button class="icon-btn"
+                onclick="openNotifications()"
+                title="Notificações">
+            🔔
+            <span class="badge" id="notificationCount">0</span>
         </button>
 
         <button class="icon-btn"
@@ -1184,26 +1200,26 @@ footer p{
 
     <div class="benefit">
         <div class="benefit-icon">🚚</div>
-        <strong>Entrega rápida</strong>
-        <span>Receba seus produtos com praticidade.</span>
+        <h3>Entrega rápida</h3>
+        <p>Receba seus produtos com praticidade.</p>
     </div>
 
     <div class="benefit">
         <div class="benefit-icon">🔒</div>
-        <strong>Compra segura</strong>
-        <span>Seus dados ficam protegidos no navegador.</span>
+        <h3>Compra segura</h3>
+        <p>Uma experiência simples e organizada.</p>
     </div>
 
     <div class="benefit">
         <div class="benefit-icon">💳</div>
-        <strong>Pagamento fácil</strong>
-        <span>Escolha a forma de pagamento.</span>
+        <h3>Pagamento fácil</h3>
+        <p>Escolha uma forma de pagamento.</p>
     </div>
 
     <div class="benefit">
         <div class="benefit-icon">⭐</div>
-        <strong>Produtos avaliados</strong>
-        <span>Veja avaliações antes de comprar.</span>
+        <h3>Produtos avaliados</h3>
+        <p>Veja avaliações de outros clientes.</p>
     </div>
 
 </section>
@@ -1349,8 +1365,15 @@ footer p{
     </p>
 
     <p>
-        FlowShop V10.5 © 2026
+        FlowShop V10.6 © 2026
     </p>
+
+    <br>
+
+    <button class="outline"
+            onclick="openAdmin()">
+        ⚙️ Área administrativa
+    </button>
 
 </footer>
 
@@ -1514,14 +1537,39 @@ let user =
 let coupon =
     localStorage.getItem("flowshop_coupon") || "";
 
-let currentCategory = "Todos";
-
 let userReviews =
     JSON.parse(localStorage.getItem("flowshop_reviews")) || {};
+
+let notifications =
+    JSON.parse(localStorage.getItem("flowshop_notifications")) || [];
+
+let customProducts =
+    JSON.parse(localStorage.getItem("flowshop_custom_products")) || [];
+
+let currentCategory = "Todos";
 
 let selectedRating = 5;
 
 let selectedPayment = "pix";
+
+/* =====================================================
+   PRODUTOS TOTAIS
+===================================================== */
+
+function getAllProducts(){
+
+    return [
+        ...products,
+        ...customProducts
+    ];
+}
+
+function getProduct(id){
+
+    return getAllProducts().find(
+        product => product.id === id
+    );
+}
 
 /* =====================================================
    UTILIDADES
@@ -1548,13 +1596,6 @@ function discountPercent(product){
     );
 }
 
-function getProduct(id){
-
-    return products.find(
-        product => product.id === id
-    );
-}
-
 function saveData(){
 
     localStorage.setItem(
@@ -1577,6 +1618,16 @@ function saveData(){
         JSON.stringify(userReviews)
     );
 
+    localStorage.setItem(
+        "flowshop_notifications",
+        JSON.stringify(notifications)
+    );
+
+    localStorage.setItem(
+        "flowshop_custom_products",
+        JSON.stringify(customProducts)
+    );
+
     if(user){
 
         localStorage.setItem(
@@ -1587,16 +1638,128 @@ function saveData(){
     }
 
     updateCartCount();
+    updateNotificationCount();
 }
 
-function escapeHTML(text){
+/* =====================================================
+   NOTIFICAÇÕES
+===================================================== */
 
-    return String(text)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+function addNotification(title,text,icon="🔔"){
+
+    notifications.unshift({
+
+        id:Date.now(),
+
+        title:title,
+
+        text:text,
+
+        icon:icon,
+
+        date:new Date()
+            .toLocaleString("pt-BR"),
+
+        read:false
+
+    });
+
+    if(notifications.length > 20){
+        notifications.pop();
+    }
+
+    saveData();
+}
+
+function updateNotificationCount(){
+
+    const unread =
+        notifications.filter(
+            notification => !notification.read
+        ).length;
+
+    document.getElementById(
+        "notificationCount"
+    ).textContent = unread;
+}
+
+function openNotifications(){
+
+    if(notifications.length === 0){
+
+        openModal(
+            "🔔 Notificações",
+
+            `
+                <div class="empty">
+
+                    <h3>
+                        Nenhuma notificação
+                    </h3>
+
+                    <p>
+                        Suas notificações aparecerão aqui.
+                    </p>
+
+                </div>
+            `
+        );
+
+        return;
+    }
+
+    let html = "";
+
+    notifications.forEach(notification => {
+
+        html += `
+
+            <div class="notification"
+                 style="
+                    opacity:${notification.read ? ".65" : "1"};
+                 ">
+
+                <div class="notification-icon">
+                    ${notification.icon}
+                </div>
+
+                <div>
+
+                    <strong>
+                        ${notification.title}
+                    </strong>
+
+                    <p>
+                        ${notification.text}
+                    </p>
+
+                    <small style="
+                        color:var(--muted);
+                    ">
+                        ${notification.date}
+                    </small>
+
+                </div>
+
+            </div>
+
+        `;
+    });
+
+    notifications =
+        notifications.map(
+            notification => ({
+                ...notification,
+                read:true
+            })
+        );
+
+    saveData();
+
+    openModal(
+        "🔔 Notificações",
+        html
+    );
 }
 
 /* =====================================================
@@ -1609,7 +1772,7 @@ function renderOffers(){
         document.getElementById("offerGrid");
 
     const offers =
-        products
+        getAllProducts()
         .filter(product => discountPercent(product) > 0)
         .slice(0,4);
 
@@ -1625,9 +1788,6 @@ function renderOffers(){
                         <img
                             src="${product.image}"
                             alt="${product.name}"
-                            onerror="
-                                this.src='https://via.placeholder.com/500?text=FlowShop'
-                            "
                         >
 
                         <span class="discount-badge">
@@ -1693,7 +1853,7 @@ function renderProducts(){
         document.getElementById("sort").value;
 
     let filtered =
-        products.filter(product => {
+        getAllProducts().filter(product => {
 
             const categoryOk =
                 currentCategory === "Todos" ||
@@ -1740,15 +1900,6 @@ function renderProducts(){
                     Tente outra busca ou categoria.
                 </p>
 
-                <br>
-
-                <button
-                    class="outline"
-                    onclick="clearSearch()"
-                >
-                    Limpar busca
-                </button>
-
             </div>
 
         `;
@@ -1766,9 +1917,7 @@ function renderProducts(){
                 discountPercent(product);
 
             const stockClass =
-                product.stock <= 0
-                ? "out"
-                : product.stock <= 5
+                product.stock <= 5
                 ? "low"
                 : "";
 
@@ -1807,11 +1956,7 @@ function renderProducts(){
                         >
 
                         <span class="stock ${stockClass}">
-                            ${
-                                product.stock <= 0
-                                ? "❌ Sem estoque"
-                                : `📦 ${product.stock} disponíveis`
-                            }
+                            📦 ${product.stock} disponíveis
                         </span>
 
                     </div>
@@ -1875,25 +2020,6 @@ function renderProducts(){
         }).join("");
 }
 
-function clearSearch(){
-
-    document.getElementById("search").value = "";
-
-    currentCategory = "Todos";
-
-    document
-        .querySelectorAll(".category")
-        .forEach(btn =>
-            btn.classList.remove("active")
-        );
-
-    document
-        .querySelector(".category")
-        .classList.add("active");
-
-    renderProducts();
-}
-
 function setCategory(category,button){
 
     currentCategory = category;
@@ -1918,8 +2044,6 @@ function openProduct(id){
     const product = getProduct(id);
 
     if(!product) return;
-
-    selectedRating = 5;
 
     const isFavorite =
         favorites.includes(product.id);
@@ -1950,7 +2074,7 @@ function openProduct(id){
                     <div class="review-header">
 
                         <strong>
-                            ${escapeHTML(review.name)}
+                            ${review.name}
                         </strong>
 
                         <span class="review-stars">
@@ -1964,7 +2088,7 @@ function openProduct(id){
                     </div>
 
                     <div class="review-text">
-                        ${escapeHTML(review.text)}
+                        ${review.text}
                     </div>
 
                 </div>
@@ -1982,9 +2106,6 @@ function openProduct(id){
                 class="detail-image"
                 src="${product.image}"
                 alt="${product.name}"
-                onerror="
-                    this.src='https://via.placeholder.com/700?text=FlowShop'
-                "
             >
 
             <h2>${product.name}</h2>
@@ -2010,16 +2131,20 @@ function openProduct(id){
 
             <div class="detail-price">
                 ${money(product.price)}
+
                 ${
                     discount > 0
-                    ? `<small style="
-                        color:var(--danger);
-                        font-size:14px;
-                    ">
-                        -${discount}%
-                    </small>`
+                    ? `
+                        <small style="
+                            color:var(--danger);
+                            font-size:14px;
+                        ">
+                            -${discount}%
+                        </small>
+                      `
                     : ""
                 }
+
             </div>
 
             <p style="
@@ -2031,11 +2156,7 @@ function openProduct(id){
             </p>
 
             <div class="detail-stock">
-                ${
-                    product.stock > 0
-                    ? `📦 ${product.stock} unidades disponíveis`
-                    : "❌ Produto sem estoque"
-                }
+                📦 ${product.stock} unidades disponíveis
             </div>
 
             <div class="detail-actions">
@@ -2056,7 +2177,6 @@ function openProduct(id){
                         addToCart(${product.id});
                         closeModal()
                     "
-                    ${product.stock <= 0 ? "disabled" : ""}
                 >
                     🛒 Adicionar ao carrinho
                 </button>
@@ -2086,7 +2206,7 @@ function openProduct(id){
                     ${[1,2,3,4,5].map(number => `
 
                         <button
-                            class="star-btn selected"
+                            class="star-btn ${number === 5 ? "selected" : ""}"
                             onclick="selectRating(${number})"
                             id="star${number}"
                         >
@@ -2145,19 +2265,17 @@ function selectRating(number){
 
 function addReview(id){
 
-    const nameElement =
-        document.getElementById("reviewName");
-
-    const textElement =
-        document.getElementById("reviewText");
-
-    if(!nameElement || !textElement) return;
-
     const name =
-        nameElement.value.trim();
+        document
+        .getElementById("reviewName")
+        .value
+        .trim();
 
     const text =
-        textElement.value.trim();
+        document
+        .getElementById("reviewText")
+        .value
+        .trim();
 
     if(!name || !text){
 
@@ -2186,6 +2304,12 @@ function addReview(id){
     });
 
     saveData();
+
+    addNotification(
+        "Nova avaliação",
+        "Sua avaliação foi publicada com sucesso.",
+        "⭐"
+    );
 
     showToast(
         "Avaliação publicada! ⭐"
@@ -2326,10 +2450,6 @@ function removeFromCart(id){
     saveData();
 
     openCart();
-
-    showToast(
-        "Produto removido do carrinho."
-    );
 }
 
 /* =====================================================
@@ -2349,8 +2469,6 @@ function openModal(title,content){
     document
         .getElementById("modalBg")
         .classList.add("show");
-
-    document.body.style.overflow = "hidden";
 }
 
 function closeModal(){
@@ -2358,8 +2476,6 @@ function closeModal(){
     document
         .getElementById("modalBg")
         .classList.remove("show");
-
-    document.body.style.overflow = "";
 }
 
 function closeModalOutside(event){
@@ -2368,14 +2484,6 @@ function closeModalOutside(event){
         closeModal();
     }
 }
-
-document.addEventListener("keydown",function(event){
-
-    if(event.key === "Escape"){
-        closeModal();
-    }
-
-});
 
 /* =====================================================
    CARRINHO
@@ -2480,10 +2588,6 @@ function openCart(){
 
                 </div>
 
-                <strong>
-                    ${money(product.price * item.quantity)}
-                </strong>
-
                 <button
                     class="remove"
                     onclick="
@@ -2528,7 +2632,7 @@ function openCart(){
                     discount > 0
                     ? `
                         <div class="total-row discount-line">
-                            <span>Desconto FLOW10:</span>
+                            <span>Desconto:</span>
                             <span>-${money(discount)}</span>
                         </div>
                       `
@@ -2595,9 +2699,17 @@ function applyCoupon(code){
             : "";
     }
 
-    if(code === "FLOW10"){
+    const validCoupons = {
 
-        coupon = "FLOW10";
+        "FLOW10":10,
+        "FLOW15":15,
+        "BEMVINDO":5
+
+    };
+
+    if(validCoupons[code]){
+
+        coupon = code;
 
         localStorage.setItem(
             "flowshop_coupon",
@@ -2605,7 +2717,13 @@ function applyCoupon(code){
         );
 
         showToast(
-            "Cupom FLOW10 aplicado! 🎉"
+            `Cupom ${code} aplicado! 🎉`
+        );
+
+        addNotification(
+            "Cupom aplicado",
+            `O cupom ${code} foi aplicado ao seu carrinho.`,
+            "🏷️"
         );
 
         openCart();
@@ -2616,6 +2734,19 @@ function applyCoupon(code){
             "Cupom inválido."
         );
     }
+}
+
+function getCouponDiscount(){
+
+    const coupons = {
+
+        "FLOW10":10,
+        "FLOW15":15,
+        "BEMVINDO":5
+
+    };
+
+    return coupons[coupon] || 0;
 }
 
 /* =====================================================
@@ -2633,94 +2764,25 @@ function openCheckout(){
         return;
     }
 
-    const subtotal =
-        cartTotal();
-
-    const discount =
-        coupon === "FLOW10"
-        ? subtotal * .10
-        : 0;
+    const percentage =
+        getCouponDiscount();
 
     const total =
-        subtotal - discount;
-
-    let productsHtml = "";
-
-    cart.forEach(item => {
-
-        const product =
-            getProduct(item.id);
-
-        if(!product) return;
-
-        productsHtml += `
-
-            <div class="checkout-product">
-
-                <span>
-                    ${product.name} × ${item.quantity}
-                </span>
-
-                <strong>
-                    ${money(product.price * item.quantity)}
-                </strong>
-
-            </div>
-
-        `;
-    });
+        cartTotal() *
+        (1 - percentage / 100);
 
     openModal(
 
-        "📦 Finalizar pedido",
+        "💳 Finalizar pedido",
 
         `
 
             <p style="
-                margin-bottom:15px;
+                margin-bottom:20px;
                 color:var(--muted);
             ">
-                Confira seus produtos e escolha uma forma
-                de pagamento para simular a compra.
+                Confira seus dados e escolha a forma de pagamento.
             </p>
-
-            <div class="checkout-summary">
-
-                <strong>
-                    🛒 Resumo do pedido
-                </strong>
-
-                <br><br>
-
-                ${productsHtml}
-
-                <div class="total-row" style="margin-top:12px">
-                    <span>Subtotal:</span>
-                    <span>${money(subtotal)}</span>
-                </div>
-
-                ${
-                    discount > 0
-                    ? `
-                        <div class="total-row discount-line">
-                            <span>Desconto:</span>
-                            <span>-${money(discount)}</span>
-                        </div>
-                    `
-                    : ""
-                }
-
-                <div class="total">
-
-                    <span>Total:</span>
-
-                    <span>
-                        ${money(total)}
-                    </span>
-
-                </div>
-
-            </div>
 
             <div class="form-group">
 
@@ -2730,7 +2792,7 @@ function openCheckout(){
                     class="input"
                     id="checkoutName"
                     placeholder="Seu nome"
-                    value="${user ? escapeHTML(user.name) : ""}"
+                    value="${user ? user.name : ""}"
                 >
 
             </div>
@@ -2743,7 +2805,7 @@ function openCheckout(){
                     class="input"
                     id="checkoutEmail"
                     placeholder="seu@email.com"
-                    value="${user ? escapeHTML(user.email) : ""}"
+                    value="${user ? user.email : ""}"
                 >
 
             </div>
@@ -2767,52 +2829,46 @@ function openCheckout(){
 
             <div class="payment-options">
 
-                <div
-                    class="payment-option active"
+                <button
+                    class="payment-option selected"
                     id="payment-pix"
                     onclick="selectPayment('pix')"
                 >
-                    <span class="payment-icon">📱</span>
+                    <div class="payment-icon">💠</div>
                     PIX
-                </div>
+                </button>
 
-                <div
+                <button
                     class="payment-option"
                     id="payment-card"
                     onclick="selectPayment('card')"
                 >
-                    <span class="payment-icon">💳</span>
+                    <div class="payment-icon">💳</div>
                     Cartão
-                </div>
+                </button>
 
-                <div
+                <button
                     class="payment-option"
                     id="payment-boleto"
                     onclick="selectPayment('boleto')"
                 >
-                    <span class="payment-icon">🧾</span>
+                    <div class="payment-icon">🧾</div>
                     Boleto
-                </div>
+                </button>
 
             </div>
 
-            <div id="paymentArea">
+            <div id="paymentInfo"></div>
 
-                <div class="pix-box">
+            <div class="total">
 
-                    <strong>
-                        📱 PIX selecionado
-                    </strong>
+                <span>
+                    Total:
+                </span>
 
-                    <p style="
-                        color:var(--muted);
-                        margin-top:7px;
-                        font-size:13px;
-                    ">
-                        Nesta versão, o pagamento é apenas uma simulação.
-                    </p>
-
-                </div>
+                <span>
+                    ${money(total)}
+                </span>
 
             </div>
 
@@ -2825,11 +2881,11 @@ function openCheckout(){
 
         `
     );
-}
 
-/* =====================================================
-   PAGAMENTO
-===================================================== */
+    selectedPayment = "pix";
+
+    renderPaymentInfo();
+}
 
 function selectPayment(method){
 
@@ -2837,8 +2893,8 @@ function selectPayment(method){
 
     document
         .querySelectorAll(".payment-option")
-        .forEach(option =>
-            option.classList.remove("active")
+        .forEach(button =>
+            button.classList.remove("selected")
         );
 
     const selected =
@@ -2847,34 +2903,39 @@ function selectPayment(method){
         );
 
     if(selected){
-        selected.classList.add("active");
+        selected.classList.add("selected");
     }
 
-    const area =
-        document.getElementById("paymentArea");
+    renderPaymentInfo();
+}
 
-    if(!area) return;
+function renderPaymentInfo(){
 
-    if(method === "pix"){
+    const container =
+        document.getElementById("paymentInfo");
 
-        area.innerHTML = `
+    if(!container) return;
+
+    if(selectedPayment === "pix"){
+
+        container.innerHTML = `
 
             <div class="pix-box">
 
                 <strong>
-                    📱 PIX selecionado
+                    💠 Pagamento via PIX
                 </strong>
 
                 <p style="
                     color:var(--muted);
-                    margin-top:7px;
+                    margin-top:6px;
                     font-size:13px;
                 ">
-                    Pagamento simulado para demonstração.
+                    Simulação de pagamento.
                 </p>
 
-                <div class="pix-code">
-                    FLOWSHOP-PAGAMENTO-PIX-SIMULACAO
+                <div class="fake-code">
+                    FLOWSHOP-PAGAMENTO-PIX-${Date.now()}
                 </div>
 
             </div>
@@ -2883,92 +2944,57 @@ function selectPayment(method){
 
     }
 
-    if(method === "card"){
+    if(selectedPayment === "card"){
 
-        area.innerHTML = `
+        container.innerHTML = `
 
             <input
                 class="input"
-                id="cardNumber"
-                placeholder="Número do cartão"
-                maxlength="19"
-                oninput="formatCard(this)"
+                placeholder="Número do cartão (simulação)"
             >
 
             <div style="
-                display:grid;
-                grid-template-columns:1fr 1fr;
+                display:flex;
                 gap:10px;
             ">
 
                 <input
                     class="input"
-                    id="cardDate"
-                    placeholder="MM/AA"
-                    maxlength="5"
+                    placeholder="Validade"
                 >
 
                 <input
                     class="input"
-                    id="cardCVV"
                     placeholder="CVV"
-                    maxlength="4"
-                    type="password"
                 >
 
             </div>
-
-            <p style="
-                color:var(--muted);
-                font-size:12px;
-                margin-bottom:10px;
-            ">
-                ⚠️ Não informe dados reais. Esta é uma simulação.
-            </p>
 
         `;
 
     }
 
-    if(method === "boleto"){
+    if(selectedPayment === "boleto"){
 
-        area.innerHTML = `
+        container.innerHTML = `
 
             <div class="pix-box">
 
                 <strong>
-                    🧾 Boleto selecionado
+                    🧾 Boleto bancário
                 </strong>
 
                 <p style="
                     color:var(--muted);
                     margin-top:7px;
-                    font-size:13px;
                 ">
-                    Um boleto seria gerado aqui em uma loja real.
+                    O boleto será gerado apenas como simulação.
                 </p>
 
             </div>
 
         `;
-
     }
-}
-
-function formatCard(input){
-
-    let value =
-        input.value
-        .replace(/\D/g,"")
-        .substring(0,16);
-
-    value =
-        value.match(/.{1,4}/g);
-
-    input.value =
-        value
-        ? value.join(" ")
-        : "";
 }
 
 /* =====================================================
@@ -2977,27 +3003,17 @@ function formatCard(input){
 
 function confirmOrder(){
 
-    const nameElement =
-        document.getElementById("checkoutName");
-
-    const emailElement =
-        document.getElementById("checkoutEmail");
-
-    const addressElement =
-        document.getElementById("checkoutAddress");
-
-    if(!nameElement || !emailElement || !addressElement){
-        return;
-    }
-
     const name =
-        nameElement.value.trim();
+        document.getElementById("checkoutName")
+        .value.trim();
 
     const email =
-        emailElement.value.trim();
+        document.getElementById("checkoutEmail")
+        .value.trim();
 
     const address =
-        addressElement.value.trim();
+        document.getElementById("checkoutAddress")
+        .value.trim();
 
     if(!name || !email || !address){
 
@@ -3017,29 +3033,12 @@ function confirmOrder(){
         return;
     }
 
-    if(cart.length === 0){
-
-        showToast(
-            "Seu carrinho está vazio."
-        );
-
-        return;
-    }
+    const percentage =
+        getCouponDiscount();
 
     const total =
         cartTotal() *
-        (
-            coupon === "FLOW10"
-            ? .90
-            : 1
-        );
-
-    const paymentName =
-        selectedPayment === "pix"
-        ? "PIX"
-        : selectedPayment === "card"
-        ? "Cartão"
-        : "Boleto";
+        (1 - percentage / 100);
 
     const order = {
 
@@ -3057,13 +3056,14 @@ function confirmOrder(){
 
         address:address,
 
-        payment:paymentName,
+        payment:selectedPayment,
 
         status:1,
 
         items:[
             ...cart
         ]
+
     };
 
     orders.unshift(order);
@@ -3086,28 +3086,27 @@ function confirmOrder(){
 
     saveData();
 
+    addNotification(
+        "Pedido realizado!",
+        `Seu pedido #${order.id} foi registrado com sucesso.`,
+        "📦"
+    );
+
     openModal(
 
         "🎉 Pedido realizado!",
 
         `
 
-            <div class="success-box">
-
-                <div class="success-icon">
-                    🎉
-                </div>
+            <div class="empty">
 
                 <h3>
                     Pedido realizado com sucesso!
                 </h3>
 
-                <p style="
-                    color:var(--muted);
-                    margin:10px 0;
-                ">
+                <p>
                     Obrigado,
-                    <strong>${escapeHTML(name)}</strong>!
+                    <strong>${name}</strong>!
                 </p>
 
                 <p>
@@ -3117,15 +3116,16 @@ function confirmOrder(){
 
                 <p style="
                     margin-top:8px;
-                    color:var(--success);
+                    color:var(--muted);
                 ">
-                    💳 Pagamento: ${paymentName}
+                    Pagamento:
+                    ${getPaymentName(selectedPayment)}
                 </p>
 
                 <br>
 
                 <button
-                    class="primary full"
+                    class="primary"
                     onclick="
                         closeModal();
                         openOrders();
@@ -3134,19 +3134,17 @@ function confirmOrder(){
                     📦 Ver meus pedidos
                 </button>
 
-                <br><br>
-
-                <button
-                    class="outline full"
-                    onclick="closeModal()"
-                >
-                    Continuar comprando
-                </button>
-
             </div>
 
         `
     );
+}
+
+function getPaymentName(method){
+
+    if(method === "pix") return "PIX";
+    if(method === "card") return "Cartão";
+    return "Boleto";
 }
 
 /* =====================================================
@@ -3184,7 +3182,7 @@ function toggleFavorite(id){
 function openFavorites(){
 
     const favoriteProducts =
-        products.filter(
+        getAllProducts().filter(
             product =>
                 favorites.includes(product.id)
         );
@@ -3239,13 +3237,6 @@ function openFavorites(){
                     </p>
 
                 </div>
-
-                <button
-                    class="outline"
-                    onclick="openProduct(${product.id})"
-                >
-                    👁️
-                </button>
 
                 <button
                     class="primary"
@@ -3334,19 +3325,19 @@ function openAccount(){
             <div class="account-box">
 
                 <div class="account-avatar">
-                    ${escapeHTML(user.name
+                    ${user.name
                         .charAt(0)
-                        .toUpperCase())}
+                        .toUpperCase()}
                 </div>
 
                 <h2>
-                    ${escapeHTML(user.name)}
+                    ${user.name}
                 </h2>
 
                 <p style="
                     color:var(--muted);
                 ">
-                    ${escapeHTML(user.email)}
+                    ${user.email}
                 </p>
 
                 <br>
@@ -3417,6 +3408,12 @@ function createAccount(){
 
     saveData();
 
+    addNotification(
+        "Conta criada",
+        "Sua conta foi criada com sucesso.",
+        "👤"
+    );
+
     showToast(
         "Conta criada! 👤"
     );
@@ -3435,14 +3432,14 @@ function editAccount(){
             <input
                 class="input"
                 id="editName"
-                value="${escapeHTML(user.name)}"
+                value="${user.name}"
                 placeholder="Nome"
             >
 
             <input
                 class="input"
                 id="editEmail"
-                value="${escapeHTML(user.email)}"
+                value="${user.email}"
                 placeholder="E-mail"
             >
 
@@ -3551,26 +3548,6 @@ function openOrders(){
         const step =
             order.status || 1;
 
-        let itemNames = "";
-
-        if(order.items){
-
-            itemNames =
-                order.items
-                .map(item => {
-
-                    const product =
-                        getProduct(item.id);
-
-                    return product
-                        ? `${product.name} × ${item.quantity}`
-                        : "";
-
-                })
-                .filter(Boolean)
-                .join(", ");
-        }
-
         html += `
 
             <div class="order-card">
@@ -3589,10 +3566,10 @@ function openOrders(){
 
                 <p style="
                     color:var(--muted);
-                    margin-top:5px;
-                    font-size:13px;
+                    margin-top:6px;
                 ">
-                    💳 ${order.payment || "Pagamento"}
+                    Pagamento:
+                    ${getPaymentName(order.payment || "pix")}
                 </p>
 
                 <p class="order-status">
@@ -3606,10 +3583,6 @@ function openOrders(){
                         : "✅ Pedido entregue"
                     }
                 </p>
-
-                <div class="order-items">
-                    🛒 ${itemNames}
-                </div>
 
                 <div class="progress">
 
@@ -3639,6 +3612,571 @@ function openOrders(){
     openModal(
         "📦 Meus pedidos",
         html
+    );
+}
+
+/* =====================================================
+   ÁREA ADMINISTRATIVA
+===================================================== */
+
+function openAdmin(){
+
+    openModal(
+
+        "⚙️ Painel FlowShop",
+
+        `
+
+            <div class="admin-header">
+
+                <h2>
+                    Painel Administrativo
+                </h2>
+
+                <p style="
+                    margin-top:7px;
+                    opacity:.8;
+                ">
+                    Área de demonstração da FlowShop.
+                </p>
+
+            </div>
+
+            <div class="admin-stats">
+
+                <div class="admin-stat">
+
+                    <small>
+                        Produtos
+                    </small>
+
+                    <strong>
+                        ${getAllProducts().length}
+                    </strong>
+
+                </div>
+
+                <div class="admin-stat">
+
+                    <small>
+                        Pedidos
+                    </small>
+
+                    <strong>
+                        ${orders.length}
+                    </strong>
+
+                </div>
+
+                <div class="admin-stat">
+
+                    <small>
+                        Favoritos
+                    </small>
+
+                    <strong>
+                        ${favorites.length}
+                    </strong>
+
+                </div>
+
+                <div class="admin-stat">
+
+                    <small>
+                        Faturamento
+                    </small>
+
+                    <strong>
+                        ${money(
+                            orders.reduce(
+                                (total,order) =>
+                                    total + order.total,
+                                0
+                            )
+                        )}
+                    </strong>
+
+                </div>
+
+            </div>
+
+            <button
+                class="primary full"
+                onclick="openAdminProducts()"
+            >
+                📦 Gerenciar produtos
+            </button>
+
+            <br><br>
+
+            <button
+                class="outline full"
+                onclick="openAdminOrders()"
+            >
+                🧾 Gerenciar pedidos
+            </button>
+
+            <br><br>
+
+            <button
+                class="purple full"
+                onclick="openAddProduct()"
+            >
+                ➕ Adicionar produto
+            </button>
+
+        `
+    );
+}
+
+function openAdminProducts(){
+
+    let html = "";
+
+    getAllProducts().forEach(product => {
+
+        html += `
+
+            <div class="admin-product">
+
+                <img
+                    src="${product.image}"
+                    alt="${product.name}"
+                >
+
+                <div class="admin-product-info">
+
+                    <strong>
+                        ${product.name}
+                    </strong>
+
+                    <div style="
+                        color:var(--muted);
+                        font-size:13px;
+                    ">
+                        ${money(product.price)}
+                        · Estoque: ${product.stock}
+                    </div>
+
+                </div>
+
+                <div class="admin-actions">
+
+                    ${
+                        customProducts.some(
+                            item => item.id === product.id
+                        )
+                        ? `
+                            <button
+                                class="danger"
+                                onclick="deleteCustomProduct(${product.id})"
+                            >
+                                🗑️
+                            </button>
+                          `
+                        : ""
+                    }
+
+                </div>
+
+            </div>
+
+        `;
+    });
+
+    openModal(
+
+        "📦 Produtos",
+
+        `
+
+            ${html}
+
+            <br>
+
+            <button
+                class="purple full"
+                onclick="openAddProduct()"
+            >
+                ➕ Adicionar produto
+            </button>
+
+            <br><br>
+
+            <button
+                class="outline full"
+                onclick="openAdmin()"
+            >
+                ← Voltar
+            </button>
+
+        `
+    );
+}
+
+function openAddProduct(){
+
+    openModal(
+
+        "➕ Novo produto",
+
+        `
+
+            <input
+                class="input"
+                id="newProductName"
+                placeholder="Nome do produto"
+            >
+
+            <select
+                class="input"
+                id="newProductCategory"
+            >
+
+                <option>
+                    Eletrônicos
+                </option>
+
+                <option>
+                    Acessórios
+                </option>
+
+                <option>
+                    Moda
+                </option>
+
+            </select>
+
+            <input
+                class="input"
+                id="newProductPrice"
+                type="number"
+                step="0.01"
+                placeholder="Preço"
+            >
+
+            <input
+                class="input"
+                id="newProductOldPrice"
+                type="number"
+                step="0.01"
+                placeholder="Preço antigo"
+            >
+
+            <input
+                class="input"
+                id="newProductStock"
+                type="number"
+                placeholder="Estoque"
+            >
+
+            <input
+                class="input"
+                id="newProductImage"
+                placeholder="URL da imagem"
+            >
+
+            <textarea
+                class="input"
+                id="newProductDescription"
+                rows="3"
+                placeholder="Descrição"
+            ></textarea>
+
+            <button
+                class="purple full"
+                onclick="addCustomProduct()"
+            >
+                ➕ Cadastrar produto
+            </button>
+
+        `
+    );
+}
+
+function addCustomProduct(){
+
+    const name =
+        document.getElementById(
+            "newProductName"
+        ).value.trim();
+
+    const category =
+        document.getElementById(
+            "newProductCategory"
+        ).value;
+
+    const price =
+        Number(
+            document.getElementById(
+                "newProductPrice"
+            ).value
+        );
+
+    const oldPrice =
+        Number(
+            document.getElementById(
+                "newProductOldPrice"
+            ).value
+        );
+
+    const stock =
+        Number(
+            document.getElementById(
+                "newProductStock"
+            ).value
+        );
+
+    const image =
+        document.getElementById(
+            "newProductImage"
+        ).value.trim();
+
+    const description =
+        document.getElementById(
+            "newProductDescription"
+        ).value.trim();
+
+    if(
+        !name ||
+        !price ||
+        !stock ||
+        !image
+    ){
+
+        showToast(
+            "Preencha os campos obrigatórios."
+        );
+
+        return;
+    }
+
+    const newProduct = {
+
+        id:
+            Date.now(),
+
+        name:name,
+
+        category:category,
+
+        price:price,
+
+        oldPrice:
+            oldPrice || price,
+
+        stock:stock,
+
+        rating:5,
+
+        reviewsCount:0,
+
+        description:
+            description ||
+            "Novo produto da FlowShop.",
+
+        image:image
+
+    };
+
+    customProducts.push(
+        newProduct
+    );
+
+    saveData();
+
+    renderOffers();
+
+    renderProducts();
+
+    addNotification(
+        "Produto adicionado",
+        `${name} foi cadastrado na loja.`,
+        "📦"
+    );
+
+    showToast(
+        "Produto cadastrado! ✅"
+    );
+
+    openAdminProducts();
+}
+
+function deleteCustomProduct(id){
+
+    const product =
+        getProduct(id);
+
+    customProducts =
+        customProducts.filter(
+            item => item.id !== id
+        );
+
+    favorites =
+        favorites.filter(
+            item => item !== id
+        );
+
+    cart =
+        cart.filter(
+            item => item.id !== id
+        );
+
+    saveData();
+
+    renderProducts();
+
+    renderOffers();
+
+    showToast(
+        `${product ? product.name : "Produto"} removido.`
+    );
+
+    openAdminProducts();
+}
+
+function openAdminOrders(){
+
+    if(orders.length === 0){
+
+        openModal(
+
+            "🧾 Pedidos",
+
+            `
+
+                <div class="empty">
+
+                    <h3>
+                        Nenhum pedido registrado.
+                    </h3>
+
+                </div>
+
+                <button
+                    class="outline full"
+                    onclick="openAdmin()"
+                >
+                    ← Voltar
+                </button>
+
+            `
+        );
+
+        return;
+    }
+
+    let html = "";
+
+    orders.forEach(order => {
+
+        html += `
+
+            <div class="order-card">
+
+                <strong>
+                    #${order.id}
+                </strong>
+
+                <p class="order-date">
+                    ${order.date}
+                </p>
+
+                <p>
+                    Total:
+                    <strong>
+                        ${money(order.total)}
+                    </strong>
+                </p>
+
+                <br>
+
+                <select
+                    class="input"
+                    onchange="
+                        changeOrderStatus(
+                            ${order.id},
+                            this.value
+                        )
+                    "
+                >
+
+                    <option
+                        value="1"
+                        ${order.status === 1 ? "selected" : ""}
+                    >
+                        🟡 Pedido recebido
+                    </option>
+
+                    <option
+                        value="2"
+                        ${order.status === 2 ? "selected" : ""}
+                    >
+                        📦 Preparando
+                    </option>
+
+                    <option
+                        value="3"
+                        ${order.status === 3 ? "selected" : ""}
+                    >
+                        🚚 Enviado
+                    </option>
+
+                    <option
+                        value="4"
+                        ${order.status === 4 ? "selected" : ""}
+                    >
+                        ✅ Entregue
+                    </option>
+
+                </select>
+
+            </div>
+
+        `;
+    });
+
+    openModal(
+
+        "🧾 Gerenciar pedidos",
+
+        `
+
+            ${html}
+
+            <button
+                class="outline full"
+                onclick="openAdmin()"
+            >
+                ← Voltar
+            </button>
+
+        `
+    );
+}
+
+function changeOrderStatus(id,status){
+
+    const order =
+        orders.find(
+            item => item.id === id
+        );
+
+    if(!order) return;
+
+    order.status =
+        Number(status);
+
+    saveData();
+
+    addNotification(
+        "Pedido atualizado",
+        `O pedido #${id} foi atualizado.`,
+        "📦"
+    );
+
+    showToast(
+        "Status atualizado! ✅"
     );
 }
 
@@ -3713,9 +4251,17 @@ function updateCountdown(){
 
     if(difference <= 0){
 
-        document.getElementById("hours").textContent = "00";
-        document.getElementById("minutes").textContent = "00";
-        document.getElementById("seconds").textContent = "00";
+        document.getElementById(
+            "hours"
+        ).textContent = "00";
+
+        document.getElementById(
+            "minutes"
+        ).textContent = "00";
+
+        document.getElementById(
+            "seconds"
+        ).textContent = "00";
 
         return;
     }
@@ -3798,6 +4344,8 @@ function init(){
     renderProducts();
 
     updateCartCount();
+
+    updateNotificationCount();
 
     updateCountdown();
 

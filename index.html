@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FlowShop V10.7 | Sua Loja Online</title>
+<title>FlowShop V11.0 | Sua Loja Online</title>
 
 <style>
 *{
@@ -1029,7 +1029,7 @@ nav a:hover{
 }
 
 
-/* V10.7 - RECENTES / FRETE / CONTA / DETALHES */
+/* V11.0 - RECENTES / FRETE / CONTA / DETALHES */
 .recent-section{
     display:none;
 }
@@ -1542,7 +1542,7 @@ footer p{
     </p>
 
     <p>
-        FlowShop V10.7 © 2026
+        FlowShop V11.0 © 2026
     </p>
 
     <br>
@@ -1731,6 +1731,14 @@ let currentCategory = "Todos";
 let selectedRating = 5;
 
 let selectedPayment = "pix";
+
+// Migração: pedidos antigos da V10.x já eram considerados registrados.
+// Eles ficam como pagos para não quebrar o histórico da loja.
+orders = orders.map(order => ({
+    ...order,
+    paymentStatus: order.paymentStatus || "paid",
+    status: Number(order.status || 1)
+}));
 
 /* =====================================================
    PRODUTOS TOTAIS
@@ -2229,7 +2237,7 @@ function setCategory(category,button){
 }
 
 /* =====================================================
-   V10.7 - VISTOS RECENTEMENTE
+   V11.0 - VISTOS RECENTEMENTE
 ===================================================== */
 
 function addRecentViewed(id){
@@ -2606,7 +2614,7 @@ function addReview(id){
 }
 
 /* =====================================================
-   V10.7 - FRETE
+   V11.0 - FRETE
 ===================================================== */
 
 const FREE_SHIPPING_LIMIT = 250;
@@ -3170,6 +3178,7 @@ function openCheckout(){
                 color:var(--muted);
             ">
                 Confira seus dados e escolha a forma de pagamento.
+                O pedido só será liberado após a confirmação do pagamento.
             </p>
 
             <div class="form-group">
@@ -3465,6 +3474,84 @@ function renderPaymentInfo(){
    CONFIRMAR PEDIDO
 ===================================================== */
 
+function getPaymentStatusLabel(order){
+
+    const status = order.paymentStatus || "pending";
+
+    if(status === "paid"){
+        return "🟢 Pagamento confirmado";
+    }
+
+    if(status === "reported"){
+        return "🟠 Pagamento informado — aguardando confirmação";
+    }
+
+    return "🟡 Aguardando pagamento";
+}
+
+function getOrderStatusLabel(order){
+
+    if((order.paymentStatus || "pending") !== "paid"){
+        return getPaymentStatusLabel(order);
+    }
+
+    const step = Number(order.status || 1);
+
+    if(step === 1) return "🟡 Pedido recebido";
+    if(step === 2) return "📦 Pedido sendo preparado";
+    if(step === 3) return "🚚 Pedido enviado";
+    return "✅ Pedido entregue";
+}
+
+function markPixPaymentReported(id){
+
+    const order = orders.find(item => item.id === id);
+
+    if(!order) return;
+
+    if((order.paymentStatus || "pending") === "paid"){
+        showToast("Este pagamento já foi confirmado. ✅");
+        return;
+    }
+
+    order.paymentStatus = "reported";
+
+    saveData();
+
+    addNotification(
+        "Pagamento informado",
+        `O pedido #${id} está aguardando confirmação do Pix.`,
+        "💠"
+    );
+
+    showToast("Pix informado. Agora aguarde a confirmação. ⏳");
+
+    openOrders();
+}
+
+function markOrderAsPaid(id){
+
+    const order = orders.find(item => item.id === id);
+
+    if(!order) return;
+
+    order.paymentStatus = "paid";
+    order.status = Math.max(1, Number(order.status || 1));
+    order.paidAt = new Date().toLocaleString("pt-BR");
+
+    saveData();
+
+    addNotification(
+        "Pagamento confirmado!",
+        `O pedido #${id} foi liberado para processamento.`,
+        "✅"
+    );
+
+    showToast("Pagamento confirmado e pedido liberado! ✅");
+
+    openAdminOrders();
+}
+
 function confirmOrder(){
 
     const name =
@@ -3538,7 +3625,14 @@ function confirmOrder(){
 
         payment:selectedPayment,
 
-        status:1,
+        /*
+           V11.0:
+           O pedido NÃO é considerado pago ao clicar em confirmar.
+           O pagamento precisa ser confirmado separadamente.
+        */
+        paymentStatus:"pending",
+
+        status:0,
 
         items:[
             ...cart
@@ -3567,49 +3661,113 @@ function confirmOrder(){
     saveData();
 
     addNotification(
-        "Pedido realizado!",
-        `Seu pedido #${order.id} foi registrado com sucesso.`,
-        "📦"
+        "Pedido aguardando pagamento",
+        `O pedido #${order.id} foi criado e está aguardando pagamento.`,
+        "⏳"
     );
+
+    if(selectedPayment === "pix"){
+
+        openModal(
+
+            "⏳ Aguardando pagamento",
+
+            `
+
+                <div class="empty">
+
+                    <h3>
+                        Pedido criado, mas ainda NÃO foi liberado.
+                    </h3>
+
+                    <p>
+                        Pedido:
+                        <strong>#${order.id}</strong>
+                    </p>
+
+                    <p style="margin-top:8px;color:var(--muted)">
+                        Total:
+                        <strong>${money(order.total)}</strong>
+                    </p>
+
+                    <div class="pix-box" style="margin-top:18px;text-align:left">
+
+                        <strong>💠 Faça o pagamento via Pix</strong>
+
+                        <p style="color:var(--muted);margin-top:7px;font-size:13px">
+                            Use a chave Pix abaixo. Depois, volte aqui e informe que realizou o pagamento.
+                        </p>
+
+                        <div style="margin-top:12px;padding:14px;border:1px solid var(--border);border-radius:12px;background:var(--bg)">
+                            <div style="font-size:12px;color:var(--muted);margin-bottom:6px">
+                                Chave Pix aleatória
+                            </div>
+                            <strong id="flowshopPixKey" style="word-break:break-all;font-size:14px">
+                                522ea3eb-f561-4f77-a17d-02245655cb1c
+                            </strong>
+                            <button
+                                class="secondary"
+                                style="margin-top:10px;width:100%"
+                                onclick="copyPixKey()"
+                            >
+                                📋 Copiar chave Pix
+                            </button>
+                        </div>
+
+                        <p style="color:var(--muted);margin-top:10px;font-size:12px">
+                            ⚠️ Nesta V11.0 a confirmação ainda é manual. O site só libera o pedido quando o pagamento for confirmado.
+                        </p>
+
+                    </div>
+
+                    <button
+                        class="primary full"
+                        style="margin-top:15px"
+                        onclick="markPixPaymentReported(${order.id})"
+                    >
+                        💠 Já fiz o Pix — aguardar confirmação
+                    </button>
+
+                    <button
+                        class="outline full"
+                        style="margin-top:10px"
+                        onclick="closeModal();openOrders();"
+                    >
+                        📦 Acompanhar pedido
+                    </button>
+
+                </div>
+
+            `
+        );
+
+        return;
+    }
 
     openModal(
 
-        "🎉 Pedido realizado!",
+        "⏳ Pagamento pendente",
 
         `
 
             <div class="empty">
 
                 <h3>
-                    Pedido realizado com sucesso!
+                    Pedido #${order.id} criado!
                 </h3>
 
-                <p>
-                    Obrigado,
-                    <strong>${name}</strong>!
+                <p style="margin-top:8px">
+                    O pagamento ainda precisa ser confirmado.
                 </p>
 
-                <p>
-                    Número do pedido:
-                    <strong>#${order.id}</strong>
+                <p style="margin-top:8px;color:var(--muted)">
+                    Status: <strong>Aguardando pagamento</strong>
                 </p>
-
-                <p style="
-                    margin-top:8px;
-                    color:var(--muted);
-                ">
-                    Pagamento:
-                    ${getPaymentName(selectedPayment)}
-                </p>
-
-                <br>
 
                 <button
                     class="primary"
-                    onclick="
-                        closeModal();
-                        openOrders();
-                    "
+                    style="margin-top:15px"
+                    onclick="closeModal();openOrders();"
                 >
                     📦 Ver meus pedidos
                 </button>
@@ -4076,16 +4234,33 @@ function openOrders(){
                 </p>
 
                 <p class="order-status">
-                    ${
-                        step === 1
-                        ? "🟡 Pedido recebido"
-                        : step === 2
-                        ? "📦 Pedido sendo preparado"
-                        : step === 3
-                        ? "🚚 Pedido enviado"
-                        : "✅ Pedido entregue"
-                    }
+                    ${getOrderStatusLabel(order)}
                 </p>
+
+                ${
+                    (order.paymentStatus || "pending") !== "paid"
+                    ? `
+                        <p style="color:var(--muted);font-size:13px;margin-top:7px">
+                            ${getPaymentStatusLabel(order)}
+                        </p>
+                    `
+                    : ""
+                }
+
+                ${
+                    order.payment === "pix" &&
+                    (order.paymentStatus || "pending") === "pending"
+                    ? `
+                        <button
+                            class="secondary full"
+                            style="margin-top:10px"
+                            onclick="markPixPaymentReported(${order.id})"
+                        >
+                            💠 Já fiz o Pix
+                        </button>
+                    `
+                    : ""
+                }
 
                 <div class="order-actions">
 
@@ -4100,19 +4275,19 @@ function openOrders(){
 
                 <div class="progress">
 
-                    <div class="progress-step ${step >= 1 ? "active" : ""}">
-                        Pedido
+                    <div class="progress-step ${(order.paymentStatus || "pending") === "paid" && step >= 1 ? "active" : ""}">
+                        Pagamento
                     </div>
 
-                    <div class="progress-step ${step >= 2 ? "active" : ""}">
+                    <div class="progress-step ${(order.paymentStatus || "pending") === "paid" && step >= 2 ? "active" : ""}">
                         Preparando
                     </div>
 
-                    <div class="progress-step ${step >= 3 ? "active" : ""}">
+                    <div class="progress-step ${(order.paymentStatus || "pending") === "paid" && step >= 3 ? "active" : ""}">
                         Enviado
                     </div>
 
-                    <div class="progress-step ${step >= 4 ? "active" : ""}">
+                    <div class="progress-step ${(order.paymentStatus || "pending") === "paid" && step >= 4 ? "active" : ""}">
                         Entregue
                     </div>
 
@@ -4242,6 +4417,25 @@ function openOrderDetails(id){
             <p style="color:var(--muted);margin-top:10px">
                 💳 Pagamento: ${getPaymentName(order.payment || "pix")}
             </p>
+
+            <p style="margin-top:7px">
+                ${getPaymentStatusLabel(order)}
+            </p>
+
+            ${
+                order.payment === "pix" &&
+                (order.paymentStatus || "pending") !== "paid"
+                ? `
+                    <button
+                        class="secondary full"
+                        style="margin-top:12px"
+                        onclick="markPixPaymentReported(${order.id})"
+                    >
+                        💠 Informar pagamento Pix
+                    </button>
+                `
+                : ""
+            }
 
             <p style="color:var(--muted);margin-top:7px">
                 📍 Endereço: ${order.address || "Não informado"}
@@ -4725,10 +4919,29 @@ function openAdminOrders(){
                     </strong>
                 </p>
 
+                <p style="margin-top:7px">
+                    ${getPaymentStatusLabel(order)}
+                </p>
+
+                ${
+                    (order.paymentStatus || "pending") !== "paid"
+                    ? `
+                        <button
+                            class="primary full"
+                            style="margin-top:10px"
+                            onclick="markOrderAsPaid(${order.id})"
+                        >
+                            ✅ Confirmar pagamento e liberar pedido
+                        </button>
+                    `
+                    : ""
+                }
+
                 <br>
 
                 <select
                     class="input"
+                    ${ (order.paymentStatus || "pending") !== "paid" ? "disabled" : "" }
                     onchange="
                         changeOrderStatus(
                             ${order.id},

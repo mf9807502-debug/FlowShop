@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FlowShop V12.1 | Sua Loja Online</title>
+<title>FlowShop V12.1.1 | Sua Loja Online</title>
 
 <style>
 *{
@@ -1288,8 +1288,8 @@ footer p{
     <nav>
         <a onclick="goHome()">Início</a>
         <a onclick="goProducts()">Produtos</a>
-        <a onclick="openAccount()">Minha conta</a>
-        <a onclick="openOrders()">Pedidos</a>
+        <a href="javascript:void(0)" onclick="openAccount()">Minha conta</a>
+        <a href="javascript:void(0)" onclick="openOrders()">Pedidos</a>
     </nav>
 
     <div class="header-buttons">
@@ -1542,7 +1542,7 @@ footer p{
     </p>
 
     <p>
-        FlowShop V12.1 © 2026
+        FlowShop V12.1.1 © 2026
     </p>
 
     <br>
@@ -3923,6 +3923,62 @@ function openPixWaitingModal(order, apiError=false){
 /* =====================================================
    PEDIDOS
 ===================================================== */
+
+
+function openAccount(){
+
+    const totalSpent = orders
+        .filter(order => order.paymentStatus === "paid")
+        .reduce((sum, order) => sum + Number(order.total || 0), 0);
+
+    openModal(
+        "👤 Minha conta",
+        `
+        <div class="account-box">
+
+            <div class="account-avatar">
+                👤
+            </div>
+
+            <h3>Minha conta</h3>
+
+            <p style="margin:8px 0 20px;color:var(--muted);">
+                Consulte seus pedidos e seus dados da loja.
+            </p>
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <strong>${orders.length}</strong>
+                    <span>Pedidos</span>
+                </div>
+
+                <div class="stat-card">
+                    <strong>${favorites.length}</strong>
+                    <span>Favoritos</span>
+                </div>
+
+                <div class="stat-card">
+                    <strong>R$ ${totalSpent.toFixed(2).replace(".", ",")}</strong>
+                    <span>Total gasto</span>
+                </div>
+
+            </div>
+
+            <div style="margin-top:20px;display:grid;gap:10px;">
+                <button class="primary full" onclick="closeModal();openOrders();">
+                    📦 Ver meus pedidos
+                </button>
+
+                <button class="outline full" onclick="closeModal();openFavorites();">
+                    ❤️ Ver favoritos
+                </button>
+            </div>
+
+        </div>
+        `
+    );
+}
 
 function openOrders(){
 

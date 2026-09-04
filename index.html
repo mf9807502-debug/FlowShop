@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FlowShop V11.1 | Sua Loja Online</title>
+<title>FlowShop V12.1 | Sua Loja Online</title>
 
 <style>
 *{
@@ -1542,7 +1542,7 @@ footer p{
     </p>
 
     <p>
-        FlowShop V11.1 © 2026
+        FlowShop V12.1 © 2026
     </p>
 
     <br>
@@ -1746,6 +1746,7 @@ let selectedPayment = "pix";
    GET   {BASE}/payments/status/{paymentId}
          resposta: { status: "pending" | "paid" | "cancelled" }
 ===================================================== */
+/* V12.1 - QR CODE: usa o QR oficial retornado pelo backend; fallback visual para Pix Copia e Cola. */
 const PAYMENT_CONFIG = {
     apiBaseUrl: "",
     pollIntervalMs: 4000,
@@ -3827,6 +3828,51 @@ function confirmOrder(){
     );
 }
 
+
+function escapeHtml(value){
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+/*
+ V12.1
+ O QR real/dinâmico deve vir do backend/provedor em order.pixQrCode.
+ Se o backend retornar apenas o texto Pix Copia e Cola, geramos um QR
+ visual desse texto como fallback. Para cobrança real, o backend deve
+ devolver o QR Code oficial da cobrança.
+*/
+function renderPixQrCode(order){
+    const text = order?.pixQrCode || order?.pixCopyPaste || "";
+    if(!text) return "";
+
+    const encoded = encodeURIComponent(text);
+
+    return `
+        <div style="margin:18px auto 8px;text-align:center">
+            <div style="font-size:13px;font-weight:bold;margin-bottom:8px">
+                📱 Escaneie o QR Code Pix
+            </div>
+            <img
+                src="https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=${encoded}"
+                alt="QR Code Pix"
+                width="260"
+                height="260"
+                style="max-width:100%;height:auto;border-radius:14px;background:#fff;padding:10px;border:1px solid var(--border)"
+                loading="eager"
+            >
+            <div style="font-size:12px;color:var(--muted);margin-top:8px">
+                ${order?.pixQrCode
+                    ? "QR Code fornecido pela cobrança."
+                    : "QR gerado a partir do texto Pix Copia e Cola."}
+            </div>
+        </div>
+    `;
+}
+
 function openPixWaitingModal(order, apiError=false){
     const automatic = paymentApiConfigured() && Boolean(order.paymentId);
     const pixValue = order.pixCopyPaste || "522ea3eb-f561-4f77-a17d-02245655cb1c";
@@ -3847,12 +3893,7 @@ function openPixWaitingModal(order, apiError=false){
                             : "Use a chave Pix abaixo. A confirmação automática será ativada quando o backend de pagamentos estiver conectado."
                         }
                     </p>
-
-                    ${order.pixQrCode ? `
-                        <div style="margin-top:12px;text-align:center">
-                            <img src="${order.pixQrCode}" alt="QR Code Pix" style="max-width:220px;width:100%;border-radius:12px;background:#fff;padding:8px">
-                        </div>
-                    ` : ""}
+                    ${renderPixQrCode(order)}
 
                     <div style="margin-top:12px;padding:14px;border:1px solid var(--border);border-radius:12px;background:var(--bg)">
                         <div style="font-size:12px;color:var(--muted);margin-bottom:6px">${order.pixCopyPaste ? "Pix Copia e Cola" : "Chave Pix de fallback"}</div>

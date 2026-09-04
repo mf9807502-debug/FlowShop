@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FlowShop V11.0 | Sua Loja Online</title>
+<title>FlowShop V11.1 | Sua Loja Online</title>
 
 <style>
 *{
@@ -1029,7 +1029,7 @@ nav a:hover{
 }
 
 
-/* V11.0 - RECENTES / FRETE / CONTA / DETALHES */
+/* V11.1 - RECENTES / FRETE / CONTA / DETALHES */
 .recent-section{
     display:none;
 }
@@ -1542,7 +1542,7 @@ footer p{
     </p>
 
     <p>
-        FlowShop V11.0 © 2026
+        FlowShop V11.1 © 2026
     </p>
 
     <br>
@@ -1732,12 +1732,36 @@ let selectedRating = 5;
 
 let selectedPayment = "pix";
 
-// Migração: pedidos antigos da V10.x já eram considerados registrados.
-// Eles ficam como pagos para não quebrar o histórico da loja.
+/* =====================================================
+   V11.1 - PREPARAÇÃO PARA PAGAMENTO AUTOMÁTICO
+   -----------------------------------------------------
+   O HTML NÃO guarda segredos de API.
+   Configure somente a URL pública do seu backend.
+
+   Contrato esperado do backend:
+   POST  {BASE}/payments/pix/create
+         body: { orderId, amount, customer, items }
+         resposta: { paymentId, qrCode?, pixCopyPaste?, expiresAt? }
+
+   GET   {BASE}/payments/status/{paymentId}
+         resposta: { status: "pending" | "paid" | "cancelled" }
+===================================================== */
+const PAYMENT_CONFIG = {
+    apiBaseUrl: "",
+    pollIntervalMs: 4000,
+    pollTimeoutMs: 30 * 60 * 1000
+};
+
+let paymentPollTimer = null;
+let paymentPollStartedAt = 0;
+
+// Migração segura:
+// pedidos antigos da V10.x continuam no histórico como pagos;
+// pedidos V11.x que já possuem paymentStatus preservam o estado.
 orders = orders.map(order => ({
     ...order,
     paymentStatus: order.paymentStatus || "paid",
-    status: Number(order.status || 1)
+    status: Number(order.status ?? ((order.paymentStatus || "paid") === "paid" ? 1 : 0))
 }));
 
 /* =====================================================
@@ -2237,7 +2261,7 @@ function setCategory(category,button){
 }
 
 /* =====================================================
-   V11.0 - VISTOS RECENTEMENTE
+   V11.1 - VISTOS RECENTEMENTE
 ===================================================== */
 
 function addRecentViewed(id){
@@ -2614,7 +2638,7 @@ function addReview(id){
 }
 
 /* =====================================================
-   V11.0 - FRETE
+   V11.1 - FRETE
 ===================================================== */
 
 const FREE_SHIPPING_LIMIT = 250;
@@ -3356,6 +3380,135 @@ function copyPixKey(){
     }
 }
 
+function paymentApiConfigured(){
+    return Boolean(
+        PAYMENT_CONFIG.apiBaseUrl &&
+        /^https:\/\//i.test(PAYMENT_CONFIG.apiBaseUrl)
+    );
+}
+
+function paymentApiUrl(path){
+    return PAYMENT_CONFIG.apiBaseUrl.replace(/\/$/, "") + path;
+}
+
+async function createPixPayment(order){
+    if(!paymentApiConfigured()) return null;
+
+    const response = await fetch(
+        paymentApiUrl("/payments/pix/create"),
+        {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({
+                orderId:String(order.id),
+                amount:Number(order.total),
+                customer:{
+                    name:order.customerName || "",
+                    email:order.customerEmail || "",
+                    address:order.address || ""
+                },
+                items:(order.items || []).map(item => ({
+                    id:item.id,
+                    quantity:item.quantity
+                }))
+            })
+        }
+    );
+
+    if(!response.ok) throw new Error("Falha ao criar a cobrança Pix.");
+
+    const data = await response.json();
+    if(!data.paymentId) throw new Error("O backend não retornou paymentId.");
+    return data;
+}
+
+async function getRemotePaymentStatus(paymentId){
+    if(!paymentApiConfigured() || !paymentId) return null;
+
+    const response = await fetch(
+        paymentApiUrl("/payments/status/" + encodeURIComponent(paymentId)),
+        {method:"GET", headers:{"Accept":"application/json"}, cache:"no-store"}
+    );
+
+    if(!response.ok) throw new Error("Não foi possível consultar o pagamento.");
+    return await response.json();
+}
+
+function stopPaymentPolling(){
+    if(paymentPollTimer){
+        clearTimeout(paymentPollTimer);
+        paymentPollTimer = null;
+    }
+}
+
+function startPaymentPolling(orderId){
+    stopPaymentPolling();
+    if(!paymentApiConfigured()) return;
+
+    const order = orders.find(item => item.id === orderId);
+    if(!order || !order.paymentId) return;
+
+    paymentPollStartedAt = Date.now();
+
+    const check = async () => {
+        const currentOrder = orders.find(item => item.id === orderId);
+
+        if(!currentOrder || currentOrder.paymentStatus === "paid"){
+            stopPaymentPolling();
+            return;
+        }
+
+        if(Date.now() - paymentPollStartedAt > PAYMENT_CONFIG.pollTimeoutMs){
+            stopPaymentPolling();
+            return;
+        }
+
+        try{
+            const result = await getRemotePaymentStatus(currentOrder.paymentId);
+            const remoteStatus = String(result?.status || "pending").toLowerCase();
+
+            if(["paid","approved","confirmed"].includes(remoteStatus)){
+                markOrderAsPaid(currentOrder.id, "automatic");
+                return;
+            }
+
+            if(["cancelled","canceled","expired"].includes(remoteStatus)){
+                currentOrder.paymentStatus = "cancelled";
+                currentOrder.paymentCancelledAt = new Date().toISOString();
+                saveData();
+                stopPaymentPolling();
+                showToast("O pagamento Pix foi cancelado ou expirou.");
+                openOrders();
+                return;
+            }
+        }catch(error){
+            console.warn("FlowShop: consulta de pagamento falhou", error);
+        }
+
+        paymentPollTimer = setTimeout(check, PAYMENT_CONFIG.pollIntervalMs);
+    };
+
+    check();
+}
+
+function renderAutomaticPaymentNotice(){
+    if(paymentApiConfigured()){
+        return `
+            <div style="margin-top:10px;padding:10px;border-radius:10px;background:rgba(34,197,94,.10);color:var(--text);font-size:12px">
+                🟢 <strong>Confirmação automática ativada.</strong><br>
+                Após o provedor confirmar o Pix, o FlowShop atualizará o pedido automaticamente.
+            </div>
+        `;
+    }
+
+    return `
+        <div style="margin-top:10px;padding:10px;border-radius:10px;background:rgba(234,179,8,.10);color:var(--text);font-size:12px">
+            🟡 <strong>Integração automática ainda não configurada.</strong><br>
+            O FlowShop já está preparado para receber um backend de pagamentos, mas esta versão usa confirmação manual enquanto a URL da API estiver vazia.
+        </div>
+    `;
+}
+
 function renderPaymentInfo(){
 
     const container =
@@ -3378,7 +3531,7 @@ function renderPaymentInfo(){
                     margin-top:6px;
                     font-size:13px;
                 ">
-                    Faça o Pix usando a chave abaixo. Depois, confirme o pedido.
+                    Faça o Pix usando a cobrança gerada pelo sistema. Nesta etapa de preparação, a chave fixa abaixo continua disponível como fallback.
                 </p>
 
                 <div style="
@@ -3408,7 +3561,7 @@ function renderPaymentInfo(){
                     margin-top:10px;
                     font-size:12px;
                 ">
-                    ⚠️ Esta versão usa uma chave Pix fixa. A confirmação automática do pagamento ainda exige integração com um provedor de pagamentos/API.
+                    ${renderAutomaticPaymentNotice()}
                 </p>
 
             </div>
@@ -3520,7 +3673,7 @@ function markPixPaymentReported(id){
 
     addNotification(
         "Pagamento informado",
-        `O pedido #${id} está aguardando confirmação do Pix.`,
+        `O pedido #${id} recebeu um aviso de pagamento, mas ainda aguarda confirmação real.`,
         "💠"
     );
 
@@ -3529,7 +3682,7 @@ function markPixPaymentReported(id){
     openOrders();
 }
 
-function markOrderAsPaid(id){
+function markOrderAsPaid(id, source="manual"){
 
     const order = orders.find(item => item.id === id);
 
@@ -3538,6 +3691,8 @@ function markOrderAsPaid(id){
     order.paymentStatus = "paid";
     order.status = Math.max(1, Number(order.status || 1));
     order.paidAt = new Date().toLocaleString("pt-BR");
+    order.paymentConfirmedBy = source === "automatic" ? "webhook/api" : "admin";
+    stopPaymentPolling();
 
     saveData();
 
@@ -3553,620 +3708,174 @@ function markOrderAsPaid(id){
 }
 
 function confirmOrder(){
-
-    const name =
-        document.getElementById("checkoutName")
-        .value.trim();
-
-    const email =
-        document.getElementById("checkoutEmail")
-        .value.trim();
-
-    const address =
-        document.getElementById("checkoutAddress")
-        .value.trim();
+    const name = document.getElementById("checkoutName").value.trim();
+    const email = document.getElementById("checkoutEmail").value.trim();
+    const address = document.getElementById("checkoutAddress").value.trim();
 
     if(!name || !email || !address){
-
-        showToast(
-            "Preencha todos os campos."
-        );
-
+        showToast("Preencha todos os campos.");
         return;
     }
 
     if(!email.includes("@")){
-
-        showToast(
-            "Digite um e-mail válido."
-        );
-
+        showToast("Digite um e-mail válido.");
         return;
     }
 
-    const percentage =
-        getCouponDiscount();
+    if(!cart.length){
+        showToast("Seu carrinho está vazio.");
+        return;
+    }
 
+    const percentage = getCouponDiscount();
     const subtotal = cartTotal();
-
-    const discount =
-        subtotal * (percentage / 100);
-
-    const afterDiscount =
-        Math.max(0, subtotal - discount);
-
-    const shipping =
-        getShipping(afterDiscount);
-
-    const total =
-        afterDiscount + shipping;
+    const discount = subtotal * (percentage / 100);
+    const afterDiscount = Math.max(0, subtotal - discount);
+    const shipping = getShipping(afterDiscount);
+    const total = afterDiscount + shipping;
 
     const order = {
-
-        id:
-            Math.floor(
-                100000 +
-                Math.random() * 900000
-            ),
-
-        date:
-            new Date()
-            .toLocaleString("pt-BR"),
-
+        id:Math.floor(100000 + Math.random() * 900000),
+        date:new Date().toLocaleString("pt-BR"),
         total:total,
-
         subtotal:subtotal,
-
         discount:discount,
-
         shipping:shipping,
-
         address:address,
-
+        customerName:name,
+        customerEmail:email,
         payment:selectedPayment,
-
-        /*
-           V11.0:
-           O pedido NÃO é considerado pago ao clicar em confirmar.
-           O pagamento precisa ser confirmado separadamente.
-        */
         paymentStatus:"pending",
-
         status:0,
-
-        items:[
-            ...cart
-        ]
-
+        paymentMode:paymentApiConfigured() ? "automatic" : "manual-fallback",
+        items:[...cart]
     };
 
     orders.unshift(order);
+    user = {name:name,email:email};
+    saveData();
 
-    user = {
+    if(selectedPayment === "pix"){
+        createPixPayment(order)
+            .then(payment => {
+                if(payment){
+                    order.paymentId = String(payment.paymentId);
+                    order.pixCopyPaste = payment.pixCopyPaste || payment.qrCodeText || "";
+                    order.pixQrCode = payment.qrCode || "";
+                    order.paymentExpiresAt = payment.expiresAt || null;
+                    order.paymentStatus = "pending";
+                    order.paymentCreatedAt = new Date().toISOString();
 
-        name:name,
+                    saveData();
+                    cart = [];
+                    coupon = "";
+                    localStorage.removeItem("flowshop_coupon");
+                    saveData();
 
-        email:email
+                    addNotification(
+                        "Pix gerado",
+                        `A cobrança do pedido #${order.id} foi gerada e está aguardando pagamento.`,
+                        "💠"
+                    );
 
-    };
+                    openPixWaitingModal(order);
+                    startPaymentPolling(order.id);
+                    return;
+                }
+
+                cart = [];
+                coupon = "";
+                localStorage.removeItem("flowshop_coupon");
+                saveData();
+
+                addNotification(
+                    "Pedido aguardando pagamento",
+                    `O pedido #${order.id} foi criado e está aguardando pagamento.`,
+                    "⏳"
+                );
+                openPixWaitingModal(order);
+            })
+            .catch(error => {
+                console.error(error);
+                showToast("Não foi possível gerar a cobrança automática. O pedido continua pendente.");
+                openPixWaitingModal(order, true);
+            });
+        return;
+    }
 
     cart = [];
-
     coupon = "";
-
-    localStorage.removeItem(
-        "flowshop_coupon"
-    );
-
+    localStorage.removeItem("flowshop_coupon");
     saveData();
 
     addNotification(
         "Pedido aguardando pagamento",
-        `O pedido #${order.id} foi criado e está aguardando pagamento.`,
+        `O pedido #${order.id} foi criado e está aguardando confirmação do pagamento.`,
         "⏳"
     );
 
-    if(selectedPayment === "pix"){
-
-        openModal(
-
-            "⏳ Aguardando pagamento",
-
-            `
-
-                <div class="empty">
-
-                    <h3>
-                        Pedido criado, mas ainda NÃO foi liberado.
-                    </h3>
-
-                    <p>
-                        Pedido:
-                        <strong>#${order.id}</strong>
-                    </p>
-
-                    <p style="margin-top:8px;color:var(--muted)">
-                        Total:
-                        <strong>${money(order.total)}</strong>
-                    </p>
-
-                    <div class="pix-box" style="margin-top:18px;text-align:left">
-
-                        <strong>💠 Faça o pagamento via Pix</strong>
-
-                        <p style="color:var(--muted);margin-top:7px;font-size:13px">
-                            Use a chave Pix abaixo. Depois, volte aqui e informe que realizou o pagamento.
-                        </p>
-
-                        <div style="margin-top:12px;padding:14px;border:1px solid var(--border);border-radius:12px;background:var(--bg)">
-                            <div style="font-size:12px;color:var(--muted);margin-bottom:6px">
-                                Chave Pix aleatória
-                            </div>
-                            <strong id="flowshopPixKey" style="word-break:break-all;font-size:14px">
-                                522ea3eb-f561-4f77-a17d-02245655cb1c
-                            </strong>
-                            <button
-                                class="secondary"
-                                style="margin-top:10px;width:100%"
-                                onclick="copyPixKey()"
-                            >
-                                📋 Copiar chave Pix
-                            </button>
-                        </div>
-
-                        <p style="color:var(--muted);margin-top:10px;font-size:12px">
-                            ⚠️ Nesta V11.0 a confirmação ainda é manual. O site só libera o pedido quando o pagamento for confirmado.
-                        </p>
-
-                    </div>
-
-                    <button
-                        class="primary full"
-                        style="margin-top:15px"
-                        onclick="markPixPaymentReported(${order.id})"
-                    >
-                        💠 Já fiz o Pix — aguardar confirmação
-                    </button>
-
-                    <button
-                        class="outline full"
-                        style="margin-top:10px"
-                        onclick="closeModal();openOrders();"
-                    >
-                        📦 Acompanhar pedido
-                    </button>
-
-                </div>
-
-            `
-        );
-
-        return;
-    }
-
     openModal(
-
         "⏳ Pagamento pendente",
-
         `
-
             <div class="empty">
-
-                <h3>
-                    Pedido #${order.id} criado!
-                </h3>
-
-                <p style="margin-top:8px">
-                    O pagamento ainda precisa ser confirmado.
-                </p>
-
-                <p style="margin-top:8px;color:var(--muted)">
-                    Status: <strong>Aguardando pagamento</strong>
-                </p>
-
-                <button
-                    class="primary"
-                    style="margin-top:15px"
-                    onclick="closeModal();openOrders();"
-                >
-                    📦 Ver meus pedidos
-                </button>
-
+                <h3>Pedido #${order.id} criado!</h3>
+                <p style="margin-top:8px">O pagamento ainda precisa ser confirmado pelo provedor.</p>
+                <p style="margin-top:8px;color:var(--muted)">Status: <strong>Aguardando pagamento</strong></p>
+                <button class="outline full" style="margin-top:15px" onclick="closeModal();openOrders();">📦 Acompanhar pedido</button>
             </div>
-
         `
     );
 }
 
-function getPaymentName(method){
-
-    if(method === "pix") return "PIX";
-    if(method === "card") return "Cartão";
-    return "Boleto";
-}
-
-/* =====================================================
-   FAVORITOS
-===================================================== */
-
-function toggleFavorite(id){
-
-    if(favorites.includes(id)){
-
-        favorites =
-            favorites.filter(
-                favoriteId =>
-                    favoriteId !== id
-            );
-
-        showToast(
-            "Removido dos favoritos."
-        );
-
-    }else{
-
-        favorites.push(id);
-
-        showToast(
-            "Adicionado aos favoritos! ❤️"
-        );
-    }
-
-    saveData();
-
-    renderProducts();
-}
-
-function openFavorites(){
-
-    const favoriteProducts =
-        getAllProducts().filter(
-            product =>
-                favorites.includes(product.id)
-        );
-
-    if(favoriteProducts.length === 0){
-
-        openModal(
-
-            "❤️ Favoritos",
-
-            `
-
-                <div class="empty">
-
-                    <h3>
-                        Você ainda não tem favoritos.
-                    </h3>
-
-                    <p>
-                        Clique no ❤️ dos produtos que você gostar.
-                    </p>
-
-                </div>
-
-            `
-        );
-
-        return;
-    }
-
-    let html = "";
-
-    favoriteProducts.forEach(product => {
-
-        html += `
-
-            <div class="cart-item">
-
-                <img
-                    src="${product.image}"
-                    alt="${product.name}"
-                >
-
-                <div class="cart-info">
-
-                    <strong>
-                        ${product.name}
-                    </strong>
-
-                    <p>
-                        ${money(product.price)}
-                    </p>
-
-                </div>
-
-                <button
-                    class="primary"
-                    onclick="
-                        addToCart(${product.id})
-                    "
-                >
-                    🛒
-                </button>
-
-            </div>
-
-        `;
-    });
+function openPixWaitingModal(order, apiError=false){
+    const automatic = paymentApiConfigured() && Boolean(order.paymentId);
+    const pixValue = order.pixCopyPaste || "522ea3eb-f561-4f77-a17d-02245655cb1c";
 
     openModal(
-        "❤️ Meus favoritos",
-        html
-    );
-}
+        automatic ? "💠 Aguardando Pix" : "⏳ Aguardando pagamento",
+        `
+            <div class="empty">
+                <h3>${automatic ? "Cobrança Pix criada!" : "Pedido criado, mas ainda NÃO foi liberado."}</h3>
+                <p>Pedido: <strong>#${order.id}</strong></p>
+                <p style="margin-top:8px;color:var(--muted)">Total: <strong>${money(order.total)}</strong></p>
 
-/* =====================================================
-   CONTA
-===================================================== */
-
-function openAccount(){
-
-    if(!user){
-
-        openModal(
-
-            "👤 Minha conta",
-
-            `
-
-                <div class="account-box">
-
-                    <div class="account-avatar">
-                        👤
-                    </div>
-
-                    <h3>
-                        Criar sua conta
-                    </h3>
-
-                    <p style="
-                        color:var(--muted);
-                        margin:10px 0 20px;
-                    ">
-                        Seus dados ficam salvos apenas neste navegador.
+                <div class="pix-box" style="margin-top:18px;text-align:left">
+                    <strong>💠 Pagamento via Pix</strong>
+                    <p style="color:var(--muted);margin-top:7px;font-size:13px">
+                        ${automatic
+                            ? "Pague a cobrança. O FlowShop consultará o status e liberará o pedido quando o provedor confirmar o pagamento."
+                            : "Use a chave Pix abaixo. A confirmação automática será ativada quando o backend de pagamentos estiver conectado."
+                        }
                     </p>
 
-                    <input
-                        class="input"
-                        id="accountName"
-                        placeholder="Seu nome"
-                    >
+                    ${order.pixQrCode ? `
+                        <div style="margin-top:12px;text-align:center">
+                            <img src="${order.pixQrCode}" alt="QR Code Pix" style="max-width:220px;width:100%;border-radius:12px;background:#fff;padding:8px">
+                        </div>
+                    ` : ""}
 
-                    <input
-                        class="input"
-                        id="accountEmail"
-                        placeholder="Seu e-mail"
-                    >
-
-                    <button
-                        class="primary full"
-                        onclick="createAccount()"
-                    >
-                        Criar conta
-                    </button>
-
-                </div>
-
-            `
-        );
-
-        return;
-    }
-
-    openModal(
-
-        "👤 Minha conta",
-
-        `
-
-            <div class="account-box">
-
-                <div class="account-avatar">
-                    ${user.name
-                        .charAt(0)
-                        .toUpperCase()}
-                </div>
-
-                <h2>
-                    ${user.name}
-                </h2>
-
-                <p style="
-                    color:var(--muted);
-                ">
-                    ${user.email}
-                </p>
-
-                <div class="stats-grid">
-
-                    <div class="user-stat">
-                        <strong>${orders.length}</strong>
-                        <small>Pedidos</small>
+                    <div style="margin-top:12px;padding:14px;border:1px solid var(--border);border-radius:12px;background:var(--bg)">
+                        <div style="font-size:12px;color:var(--muted);margin-bottom:6px">${order.pixCopyPaste ? "Pix Copia e Cola" : "Chave Pix de fallback"}</div>
+                        <strong id="flowshopPixKey" style="word-break:break-all;font-size:14px">${pixValue}</strong>
+                        <button class="secondary" style="margin-top:10px;width:100%" onclick="copyPixKey()">📋 Copiar Pix</button>
                     </div>
 
-                    <div class="user-stat">
-                        <strong>${favorites.length}</strong>
-                        <small>Favoritos</small>
-                    </div>
+                    ${apiError ? `
+                        <p style="color:#d97706;margin-top:10px;font-size:12px">⚠️ A API não respondeu. O pedido continua pendente e não será marcado como pago por este erro.</p>
+                    ` : ""}
 
-                    <div class="user-stat">
-                        <strong>${money(
-                            orders.reduce(
-                                (total,order) =>
-                                    total + Number(order.total || 0),
-                                0
-                            )
-                        )}</strong>
-                        <small>Total gasto</small>
-                    </div>
-
+                    ${renderAutomaticPaymentNotice()}
                 </div>
 
-                <button
-                    class="primary full"
-                    onclick="editAccount()"
-                >
-                    ✏️ Editar dados
-                </button>
+                ${!automatic ? `
+                    <button class="primary full" style="margin-top:15px" onclick="markPixPaymentReported(${order.id})">💠 Já fiz o Pix — aguardar confirmação</button>
+                ` : `
+                    <div id="paymentAutoStatus" style="margin-top:15px;padding:12px;border:1px solid var(--border);border-radius:12px">⏳ Aguardando confirmação do provedor...</div>
+                `}
 
-                <br><br>
-
-                <button
-                    class="outline full"
-                    onclick="openOrders()"
-                >
-                    📦 Meus pedidos
-                </button>
-
-                <br><br>
-
-                <button
-                    class="danger full"
-                    onclick="logout()"
-                >
-                    Sair da conta
-                </button>
-
+                <button class="outline full" style="margin-top:10px" onclick="closeModal();openOrders();">📦 Acompanhar pedido</button>
             </div>
-
         `
-    );
-}
-
-function createAccount(){
-
-    const name =
-        document.getElementById("accountName")
-        .value.trim();
-
-    const email =
-        document.getElementById("accountEmail")
-        .value.trim();
-
-    if(!name || !email){
-
-        showToast(
-            "Preencha os dados."
-        );
-
-        return;
-    }
-
-    if(!email.includes("@")){
-
-        showToast(
-            "Digite um e-mail válido."
-        );
-
-        return;
-    }
-
-    user = {
-        name:name,
-        email:email
-    };
-
-    saveData();
-
-    addNotification(
-        "Conta criada",
-        "Sua conta foi criada com sucesso.",
-        "👤"
-    );
-
-    showToast(
-        "Conta criada! 👤"
-    );
-
-    openAccount();
-}
-
-function editAccount(){
-
-    openModal(
-
-        "✏️ Editar conta",
-
-        `
-
-            <input
-                class="input"
-                id="editName"
-                value="${user.name}"
-                placeholder="Nome"
-            >
-
-            <input
-                class="input"
-                id="editEmail"
-                value="${user.email}"
-                placeholder="E-mail"
-            >
-
-            <button
-                class="primary full"
-                onclick="saveAccountEdit()"
-            >
-                💾 Salvar alterações
-            </button>
-
-        `
-    );
-}
-
-function saveAccountEdit(){
-
-    const name =
-        document.getElementById("editName")
-        .value.trim();
-
-    const email =
-        document.getElementById("editEmail")
-        .value.trim();
-
-    if(!name || !email){
-
-        showToast(
-            "Preencha todos os campos."
-        );
-
-        return;
-    }
-
-    if(!email.includes("@")){
-
-        showToast(
-            "Digite um e-mail válido."
-        );
-
-        return;
-    }
-
-    user.name = name;
-    user.email = email;
-
-    saveData();
-
-    showToast(
-        "Dados atualizados! ✅"
-    );
-
-    openAccount();
-}
-
-function logout(){
-
-    user = null;
-
-    localStorage.removeItem(
-        "flowshop_user"
-    );
-
-    closeModal();
-
-    showToast(
-        "Você saiu da conta."
     );
 }
 
@@ -4421,6 +4130,12 @@ function openOrderDetails(id){
             <p style="margin-top:7px">
                 ${getPaymentStatusLabel(order)}
             </p>
+
+            ${order.paymentId ? `
+                <p style="color:var(--muted);font-size:12px;margin-top:6px">
+                    ID da cobrança: ${order.paymentId}
+                </p>
+            ` : ""}
 
             ${
                 order.payment === "pix" &&
@@ -5215,6 +4930,21 @@ function init(){
 }
 
 init();
+
+
+
+function resumePendingAutomaticPayments(){
+    if(!paymentApiConfigured()) return;
+    const pending = orders.filter(order =>
+        order.payment === "pix" &&
+        order.paymentId &&
+        order.paymentStatus !== "paid" &&
+        order.paymentStatus !== "cancelled"
+    );
+    pending.forEach(order => startPaymentPolling(order.id));
+}
+
+resumePendingAutomaticPayments();
 
 </script>
 

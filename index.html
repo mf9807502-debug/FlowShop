@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FlowShop V12.1.1 | Sua Loja Online</title>
+<title>FlowShop V12.1.2 | Sua Loja Online</title>
 
 <style>
 *{
@@ -1542,7 +1542,7 @@ footer p{
     </p>
 
     <p>
-        FlowShop V12.1.1 © 2026
+        FlowShop V12.1.2 © 2026
     </p>
 
     <br>
@@ -3628,6 +3628,18 @@ function renderPaymentInfo(){
    CONFIRMAR PEDIDO
 ===================================================== */
 
+
+function getPaymentName(payment){
+
+    const names = {
+        pix: "💠 Pix",
+        card: "💳 Cartão",
+        boleto: "🧾 Boleto"
+    };
+
+    return names[payment] || "Pagamento";
+}
+
 function getPaymentStatusLabel(order){
 
     const status = order.paymentStatus || "pending";
@@ -3980,6 +3992,52 @@ function openAccount(){
     );
 }
 
+
+function openFavorites(){
+
+    if(!favorites.length){
+
+        openModal(
+            "❤️ Favoritos",
+            `
+            <div class="empty">
+                <h3>Nenhum favorito ainda.</h3>
+                <p>Você pode favoritar produtos para encontrá-los aqui.</p>
+            </div>
+            `
+        );
+        return;
+    }
+
+    let html = "";
+
+    favorites.forEach(id => {
+
+        const product = getProduct(id);
+
+        if(!product) return;
+
+        html += `
+            <div class="cart-item">
+                <img src="${product.image}" alt="${product.name}">
+                <div class="cart-info">
+                    <strong>${product.name}</strong>
+                    <span>${money(product.price)}</span>
+                    <button
+                        class="primary"
+                        style="margin-top:8px"
+                        onclick="closeModal();openProduct(${product.id})"
+                    >
+                        👁️ Ver produto
+                    </button>
+                </div>
+            </div>
+        `;
+    });
+
+    openModal("❤️ Favoritos", html);
+}
+
 function openOrders(){
 
     if(orders.length === 0){
@@ -4013,7 +4071,7 @@ function openOrders(){
     orders.forEach(order => {
 
         const step =
-            order.status || 1;
+            Number(order.status || 1);
 
         html += `
 

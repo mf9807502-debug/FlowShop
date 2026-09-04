@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FlowShop V12.2.2.2 | Sua Loja Online</title>
+<title>FlowShop V12.3.2 | Sua Loja Online</title>
 
 <style>
 *{
@@ -1341,6 +1341,50 @@ footer p{
     margin-top:12px;
 }
 
+
+.price-filter-panel{
+    margin:14px 0 18px;
+    padding:14px;
+    border:1px solid var(--border);
+    border-radius:16px;
+    background:var(--card);
+}
+.price-filter-title{
+    font-weight:800;
+    margin-bottom:10px;
+}
+.price-filter-fields{
+    display:grid;
+    grid-template-columns:1fr 1fr auto auto;
+    gap:8px;
+    align-items:center;
+}
+.order-item-v23{
+    display:grid;
+    grid-template-columns:56px 1fr auto;
+    gap:10px;
+    align-items:center;
+    padding:10px 0;
+    border-bottom:1px solid var(--border);
+}
+.order-item-v23:last-child{
+    border-bottom:0;
+}
+.order-item-v23 img{
+    width:56px;
+    height:56px;
+    object-fit:cover;
+    border-radius:10px;
+}
+@media(max-width:650px){
+    .price-filter-fields{
+        grid-template-columns:1fr 1fr;
+    }
+    .price-filter-fields button{
+        width:100%;
+    }
+}
+
 </style>
 </head>
 
@@ -1574,7 +1618,25 @@ footer p{
 
     <div class="search-count" id="searchCount"></div>
 
-    <div class="products" id="products"></div>
+    
+<div id="priceFilterPanel" class="price-filter-panel">
+    <div class="price-filter-title">🔎 Filtros rápidos</div>
+
+    <div class="price-filter-fields">
+        <input id="minPrice" class="input" type="number" min="0" step="0.01"
+               placeholder="Preço mínimo">
+        <input id="maxPrice" class="input" type="number" min="0" step="0.01"
+               placeholder="Preço máximo">
+        <button class="secondary" onclick="applyPriceFilter()">
+            Aplicar
+        </button>
+        <button class="outline" onclick="clearProductFilters()">
+            Limpar
+        </button>
+    </div>
+</div>
+
+<div class="products" id="products"></div>
 
 </section>
 
@@ -1609,7 +1671,7 @@ footer p{
     </p>
 
     <p>
-        FlowShop V12.2.2.2 © 2026
+        FlowShop V12.3.2 © 2026
     </p>
 
     <br>
@@ -2335,6 +2397,51 @@ function renderProducts(){
             `;
 
         }).join("");
+}
+
+
+function clearProductFilters(){
+
+    const searchInput = document.getElementById("search");
+    const sortInput = document.getElementById("sort");
+
+    if(searchInput) searchInput.value = "";
+    if(sortInput) sortInput.value = "";
+
+    currentCategory = "Todos";
+
+    document.querySelectorAll(".category").forEach(btn => {
+        btn.classList.toggle(
+            "active",
+            String(btn.textContent || "").includes("Todos")
+        );
+    });
+
+    renderProducts();
+}
+
+function applyPriceFilter(){
+
+    const minInput = document.getElementById("minPrice");
+    const maxInput = document.getElementById("maxPrice");
+
+    const min = minInput && minInput.value !== ""
+        ? Number(minInput.value)
+        : 0;
+
+    const max = maxInput && maxInput.value !== ""
+        ? Number(maxInput.value)
+        : Infinity;
+
+    if(min < 0 || max < 0 || min > max){
+        showToast("Informe uma faixa de preço válida.");
+        return;
+    }
+
+    window.flowshopPriceFilter = { min, max };
+
+    renderProducts();
+    showToast("Filtro de preço aplicado. 🔎");
 }
 
 function setCategory(category,button){
@@ -4354,6 +4461,32 @@ function openOrders(){
     );
 }
 
+
+function getOrderItemsHtml(order){
+
+    return (order.items || []).map(item => {
+
+        const product = getProduct(item.id);
+        const name = product?.name || item.name || "Produto";
+        const image = product?.image || item.image || "https://via.placeholder.com/80?text=FlowShop";
+        const quantity = Number(item.quantity || 1);
+        const unitPrice = Number(item.price ?? product?.price ?? 0);
+
+        return `
+            <div class="order-item-v23">
+                <img src="${image}" alt="${escapeHtml(name)}">
+                <div>
+                    <strong>${escapeHtml(name)}</strong>
+                    <div style="color:var(--muted);font-size:13px;margin-top:4px;">
+                        ${quantity} × ${money(unitPrice)}
+                    </div>
+                </div>
+                <strong>${money(unitPrice * quantity)}</strong>
+            </div>
+        `;
+    }).join("");
+}
+
 function openOrderDetails(id){
 
     const order =
@@ -5286,6 +5419,23 @@ function resumePendingAutomaticPayments(){
 }
 
 resumePendingAutomaticPayments();
+
+
+
+function goToProducts(){
+
+    const section =
+        document.getElementById("productsSection") ||
+        document.getElementById("products") ||
+        document.querySelector(".products-section");
+
+    if(section){
+        section.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
+    }
+}
 
 
 </script>
